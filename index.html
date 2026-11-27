@@ -192,6 +192,14 @@ details.grp>div{padding:4px 0 14px}
 .lesson ul,.lesson ol{padding-left:20px;margin:0 0 10px}.lesson li{margin:0 0 6px}
 .lesson .ex{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;font-size:15px}
 .calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.coinrow{display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin:10px 0 2px}.coinrow .fld{flex:1 1 150px}.coinrow .fld>span{color:var(--mute);font-weight:600}.coinrow .btn{flex:0 0 auto}
+.planin .favs .small,.chips .small{color:var(--mute);margin-right:2px}
+.planin .favs button,.chips button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;min-height:40px;padding:0 12px;font:600 14px Inter,sans-serif;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:12px 0 0}.chips:empty{display:none}
+.two{display:flex;gap:6px}.two input{flex:1 1 64px;min-width:0}.two select{flex:1.4 1 96px;min-width:0}
+ol.steps{margin:4px 0 12px;padding-left:24px}ol.steps li{margin:0 0 10px}
+details.adv{margin-top:14px;border-top:1px solid var(--line);padding-top:4px}details.adv>summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
+dl.gloss{margin:0}dl.gloss dt{font-weight:700;margin-top:10px}dl.gloss dd{margin:2px 0 0;color:var(--mute);font-size:15px}
 @media(max-width:700px){.calc{grid-template-columns:minmax(0,1fr)}}
 .big{font:700 clamp(30px,7vw,44px)/1 "Inter Tight",sans-serif;font-variant-numeric:tabular-nums}
 footer{border-top:1px solid var(--line);color:var(--mute);font-size:14px}
@@ -212,11 +220,11 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
 <header class="hero band">
   <div class="wrap">
     <h1>Analizor crypto, explicat pas cu pas</h1>
-    <p class="lede">Programul ia datele din Binance și îți arată trendul pe termen scurt, mediu și lung, dacă regulile permit cumpărarea sau ieșirea — și de ce, pentru fiecare cifră.</p>
+    <p class="lede">Spui ce plan ai: câți bani, cât timp ții moneda, la ce preț crezi că ajunge. Alegi moneda, iar programul îți spune ce e cel mai bine de făcut acum, cu datele live de la Binance — și de ce, pentru fiecare cifră.</p>
     <nav class="tabs" role="tablist" aria-label="Secțiuni">
+      <button role="tab" id="t-plan" data-v="plan" aria-selected="false">Plan</button>
       <button role="tab" id="t-analiza" data-v="analiza" aria-selected="true">Analiză</button>
       <button role="tab" id="t-risc" data-v="risc" aria-selected="false">Risc</button>
-      <button role="tab" id="t-acumulare" data-v="acumulare" aria-selected="false">Acumulare</button>
       <button role="tab" id="t-invata" data-v="invata" aria-selected="false">Învață</button>
     </nav>
     <div id="updBar" hidden></div>
@@ -236,14 +244,14 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
 </header>
 
 <main>
+  <section class="view" id="v-plan" aria-labelledby="t-plan" hidden>
+    <div class="band"><div class="wrap" id="acc"></div></div>
+  </section>
   <section class="view" id="v-analiza" aria-labelledby="t-analiza">
     <div class="band"><div class="wrap" id="results"></div></div>
   </section>
   <section class="view" id="v-risc" aria-labelledby="t-risc" hidden>
     <div class="band"><div class="wrap" id="risk"></div></div>
-  </section>
-  <section class="view" id="v-acumulare" aria-labelledby="t-acumulare" hidden>
-    <div class="band"><div class="wrap" id="acc"></div></div>
   </section>
   <section class="view" id="v-invata" aria-labelledby="t-invata" hidden>
     <div class="band"><div class="wrap lessons" id="lessons">
@@ -404,12 +412,20 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
 <p><b>Cum verifici singur în Binance:</b> deschide BTC/USDT pe 1 zi și uită-te dacă prețul e peste MA(99) și dacă MA(25) urcă. Pentru forța relativă, deschide perechea MONEDĂ/BTC (de exemplu ETH/BTC), dacă există: dacă graficul ei urcă, moneda bate Bitcoin. Dacă perechea nu există, compară variația pe 30 de zile a celor două.</p>
 </div></details>
 <details id="l-acumulare"><summary>Acumularea într-o piață care scade</summary><div class="lesson">
+<p><b>Unde o găsești.</b> În tab-ul „Plan”: scrii suma, cât timp ții moneda și, dacă vrei, prețul la care crezi că ajunge. Până la 90 de zile, planul e de termen scurt (ordine eșalonate cu stop); peste, e de acumulare (cumpărare săptămânală + rezervă).</p>
 <p><b>Ce înseamnă.</b> Nu cumperi totul într-o zi, ci în mai multe tranșe, la prețuri și momente diferite. Așa nu depinzi de o singură zi, iar când piața scade, aceeași sumă cumpără mai multe monede. Prețul tău mediu = suma totală plătită / cantitatea totală.</p>
 <p><b>Ce spun studiile.</b> Pe acțiuni, studiile (de exemplu Vanguard) arată că a investi totul odată a ieșit mai bine în aproximativ două treimi din cazuri, pentru că piețele urcă mai des decât scad. Cumpărarea treptată câștigă când prețul scade după ce ai început și te ferește de cel mai prost moment posibil. În crypto, mișcările sunt mult mai mari, deci și riscul unui moment prost e mai mare. Programul testează pe istoricul fiecărei monede care metodă a mers mai bine.</p>
 <h4>Termen lung (luni–ani): cumpărare săptămânală + rezervă</h4>
-<ul><li><b>Suma de bază</b> se împarte egal pe săptămâni.</li><li><b>Factorul</b>: cumperi mai mult când prețul e sub media lui lungă sau când piața e speriată (Fear & Greed mic) și mai puțin când e scump sau când e lăcomie. E o variantă simplă a „value averaging”.</li><li><b>Rezerva</b> (de obicei 20–40%) stă în ordine Limit mult sub preț. În piețele care scad, căderile bruște de 20–40% sunt frecvente; rezerva le prinde fără să trebuiască să stai cu ochii pe ecran.</li><li>Nu există stop-loss la acumularea pe ani, așa că riscul îl controlezi prin sumă: doar bani pe care îi poți lăsa acolo 2–4 ani.</li></ul>
+<ul><li><b>Suma de bază</b> se împarte egal pe săptămâni.</li><li><b>Factorul</b>: cumperi mai mult când prețul e sub media lui lungă sau când piața e speriată (Fear & Greed mic) și mai puțin când e scump sau când e lăcomie. E o variantă simplă a „value averaging”.</li><li><b>Rezerva</b> (de obicei 20–40%) stă în 5–8 ordine Limit sub preț, pe toată durata planului. În piețele care scad, căderile bruște sunt frecvente; rezerva le prinde fără să stai cu ochii pe ecran. Ordinele se aleg ca mai jos, dar pe săptămânile planului, iar cel mai jos nu coboară mai mult de 25% / 40% / 55% sub preț (Aproape / Echilibrat / Adânc).</li><li>Nu există stop-loss la acumularea pe ani, așa că riscul îl controlezi prin sumă: doar bani pe care îi poți lăsa acolo 2–4 ani.</li></ul>
 <h4>Termen scurt (zile–săptămâni): ordine eșalonate, cu stop</h4>
-<ul><li>3 ordine Limit sub preț, la suporturi sau la distanțe măsurate în ATR, cu sume mai mari mai jos (25% / 35% / 40%).</li><li>Ordinele stau puțin <b>peste</b> suport: mulți cumpărători așteaptă exact pe nivel și prețul se întoarce des înainte să-l atingă.</li><li>Un singur stop sub toate ordinele. Suma totală se calculează așa încât, dacă se execută tot și se atinge stopul, să pierzi cel mult riscul tău pe tranzacție. Într-o cădere activă, programul folosește jumătate din risc, pentru că atunci cumperi împotriva trendului.</li><li>Ținta 1 e de obicei MA(25) pe 1 zi: după căderi mari, prețul revine des spre medie. Acolo vinzi jumătate și muți stopul la prețul mediu.</li><li><b>Niciodată</b> nu adăuga ordine sub stop „ca să faci media”: așa se transformă o pierdere mică într-una mare.</li></ul>
+<ul><li>5 ordine Limit sub preț (poți alege până la 8), cu sume mai mari mai jos: ultimul e de 1,5–2 ori primul.</li><li>Ordinele stau puțin <b>peste</b> suport: mulți cumpărători așteaptă exact pe nivel și prețul se întoarce des înainte să-l atingă.</li><li>Un singur stop sub toate ordinele. Suma totală se calculează așa încât, dacă se execută tot și se atinge stopul, să pierzi cel mult riscul tău pe tranzacție. Într-o cădere activă, programul folosește jumătate din risc, pentru că atunci cumperi împotriva trendului.</li><li>Ținta 1 e de obicei MA(25) pe 1 zi: după căderi mari, prețul revine des spre medie. Acolo vinzi jumătate și muți stopul la prețul mediu.</li><li><b>Niciodată</b> nu adăuga ordine sub stop „ca să faci media”: așa se transformă o pierdere mică într-una mare.</li></ul>
+<h4>Cum alege programul prețurile ordinelor</h4>
+<ol><li><b>Măsoară în ATR</b>, adică în mișcarea obișnuită a monedei într-o zi. Așa, aceleași reguli se potrivesc și pentru BTC (ATR de 2–3%), și pentru un altcoin agitat (ATR de 6–10%).</li>
+<li><b>Se uită în istoricul monedei</b> la perioadele care au început ca acum (cu trend descendent pe 1 zi sau fără) și măsoară cât de jos a ajuns prețul în următoarele 10 zile (termen scurt) sau în săptămânile planului (rezerva).</li>
+<li><b>Pune ordinele după șanse.</b> „Echilibrat”: primul ordin acolo unde prețul a ajuns în ~75% din cazuri, ultimul unde a ajuns în ~20%. „Aproape”: 85% → 40%. „Adânc”: 60% → 10%. Pe termen scurt, cel mai jos ordin nu coboară mai mult de 20% / 30% / 40% sub preț.</li>
+<li><b>Le mută pe niveluri reale.</b> Dacă lângă un ordin e un suport, o medie mobilă urmărită de mulți (MA25 sau MA99, pe 1 zi sau pe 1 săptămână) sau un număr rotund, ordinul se mută puțin deasupra lui.</li>
+<li><b>Respectă regulile Binance</b>: pasul de preț, pasul de cantitate și valoarea minimă pe ordin. Dacă suma nu ajunge, întâi face sumele egale, apoi folosește mai puține ordine, răspândite pe toată zona, și îți spune de cât ai avea nevoie.</li></ol>
+<p><b>De ce nu foarte jos.</b> Un ordin la −50% care s-a executat istoric în 2% din cazuri nu te ajută: banii stau blocați degeaba. Șansa afișată lângă fiecare ordin îți arată cât de realist e, iar tabelul „Dacă se execută doar o parte” îți arată prețul mediu în fiecare caz.</p>
 <h4>Semnele că vânzătorii obosesc</h4>
 <p>RSI foarte mic (sub 30 pe 1 zi, sub 35 pe 1 săptămână), divergența pozitivă (prețul face un minim mai jos, RSI nu), o zi roșie cu volum uriaș (capitulare), prețul foarte departe sub medie, frica extremă și funding-ul negativ (mulți pariază pe scădere, iar ieșirea lor bruscă poate urca prețul). Cu cât apar mai multe deodată, cu atât crește șansa unui minim apropiat, dar într-o criză lungă aceleași semne apar de mai multe ori.</p>
 <h4>Greșelile care costă cel mai mult</h4>
@@ -428,10 +444,11 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
 </div></details>
 
 <details id="l-risc"><summary>Managementul riscului: partea care te face profitabil</summary><div class="lesson">
+<p><b>Pe scurt.</b> Nu poți controla cât câștigi, dar poți controla cât pierzi. Riscul se alege înainte de cumpărare: unde ieși dacă greșești (stop-loss) și câte monede cumperi, ca pierderea să fie mică.</p>
 <h4>Regula de 1%</h4>
 <p>Pe o tranzacție pierzi cel mult 1% din capital (maxim 2%). Cu 1%, zece pierderi la rând înseamnă −9,6%: recuperabil. Cu 10% pe tranzacție, aceleași zece pierderi înseamnă −65%.</p>
-<h4>Mărimea poziției</h4>
-<p>Cantitate = (capital × risc%) ÷ (intrare − stop).</p>
+<h4>Mărimea poziției (câte monede cumperi)</h4>
+<p>Cantitate = (capital × risc%) ÷ (intrare − stop). Tab-ul „Risc” o calculează pentru tine.</p>
 <div class="ex">Capital 1.000 USDC, risc 1% = 10 USDC. Intrare 0,05023, stop 0,04700 → distanța 0,00323. Cantitate = 10 ÷ 0,00323 ≈ 3.096 PYTH ≈ 155 USDC. Dacă atinge stop-ul, pierzi ~10 USDC plus comisioane, nu 155.</div>
 <h4>Stop-loss mereu</h4>
 <p>Îl stabilești înainte de intrare, îl pui imediat ca ordin și nu îl muți niciodată mai jos. Îl poți muta doar în sus, în favoarea ta.</p>
@@ -440,6 +457,49 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
 <h4>Ce nu faci</h4>
 <ul><li>Nu „faci media în jos” cumpărând tot mai mult într-un trend descendent.</li><li>Nu ții o pierdere „până revine”.</li><li>Nu pui tot capitalul într-o singură monedă mică.</li></ul>
 <p>Matematica pierderilor: −50% are nevoie de +100% ca să revii la zero. De aceea protecția capitalului vine înaintea oricărui câștig.</p>
+</div></details>
+
+<details id="l-tinta"><summary>Ținta ta: cum se calculează șansele</summary><div class="lesson">
+<p><b>Întrebarea.</b> „Dacă țin moneda 1 an, ce șanse are să ajungă la prețul pe care îl cred eu?” Nimeni nu știe viitorul, dar putem afla cât de des se întâmplă o asemenea mișcare, după cât de agitată e moneda.</p>
+<h4>Drumurile posibile</h4>
+<p>Programul ia mișcările zilnice reale ale monedei din ultimii ~2 ani: cât a urcat sau a coborât în fiecare zi și cât de sus și de jos a fost în timpul zilei. Le taie în bucăți de câte 20 de zile, ca să păstreze perioadele agitate și pe cele liniștite, și le pune cap la cap la întâmplare. Așa construiește 2.000 de drumuri posibile pentru timpul în care ții moneda.</p>
+<h4>Fără să ghicească direcția</h4>
+<p>Din aceste mișcări se scoate tendința: pe drumurile simulate, în medie nu câștigi și nu pierzi, ca într-o piață corectă. Altfel, o monedă care a urcat mult în trecut ar părea că urcă sigur și în viitor, iar una care a scăzut, că scade sigur. Separat, programul îți arată și ce s-ar întâmpla dacă tendința din ultimii 2 ani ar continua.</p>
+<p>Un lucru care pare ciudat la început: la o monedă foarte agitată, o piață corectă înseamnă că drumul tipic coboară puțin câte puțin, iar câteva drumuri urcă foarte mult. După −50% ai nevoie de +100% ca să revii, așa că agitația mare „mănâncă” din preț. De aceea țintele mari au șanse mai mici decât ar părea.</p>
+<h4>Ce înseamnă cifrele</h4>
+<ul><li><b>S-o atingă măcar o dată</b>: în câte drumuri prețul ajunge la țintă cel puțin o dată (contează și maximul zilei, pentru că acolo se execută un ordin Limit de vânzare).</li><li><b>Să fie peste ea la final</b>: în câte drumuri prețul e peste țintă în ultima zi. E mai mică, pentru că prețul poate atinge ținta și apoi coborî. De aceea vinzi cu ordine Limit puse din timp.</li><li><b>Să scadă la jumătate pe drum</b>: riscul. Îți arată cât de des ai trece printr-o cădere de 50% până la final.</li><li><b>Istoricul monedei</b>: din fiecare zi (sau săptămână) din trecut, de câte ori a făcut moneda o creștere la fel de mare în același timp.</li></ul>
+<h4>O regulă bună de ținut minte</h4>
+<p>Într-o piață corectă, șansa ca prețul să ajungă vreodată de N ori mai sus decât acum e cam 1 din N. Pentru o țintă de 3 ori prețul, cam 1 din 3, oricât ai aștepta. De aceea ținta se împarte în trepte de vânzare: prima treaptă are șanse mari, ultima mici.</p>
+<h4>Limitele</h4>
+<p>E un calcul statistic, nu o prognoză. Știrile, deblocările de monede, un hack, regulile noi sau un ciclu nou al pieței pot schimba totul. Monedele noi au puțin istoric, deci calculul e mai puțin sigur. Folosește-l ca să-ți potrivești așteptările, nu ca promisiune.</p>
+</div></details>
+
+<details id="l-glosar"><summary>Dicționar: cuvintele din aplicație, pe scurt</summary><div class="lesson">
+<dl class="gloss">
+<dt>Acumulare (DCA)</dt><dd>Cumperi treptat, sume mai mici, la intervale regulate, în loc să cumperi totul odată.</dd>
+<dt>ATR</dt><dd>Cât se mișcă prețul în mod obișnuit într-o lumânare (de exemplu într-o zi). Programul măsoară distanțele în ATR ca să se potrivească fiecărei monede.</dd>
+<dt>Bandă Bollinger</dt><dd>Un canal în jurul mediei de 20 de lumânări; se lărgește când piața e agitată.</dd>
+<dt>Capitalizare și FDV</dt><dd>Valoarea monedelor aflate deja în circulație și valoarea tuturor monedelor care vor exista. Dacă FDV e mult mai mare, urmează deblocări.</dd>
+<dt>Câștig/risc (R:R)</dt><dd>Cât poți câștiga până la țintă împărțit la cât poți pierde până la stop.</dd>
+<dt>Deblocare (unlock)</dt><dd>Momentul în care monede blocate (ale echipei sau investitorilor) intră pe piață. De obicei apasă prețul.</dd>
+<dt>Divergență</dt><dd>Prețul face un minim mai jos, dar RSI nu (pozitivă), sau invers la maxime (negativă). Arată că mișcarea obosește.</dd>
+<dt>Fear &amp; Greed</dt><dd>Un indice de la 0 (frică extremă) la 100 (lăcomie extremă) pentru toată piața crypto.</dd>
+<dt>Funding</dt><dd>Plata periodică între cei care pariază pe creștere și cei care pariază pe scădere, pe futures. Negativ = mulți pariază pe scădere.</dd>
+<dt>Lichiditate</dt><dd>Cât de ușor cumperi sau vinzi fără să miști prețul.</dd>
+<dt>Lumânare</dt><dd>Prețul dintr-un interval: deschiderea, maximul, minimul și închiderea. Verde dacă a închis mai sus decât a deschis.</dd>
+<dt>MA (media mobilă)</dt><dd>Prețul mediu din ultimele N lumânări: MA(7) scurt, MA(25) mediu, MA(99) lung. Arată direcția.</dd>
+<dt>MACD</dt><dd>Diferența dintre două medii; arată dacă impulsul crește sau scade.</dd>
+<dt>Ordin Limit, Market, Stop-Limit, OCO</dt><dd>Limit: doar la prețul tău sau mai bine. Market: imediat, la prețul pieței. Stop-Limit: un ordin care pornește când prețul atinge stopul. OCO: ținta și stopul legate; când se execută unul, celălalt se anulează.</dd>
+<dt>R</dt><dd>Suma riscată într-o tranzacție (de la intrare până la stop). 2R = de două ori suma riscată.</dd>
+<dt>Retragere (pullback)</dt><dd>O scădere temporară într-un trend în sus. Momentul bun de cumpărare după reguli.</dd>
+<dt>Rezervă</dt><dd>Partea din suma de acumulare pusă în ordine limită sub preț, pentru căderi.</dd>
+<dt>RSI</dt><dd>Un indicator de la 0 la 100: sub 30 = vândut excesiv, peste 70 = cumpărat excesiv.</dd>
+<dt>Stop-loss</dt><dd>Prețul la care ieși ca să oprești pierderea. Îl alegi înainte de cumpărare.</dd>
+<dt>Suport și rezistență</dt><dd>Zone de preț unde prețul s-a oprit de mai multe ori: jos (suport) și sus (rezistență).</dd>
+<dt>Ținta (take-profit)</dt><dd>Prețul la care vinzi cu profit.</dd>
+<dt>Trend</dt><dd>Direcția generală a prețului: în sus, în jos sau lateral. Programul o rezumă într-un scor de la −100 la +100.</dd>
+<dt>Volatilitate</dt><dd>Cât de mult se mișcă prețul. Crypto e foarte volatil: ±50–100% pe an e obișnuit.</dd>
+</dl>
 </div></details>
 
 <details id="l-plan"><summary>Planul de tranzacționare și jurnalul</summary><div class="lesson">
@@ -549,7 +609,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   </section>
 </main>
 <footer class="band"><div class="wrap">
-  <p class="small">Versiunea programului: 27.11.2026, 18:16</p>
+  <p class="small">Versiunea programului: 27.11.2026, 19:31</p>
   <p>Programul aplică reguli fixe pe date; nu poate ști ce urmează și nu e sfat financiar. Decizia și riscul sunt ale tale. Nu folosi bani de care ai nevoie și evită levierul până nu ai un istoric de tranzacții profitabile.</p>
 </div></footer>
 <script>
@@ -1925,8 +1985,11 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
 
 /* accum.js — acumularea într-o piață care scade:
    • faza pieței (cădere activă, oboseală a vânzătorilor, stabilizare, revenire...);
-   • termen scurt: 3 ordine limită eșalonate la suporturi, cu stop comun și ținte, dimensionate după risc;
-   • termen lung: cumpărare săptămânală ajustată după preț și sentiment + o rezervă pentru căderi mari;
+   • ordinele limită (implicit 5, până la 8): distanțele vin din istoricul monedei — cât de jos a ajuns prețul
+     în perioade asemănătoare cu acum — apoi fiecare ordin se mută puțin peste un nivel real din apropiere
+     (suport, medie mobilă, număr rotund). Sumele cresc spre ordinele de jos;
+   • termen scurt: ordinele eșalonate au un stop comun și ținte, iar suma se calculează după risc;
+   • termen lung: cumpărare săptămânală ajustată după preț și sentiment + o rezervă în ordine limită;
    • testul fiecărei metode pe istoricul monedei. Totul folosește doar lumânări închise (fără viitor). */
 (function (root) {
   'use strict';
@@ -1999,59 +2062,181 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     return { n: drops.length, onlyFalling: !!onlyFalling, fallback: false, p: ks.map((k) => (drops.length ? drops.filter((x) => x >= k).length / drops.length : null)) };
   }
 
-  /* ---------- termen scurt: 3 ordine limită eșalonate, cu stop comun ---------- */
-  const LW = { 3: [0.25, 0.35, 0.4], 2: [0.4, 0.6], 1: [1] };
+  /* ---------- cât de jos a coborât prețul, istoric: baza pentru alegerea ordinelor ----------
+     Pentru fiecare zi din trecut: cu câte ATR (mișcări zilnice obișnuite) a coborât prețul sub închiderea zilei
+     în următoarele h zile. Se folosesc zilele care seamănă cu azi (cu trend descendent pe 1 zi, sau fără);
+     dacă sunt prea puține, toate zilele. Măsurat în ATR, rezultatul se potrivește și când volatilitatea se schimbă. */
+  const MIN_N = 60;
+  function dropAt(D, j, h) {
+    const a = D.atr[j];
+    if (!fin(a) || a <= 0 || j + h > D.lastClosed) return null;
+    let mn = Infinity;
+    for (let k = j + 1; k <= j + h; k++) if (D.l[k] < mn) mn = D.l[k];
+    return (D.c[j] - mn) / a;
+  }
+  function dropDist(D, h, down) {
+    const ts = down === true || down === false ? CE.trendSeries(D) : null, all = [], same = [];
+    for (let j = 30; j + h <= D.lastClosed; j++) {
+      const x = dropAt(D, j, h);
+      if (x === null) continue;
+      all.push(x);
+      if (ts && fin(ts[j]) && (ts[j] <= -20) === down) same.push(x);
+    }
+    const fallback = !!ts && same.length < MIN_N, xs = (ts && !fallback ? same : all).sort((a, b) => a - b);
+    return { xs, n: xs.length, h, down: ts ? down : null, fallback };
+  }
+  /* fracția de perioade în care prețul a coborât cel puțin k × ATR */
+  function pAt(S, k) {
+    const xs = S && S.xs, n = xs ? xs.length : 0;
+    if (!n || !fin(k)) return null;
+    let lo = 0, hi = n;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (xs[m] >= k) hi = m; else lo = m + 1; }
+    return (n - lo) / n;
+  }
+  /* adâncimea (în ATR) la care prețul a ajuns în fracția p din perioade */
+  function kAt(S, p) {
+    const xs = S && S.xs, n = xs ? xs.length : 0;
+    if (!n) return null;
+    const pos = clamp(1 - p, 0, 1) * (n - 1), i = Math.floor(pos), f = pos - i;
+    return i + 1 < n ? xs[i] + f * (xs[i + 1] - xs[i]) : xs[n - 1];
+  }
+
+  /* cât de jos pui ordinele: p = șansa istorică a primului și a ultimului ordin; limite pentru cel mai jos ordin
+     (în ATR și în procente față de preț); trepte de rezervă când istoricul e prea scurt */
+  const DEPTH = {
+    aproape: { name: 'Aproape de preț', p: [0.85, 0.4], kMinS: 0.2, capS: 2.5, pctS: 0.2, pctL: 0.25, fbS: [0.3, 1.5], fbL: [0.75, 3] },
+    echilibrat: { name: 'Echilibrat', p: [0.75, 0.2], kMinS: 0.25, capS: 3.5, pctS: 0.3, pctL: 0.4, fbS: [0.4, 2.5], fbL: [1, 5] },
+    adanc: { name: 'Adânc', p: [0.6, 0.1], kMinS: 0.3, capS: 5, pctS: 0.4, pctL: 0.55, fbS: [0.6, 3.5], fbL: [1.5, 7] }
+  };
+  /* cât de mult cresc sumele spre ordinele de jos: ultimul / primul. Într-o cădere activă, mai mult */
+  const SLOPE = { falling: 2, exhaustion: 2, base: 1.75, recovery: 1.5, pullback: 1.5, none: 1.5 };
+  function weights(n, ratio) {
+    const w = [];
+    for (let i = 0; i < n; i++) w.push(1 + (ratio - 1) * (n === 1 ? 0 : i / (n - 1)));
+    const s = w.reduce((a, b) => a + b, 0);
+    return w.map((x) => x / s);
+  }
+  /* distanțele ordinelor (în ATR sub preț), înainte de potrivirea pe niveluri */
+  function gridKs(S, N, prof, mode, P, A) {
+    const short = mode === 'scurt', useD = !!(S && S.n >= MIN_N);
+    const kMin = short ? prof.kMinS : 0.75, gap = short ? 0.3 : 0.5;
+    const kMax = Math.max(kMin + gap * (N - 1), Math.min(short ? prof.capS : Infinity, (short ? prof.pctS : prof.pctL) * P / A));
+    const fb = short ? prof.fbS : prof.fbL, ks = [];
+    for (let i = 0; i < N; i++) {
+      const t = N === 1 ? 0 : i / (N - 1);
+      ks.push(useD ? kAt(S, prof.p[0] + (prof.p[1] - prof.p[0]) * t) : fb[0] + (fb[1] - fb[0]) * t);
+    }
+    ks[0] = Math.max(ks[0], kMin);
+    for (let i = 1; i < N; i++) ks[i] = Math.max(ks[i], ks[i - 1] + gap);
+    if (ks[N - 1] > kMax) {
+      for (let i = N - 1; i >= 0; i--) ks[i] = Math.min(ks[i], kMax - (N - 1 - i) * gap);
+      if (ks[0] < kMin) for (let i = 0; i < N; i++) ks[i] = kMin + (kMax - kMin) * (N === 1 ? 0 : i / (N - 1));
+    }
+    return { ks, kMin, kMax, gap, useD };
+  }
+  /* nivelurile reale sub preț: suporturi (zone unde prețul s-a întors), medii mobile urmărite de mulți, numere rotunde.
+     Ordinul stă puțin DEASUPRA nivelului: mulți cumpărători așteaptă fix pe nivel și prețul se întoarce des înainte. */
+  function levelCands(o, P, A) {
+    const fp = (x) => fmtPrice(x, P), out = [], D = o.D, lc = D.lastClosed, Wk = o.Wk || null, wl = Wk ? Wk.lastClosed : -1;
+    for (const s of (o.levels && o.levels.supports) || []) {
+      if (s.cls !== 'slab' && s.level < P) out.push({ px: s.level + 0.12 * A, rank: s.cls === 'puternic' ? 3 : 2, why: 'puțin peste suportul ' + s.cls + ' de la ' + fp(s.level) });
+    }
+    const mas = [['MA(25) pe 1 zi', D.ma25[lc]], ['MA(99) pe 1 zi', D.ma99[lc]]];
+    if (wl >= 0) mas.push(['MA(25) pe 1 săptămână', Wk.ma25[wl]], ['MA(99) pe 1 săptămână', Wk.ma99[wl]]);
+    for (const [nm, v] of mas) if (fin(v) && v < P) out.push({ px: v + 0.08 * A, rank: 2, why: 'puțin peste ' + nm + ' (' + fp(v) + '), o medie urmărită de mulți' });
+    const st = Math.pow(10, Math.floor(Math.log10(P))) / 2, top = Math.floor(P / st + 1e-9), rd = Math.max(0, -Math.floor(Math.log10(st) + 1e-9));
+    for (let i = 0; i < 12; i++) {
+      const r = +((top - i) * st).toPrecision(12);
+      if (r <= P * 0.4) break;
+      if (r < P) out.push({ px: r + 0.05 * A, rank: 1, why: 'puțin peste numărul rotund ' + fmtNum(r, rd) });
+    }
+    return out;
+  }
+  /* fiecare treaptă se mută la cel mai bun nivel real din apropiere (fără să se apropie prea mult de vecine) */
+  function snapOrders(gpx, cands, P, A, G, maxWin) {
+    const used = new Set(), out = [];
+    for (let i = 0; i < gpx.length; i++) {
+      const g = gpx[i], prev = out.length ? out[out.length - 1].px : null;
+      const sp = Math.min(i > 0 ? gpx[i - 1] - g : Infinity, i + 1 < gpx.length ? g - gpx[i + 1] : Infinity);
+      const win = Math.min(maxWin * A, 0.4 * sp); // cel mult 40% din distanța până la vecine: ordinele rămân bine despărțite
+      let best = null;
+      cands.forEach((c, ci) => {
+        if (used.has(ci) || Math.abs(c.px - g) > win) return;
+        const k = (P - c.px) / A;
+        if (k < G.kMin - 1e-9 || k > G.kMax + 1e-9 || (prev !== null && prev - c.px < 0.6 * G.gap * A)) return;
+        if (!best || c.rank > best.rank || (c.rank === best.rank && Math.abs(c.px - g) < Math.abs(best.px - g))) best = Object.assign({ ci }, c);
+      });
+      if (best) { used.add(best.ci); out.push({ px: best.px, why: best.why, snapped: true }); }
+      else out.push({ px: g, why: (G.useD ? 'distanță din istoric: ' : 'distanță fixă: ') + fmtNum((P - g) / A, 1) + ' × ATR sub preț (fără suport aproape)', snapped: false });
+    }
+    return out;
+  }
+  /* când suma nu ajunge pentru toate ordinele: păstrăm ordine răspândite pe toată zona, nu doar pe cele de sus */
+  function spread(all, m) {
+    if (m >= all.length) return all.slice();
+    if (m === 1) return [all[Math.floor((all.length - 1) / 2)]];
+    const out = [];
+    for (let i = 0; i < m; i++) out.push(all[Math.round(i * (all.length - 1) / (m - 1))]);
+    return out;
+  }
+  /* prețul mediu dacă se execută primele m ordine (sumele ca fracții din total) */
+  function scenarios(orders, P) {
+    let inv = 0, q = 0;
+    return orders.map((x, i) => { inv += x.w; q += x.w / x.px; return { m: i + 1, w: inv, avg: inv / q, vsP: inv / q / P - 1 }; });
+  }
+  const expFill = (orders) => (orders.length && orders.every((x) => fin(x.p)) ? orders.reduce((s, x) => s + x.p * x.w, 0) : null);
+
+  /* ---------- termen scurt: ordine limită eșalonate, cu stop comun ---------- */
   function ladder(o) {
     const D = o.D, lc = D.lastClosed, A = D.atr[lc], P = o.price;
     if (!fin(A) || A <= 0 || !fin(P) || P <= 0) return null;
     const fp = (x) => fmtPrice(x, P), sups = (o.levels && o.levels.supports) || [];
-    const picks = [], far = (px) => picks.every((q) => Math.abs(q.px - px) >= 0.75 * A);
-    for (const s of sups) {
-      if (picks.length >= 3) break;
-      if (s.cls === 'slab' || s.level >= P - 0.5 * A || s.level <= P - 5 * A) continue; // pe termen scurt, cel mult ~5 mișcări zilnice sub preț
-      const px = s.level + 0.15 * A; // puțin peste suport: mulți cumpărători așteaptă fix pe nivel și prețul se poate întoarce înainte
-      if (far(px)) picks.push({ px, why: 'puțin peste suportul ' + s.cls + ' de la ' + fp(s.level) });
-    }
-    for (const k of [1.5, 3, 4.5]) {
-      if (picks.length >= 3) break;
-      const px = P - k * A;
-      if (px > 0 && far(px)) picks.push({ px, why: fmtNum(k, 1) + ' × ATR sub prețul de acum (fără suport clar acolo)' });
-    }
-    if (!picks.length) return null;
-    picks.sort((a, b) => b.px - a.px);
-    // fiecare ordin trebuie să treacă de valoarea minimă a unui ordin pe Binance; dacă suma e mică, folosim mai puține ordine
-    const minOrder = fin(o.minOrder) && o.minOrder > 0 ? o.minOrder : 0;
-    for (let n = picks.length; n >= 1; n--) {
-      const r = build(picks.slice(0, n));
-      if (!minOrder || r.amount === null || r.orders.every((x) => x.amt >= minOrder * 1.02)) return Object.assign(r, { fewer: n < picks.length, minOrder });
-    }
-    return Object.assign(build(picks.slice(0, 1)), { fewer: picks.length > 1, tooSmall: true, minOrder });
-    function build(pk) {
-    const picks = pk, w = LW[picks.length], deep = picks[picks.length - 1];
-    let stop = deep.px - A, stopWhy = '1 × ATR sub cel mai jos ordin';
-    const under = sups.find((s) => s.cls !== 'slab' && s.level < deep.px && s.level > deep.px - 1.5 * A);
-    if (under && under.level - 0.25 * A < stop) { stop = under.level - 0.25 * A; stopWhy = 'sub suportul ' + under.cls + ' de la ' + fp(under.level); }
-    if (stop <= deep.px * 0.3) { stop = deep.px * 0.7; stopWhy = '30% sub cel mai jos ordin'; }
+    const depth = DEPTH[o.depth] ? o.depth : 'echilibrat', prof = DEPTH[depth], N = clamp(Math.round(fin(o.n) ? o.n : 5), 1, 8), h = clamp(Math.round(fin(o.h) ? o.h : 10), 2, 30);
+    const S = o.dist || dropDist(D, h, fin(o.sD) ? o.sD <= -20 : null);
+    const G = gridKs(S, N, prof, 'scurt', P, A);
+    const all = snapOrders(G.ks.map((k) => P - k * A), levelCands(o, P, A), P, A, G, 0.5);
+    const minOrder = fin(o.minOrder) && o.minOrder > 0 ? o.minOrder : 0, ratio = SLOPE[o.phase] || 1.75;
     const fee = fin(o.fee) && o.fee >= 0 ? o.fee : 0.001;
-    const lossPer = picks.reduce((s, q, i) => s + w[i] * ((q.px - stop) / q.px + 2 * fee), 0); // pierderea la 1 USDC, dacă se execută tot și se atinge stopul
-    const riskMul = (PHASES[o.phase] || PHASES.falling).risk;
-    const budget = fin(o.capital) && o.capital > 0 && fin(o.riskPct) && o.riskPct > 0 ? o.capital * o.riskPct / 100 * riskMul : null;
-    const maxAmt = budget !== null ? budget / lossPer : null;
-    const want = fin(o.amount) && o.amount > 0 ? o.amount : null;
-    const amount = want !== null ? (maxAmt !== null ? Math.min(want, maxAmt) : want) : maxAmt;
-    const orders = picks.map((q, i) => ({ px: q.px, w: w[i], amt: amount !== null ? amount * w[i] : null, qty: amount !== null ? amount * w[i] / q.px : null, dist: 1 - q.px / P, k: (P - q.px) / A, why: q.why }));
-    const avg = 1 / picks.reduce((s, q, i) => s + w[i] / q.px, 0); // prețul mediu dacă se execută toate
-    const risk = avg - stop, ma25 = D.ma25[lc], ma99 = D.ma99[lc];
-    let tp1 = avg + 1.5 * risk, tp1Why = '1,5 × riscul peste prețul mediu';
-    if (fin(ma25) && ma25 > avg + 0.75 * risk) { tp1 = ma25; tp1Why = 'MA(25) pe 1 zi: după căderi mari, prețul revine des spre medie'; }
-    const cand = [];
-    if (fin(ma99) && ma99 > tp1 * 1.02) cand.push({ p: ma99, why: 'MA(99) pe 1 zi' });
-    const res = ((o.levels && o.levels.resistances) || []).find((r) => r.cls !== 'slab' && r.level > tp1 * 1.02);
-    if (res) cand.push({ p: res.level, why: 'rezistența ' + (res.cls === 'puternic' ? 'puternică' : res.cls === 'mediu' ? 'medie' : res.cls) + ' de la ' + fp(res.level) });
-    cand.sort((a, b) => a.p - b.p);
-    const tp2 = cand.length ? cand[0].p : avg + 3 * risk, tp2Why = cand.length ? cand[0].why : '3 × riscul peste prețul mediu';
-    return { orders, stop, stopWhy, avg, risk, tp1, tp1Why, tp2, tp2Why, rr1: (tp1 - avg) / risk, rr2: (tp2 - avg) / risk, amount, want, maxAmt, budget, riskMul,
-      lossPer, lossAll: amount !== null ? amount * lossPer : null, A, P, validDays: 10, timeStopDays: 20 };
+    // fiecare ordin trebuie să treacă de valoarea minimă a unui ordin pe Binance: întâi sume egale, apoi mai puține ordine
+    let res = null;
+    for (let m = N; m >= 1 && !res; m--) {
+      const sub = spread(all, m);
+      for (const eq of m > 1 ? [false, true] : [false]) {
+        const r = build(sub, weights(m, eq ? 1 : ratio));
+        if (!minOrder || r.amount === null || r.orders.every((x) => x.amt >= minOrder * 1.02)) { res = Object.assign(r, { equal: eq }); break; }
+      }
+    }
+    if (!res) res = Object.assign(build(spread(all, 1), [1]), { equal: false, tooSmall: true });
+    return Object.assign(res, { nWant: N, fewer: res.orders.length < N, minOrder, needFor: minOrder ? N * minOrder * 1.02 : 0, depth, depthName: prof.name, pRange: prof.p,
+      kMax: G.kMax, dist: { n: S ? S.n : 0, h, down: S ? S.down : null, fallback: S ? !!S.fallback : false, useD: G.useD }, validDays: h, timeStopDays: Math.max(h, Math.round(fin(o.timeStop) ? o.timeStop : 20)) });
+    function build(sub, w) {
+      const deep = sub[sub.length - 1];
+      let stop = deep.px - A, stopWhy = '1 × ATR sub cel mai jos ordin';
+      const under = sups.find((s) => s.cls !== 'slab' && s.level < deep.px && s.level > deep.px - 1.5 * A);
+      if (under && under.level - 0.25 * A < stop) { stop = under.level - 0.25 * A; stopWhy = 'sub suportul ' + under.cls + ' de la ' + fp(under.level); }
+      if (stop <= deep.px * 0.3) { stop = deep.px * 0.7; stopWhy = '30% sub cel mai jos ordin'; }
+      const lossPer = sub.reduce((s, q, i) => s + w[i] * ((q.px - stop) / q.px + 2 * fee), 0); // pierderea la 1 USDC, dacă se execută tot și se atinge stopul
+      const riskMul = (PHASES[o.phase] || PHASES.falling).risk;
+      const budget = fin(o.capital) && o.capital > 0 && fin(o.riskPct) && o.riskPct > 0 ? o.capital * o.riskPct / 100 * riskMul : null;
+      const maxAmt = budget !== null ? budget / lossPer : null;
+      const want = fin(o.amount) && o.amount > 0 ? o.amount : null;
+      const amount = want !== null ? (maxAmt !== null ? Math.min(want, maxAmt) : want) : maxAmt;
+      const orders = sub.map((q, i) => {
+        const k = (P - q.px) / A;
+        return { px: q.px, w: w[i], amt: amount !== null ? amount * w[i] : null, qty: amount !== null ? amount * w[i] / q.px : null, dist: 1 - q.px / P, k, why: q.why, snapped: q.snapped, p: G.useD ? pAt(S, k) : null };
+      });
+      const avg = 1 / sub.reduce((s, q, i) => s + w[i] / q.px, 0); // prețul mediu dacă se execută toate
+      const risk = avg - stop, ma25 = D.ma25[lc], ma99 = D.ma99[lc];
+      let tp1 = avg + 1.5 * risk, tp1Why = '1,5 × riscul peste prețul mediu';
+      if (fin(ma25) && ma25 > avg + 0.75 * risk) { tp1 = ma25; tp1Why = 'MA(25) pe 1 zi: după căderi, prețul revine des spre medie'; }
+      const cand = [];
+      if (fin(ma99) && ma99 > tp1 * 1.02) cand.push({ p: ma99, why: 'MA(99) pe 1 zi' });
+      const res2 = ((o.levels && o.levels.resistances) || []).find((r) => r.cls !== 'slab' && r.level > tp1 * 1.02);
+      if (res2) cand.push({ p: res2.level, why: 'rezistența ' + (res2.cls === 'puternic' ? 'puternică' : res2.cls === 'mediu' ? 'medie' : res2.cls) + ' de la ' + fp(res2.level) });
+      cand.sort((a, b) => a.p - b.p);
+      const tp2 = cand.length ? cand[0].p : avg + 3 * risk, tp2Why = cand.length ? cand[0].why : '3 × riscul peste prețul mediu';
+      return { orders, stop, stopWhy, avg, risk, tp1, tp1Why, tp2, tp2Why, rr1: (tp1 - avg) / risk, rr2: (tp2 - avg) / risk, amount, want, maxAmt, budget, riskMul,
+        lossPer, lossAll: amount !== null ? amount * lossPer : null, A, P, scen: scenarios(orders, P), expFill: expFill(orders) };
     }
   }
 
@@ -2072,11 +2257,9 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     if (v <= 80) return { f: 0.9, why: 'lăcomie în piață' };
     return { f: 0.75, why: 'lăcomie extremă în piață' };
   }
-  const RW = { 3: [0.3, 0.3, 0.4], 2: [0.4, 0.6], 1: [1] };
   function dcaPlan(o) {
     const D = o.D, Wk = o.Wk || null, lc = D.lastClosed, P = o.price, wl = Wk ? Wk.lastClosed : -1;
     if (!fin(P) || P <= 0) return null;
-    const fp = (x) => fmtPrice(x, P);
     const useW = wl >= 0 && fin(Wk.ma25[wl]);
     const ma = useW ? Wk.ma25[wl] : fin(D.ma99[lc]) ? D.ma99[lc] : null;
     const maName = useW ? 'MA(25) pe 1 săptămână (media ultimelor ~6 luni)' : 'MA(99) pe 1 zi (media ultimelor ~3 luni)';
@@ -2086,42 +2269,56 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     const amount = fin(o.amount) && o.amount > 0 ? o.amount : null;
     const base = amount !== null ? amount * (1 - r) / weeks : null;
     const Aw = wl >= 0 && fin(Wk.atr[wl]) ? Wk.atr[wl] : fin(D.atr[lc]) ? D.atr[lc] * Math.sqrt(7) : null;
-    const reserve = [];
-    if (r > 0 && fin(Aw) && Aw > 0) {
-      const far = (px) => reserve.every((q) => Math.abs(q.px - px) >= 0.5 * Aw);
-      for (const s of (o.levels && o.levels.supports) || []) {
-        if (reserve.length >= 3) break;
-        if (s.cls === 'slab' || s.level >= P - 0.6 * Aw || s.level <= P - 2.75 * Aw || s.level < 0.35 * P) continue;
-        const px = s.level + 0.1 * Aw;
-        if (far(px)) reserve.push({ px, why: 'puțin peste suportul ' + s.cls + ' de la ' + fp(s.level) });
+    const minOrder = fin(o.minOrder) && o.minOrder > 0 ? o.minOrder : 0;
+    const depth = DEPTH[o.depth] ? o.depth : 'echilibrat', prof = DEPTH[depth], N = clamp(Math.round(fin(o.n) ? o.n : 5), 1, 8);
+    const A = D.atr[lc], h = Math.min(weeks * 7, 364), reserve = [];
+    let S = null, G = null, equal = false;
+    if (r > 0 && fin(A) && A > 0) {
+      // rezerva: aceleași reguli ca ordinele pe termen scurt, dar pe toată durata planului (cât de jos a ajuns prețul în atâtea săptămâni)
+      S = o.dist || dropDist(D, h, fin(o.sD) ? o.sD <= -20 : null);
+      G = gridKs(S, N, prof, 'lung', P, A);
+      const all = snapOrders(G.ks.map((k) => P - k * A), levelCands(o, P, A), P, A, G, 1);
+      const ratio = SLOPE[o.phase] || 1.75, resAmt = amount !== null ? amount * r : null;
+      let pick = null;
+      for (let m = N; m >= 1 && !pick; m--) {
+        for (const eq of m > 1 ? [false, true] : [false]) {
+          const w = weights(m, eq ? 1 : ratio);
+          if (!minOrder || resAmt === null || resAmt * Math.min(...w) >= minOrder * 1.02) { pick = { sub: spread(all, m), w }; equal = eq; break; }
+        }
       }
-      for (const m of [0.75, 1.5, 2.5]) {
-        if (reserve.length >= 3) break;
-        const px = Math.max(P - m * Aw, 0.35 * P); // cel mult 65% sub preț
-        if (far(px)) reserve.push({ px, why: fmtNum(m, 2) + ' × ATR săptămânal sub prețul de acum' });
-      }
-      reserve.sort((a, b) => b.px - a.px);
-      // ca la ordinele pe termen scurt: fiecare ordin al rezervei trebuie să treacă de minimul Binance
-      const minOrder = fin(o.minOrder) && o.minOrder > 0 ? o.minOrder : 0;
-      while (minOrder && amount !== null && reserve.length && amount * r * Math.min(...(RW[reserve.length] || [1])) < minOrder * 1.02) reserve.pop();
-      const rw = RW[reserve.length] || [];
-      reserve.forEach((q, i) => { q.w = rw[i]; q.amt = amount !== null ? amount * r * rw[i] : null; q.qty = q.amt !== null ? q.amt / q.px : null; q.dist = 1 - q.px / P; q.k = fin(D.atr[lc]) && D.atr[lc] > 0 ? (P - q.px) / D.atr[lc] : null; });
+      if (pick) pick.sub.forEach((q, i) => {
+        const k = (P - q.px) / A, amt = resAmt !== null ? resAmt * pick.w[i] : null;
+        reserve.push({ px: q.px, why: q.why, snapped: q.snapped, w: pick.w[i], amt, qty: amt !== null ? amt / q.px : null, dist: 1 - q.px / P, k, p: G.useD ? pAt(S, k) : null });
+      });
     }
     const now = fin(o.now) ? o.now : Date.now();
     const sched = Array.from({ length: weeks }, (_, i) => ({ t: now + i * 7 * 864e5, base }));
-    const minOrder = fin(o.minOrder) && o.minOrder > 0 ? o.minOrder : 0;
+    const rs = reserve.length ? scenarios(reserve, P) : [];
     return { weeks, r, amount, base, f, pf, ff, d, ma, maName, thisWeek: base !== null ? base * f : null, reserve, Aw, sched, minOrder,
+      nWant: N, depth, depthName: prof.name, pRange: prof.p, equal, rFewer: reserve.length > 0 && reserve.length < N, rNeedFor: minOrder ? N * minOrder * 1.02 : 0,
+      rAvgAll: rs.length ? rs[rs.length - 1].avg : null, rExpFill: expFill(reserve), rKMax: G ? G.kMax : null,
+      rDist: S ? { n: S.n, h, down: S.down, fallback: !!S.fallback, useD: G.useD } : null,
       reserveTooSmall: r > 0 && amount !== null && !reserve.length, weekTooSmall: !!(minOrder && base !== null && base * f < minOrder) };
   }
 
-  /* ---------- test pe istoric: termen scurt ---------- */
+  /* ---------- test pe istoric: termen scurt ----------
+     Aceeași metodă ca planul (fără potrivirea pe niveluri): în fiecare zi cu trend descendent, ordinele se pun după
+     căderile din istoricul de PÂNĂ atunci. Distribuția se construiește treptat: la ziua j intră doar perioadele încheiate până în j. */
+  function sortedIns(arr, x) {
+    let lo = 0, hi = arr.length;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (arr[m] < x) lo = m + 1; else hi = m; }
+    arr.splice(lo, 0, x);
+  }
   function ladderBacktest(D, opts) {
-    const o = Object.assign({ steps: [1.5, 3, 4.5], w: [0.25, 0.35, 0.4], stopK: 5.5, valid: 10, maxDays: 20, fee: 0.001 }, opts || {});
-    const lc = D.lastClosed, ts = CE.trendSeries(D), rows = [];
-    let j = 100;
+    const o = Object.assign({ n: 5, depth: 'echilibrat', valid: 10, maxDays: 20, fee: 0.001 }, opts || {});
+    const prof = DEPTH[o.depth] || DEPTH.echilibrat, N = clamp(Math.round(o.n), 1, 8), w = weights(N, SLOPE.falling);
+    const lc = D.lastClosed, ts = CE.trendSeries(D), rows = [], dn = [], allD = [];
+    let next = 30, j = 100;
     while (j < lc - 1) {
+      for (; next + o.valid <= j; next++) { const x = dropAt(D, next, o.valid); if (x !== null) { sortedIns(allD, x); if (fin(ts[next]) && ts[next] <= -20) sortedIns(dn, x); } }
       if (!(fin(ts[j]) && ts[j] <= -20) || !fin(D.atr[j]) || D.atr[j] <= 0) { j++; continue; }
-      const A = D.atr[j], c = D.c[j], lv = o.steps.map((k) => c - k * A), stop = c - o.stopK * A;
+      const A = D.atr[j], c = D.c[j], Sd = dn.length >= MIN_N ? { xs: dn, n: dn.length } : { xs: allD, n: allD.length };
+      const G = gridKs(Sd, N, prof, 'scurt', c, A), lv = G.ks.map((k) => c - k * A), stop = c - (G.ks[N - 1] + 1) * A;
       if (stop <= 0) { j++; continue; }
       const fills = lv.map(() => null);
       let exit = null, why = null, k = j + 1;
@@ -2131,28 +2328,30 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
         if (D.l[k] <= stop) { exit = Math.min(D.o[k], stop); why = 'stop'; break; } // prudent: umplere și stop în aceeași zi = stop
         if (fin(D.ma25[k]) && D.c[k] >= D.ma25[k]) { exit = D.c[k]; why = 'țintă'; break; }
       }
-      const filled = fills.map((x, i) => (x !== null ? { px: x, w: o.w[i] } : null)).filter(Boolean);
-      if (!filled.length) { rows.push({ j, filled: 0 }); j = Math.max(j + 1, Math.min(k, j + o.valid)); continue; }
+      const filled = fills.map((x, i) => (x !== null ? { px: x, w: w[i] } : null)).filter(Boolean);
+      if (!filled.length) { rows.push({ j, filled: 0, k1: G.ks[0], kN: G.ks[N - 1] }); j = Math.max(j + 1, Math.min(k, j + o.valid)); continue; }
       if (exit === null) { k = Math.min(lc, j + o.maxDays); exit = D.c[k]; why = 'timp'; }
       let inv = 0, pnl = 0;
       for (const f of filled) { inv += f.w; pnl += f.w * (exit / f.px - 1) - o.fee * f.w * (1 + exit / f.px); }
-      const riskFull = o.w.reduce((s, w, i) => s + w * ((lv[i] - stop) / lv[i] + 2 * o.fee), 0);
-      rows.push({ j, jOut: k, tIn: D.T[j], filled: filled.length, inv, pnl, R: pnl / riskFull, ret: pnl / inv, why });
+      const riskFull = w.reduce((s, wi, i) => s + wi * ((lv[i] - stop) / lv[i] + 2 * o.fee), 0);
+      rows.push({ j, jOut: k, tIn: D.T[j], filled: filled.length, inv, pnl, R: pnl / riskFull, ret: pnl / inv, why, k1: G.ks[0], kN: G.ks[N - 1] });
       j = k + 1;
     }
     const f = rows.filter((x) => x.filled > 0), R = f.map((x) => x.R), sum = (a) => a.reduce((x, y) => x + y, 0);
     const win = f.filter((x) => x.pnl > 0), loss = f.filter((x) => x.pnl <= 0);
-    return { placed: rows.length, n: f.length, fillRate: rows.length ? f.length / rows.length : null, winRate: f.length ? win.length / f.length : null,
+    return { placed: rows.length, n: f.length, nOrders: N, depth: o.depth, valid: o.valid, maxDays: o.maxDays, fillRate: rows.length ? f.length / rows.length : null, winRate: f.length ? win.length / f.length : null,
       avgR: f.length ? sum(R) / f.length : null, avgRet: f.length ? sum(f.map((x) => x.ret)) / f.length : null,
+      avgFilled: f.length ? sum(f.map((x) => x.inv)) / f.length : null,
       pf: loss.length ? sum(win.map((x) => x.pnl)) / Math.abs(sum(loss.map((x) => x.pnl)) || 1e-12) : win.length ? Infinity : null,
       why: { stop: f.filter((x) => x.why === 'stop').length, tinta: f.filter((x) => x.why === 'țintă').length, timp: f.filter((x) => x.why === 'timp').length }, rows };
   }
 
   /* ---------- test pe istoric: termen lung (o dată vs treptat vs treptat cu factor și rezervă) ---------- */
   function dcaBacktest(D, Wk, opts) {
-    const o = Object.assign({ weeks: 12, reservePct: 30, fng: null, hold: 182, step: 14 }, opts || {});
-    const lc = D.lastClosed, H = o.weeks * 7, r = clamp(o.reservePct / 100, 0, 0.6);
-    const wIdx = Wk ? CE.alignClosed(D, Wk) : null, wTs = Wk ? CE.trendSeries(Wk) : null, dTs = Wk ? null : CE.trendSeries(D);
+    const o = Object.assign({ weeks: 12, reservePct: 30, fng: null, hold: 182, step: 14, n: 5, depth: 'echilibrat' }, opts || {});
+    const lc = D.lastClosed, H = o.weeks * 7, hD = Math.min(H, 364), r = clamp(o.reservePct / 100, 0, 0.6);
+    const prof = DEPTH[o.depth] || DEPTH.echilibrat, N = clamp(Math.round(o.n), 1, 8);
+    const wIdx = Wk ? CE.alignClosed(D, Wk) : null, wTs = Wk ? CE.trendSeries(Wk) : null, dTs = CE.trendSeries(D);
     const fg = Array.isArray(o.fng) && o.fng.length ? o.fng : null;
     const fngAt = (t) => { // ultima valoare publicată până la acel moment
       if (!fg) return null;
@@ -2161,16 +2360,20 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
       return ans >= 0 && t - fg[ans][0] < 3 * 864e5 ? fg[ans][1] : null;
     };
     const maAt = (i) => { if (Wk) { const w = wIdx[i]; if (w >= 0 && fin(Wk.ma25[w])) return Wk.ma25[w]; } return fin(D.ma99[i]) ? D.ma99[i] : null; };
-    const awAt = (i) => { if (Wk) { const w = wIdx[i]; if (w >= 0 && fin(Wk.atr[w])) return Wk.atr[w]; } return fin(D.atr[i]) ? D.atr[i] * Math.sqrt(7) : null; };
-    const all = [], falling = [];
+    const all = [], falling = [], dn = [], up = [], allD = [];
+    let next = 30;
     for (let j0 = 120; j0 + H <= lc; j0 += o.step) {
+      // căderile pe durata planului, doar din perioadele încheiate până în ziua j0
+      for (; next + hD <= j0; next++) { const x = dropAt(D, next, hD); if (x !== null) { sortedIns(allD, x); if (fin(dTs[next])) sortedIns(dTs[next] <= -20 ? dn : up, x); } }
       const tsv = Wk ? (wIdx[j0] >= 0 ? wTs[wIdx[j0]] : null) : dTs[j0];
       const fall = fin(tsv) && tsv <= -20;
-      const c0 = D.c[j0], end = j0 + H - 1;
+      const c0 = D.c[j0], end = j0 + H - 1, a0 = D.atr[j0];
       let uD = 0;
       for (let i = 0; i < o.weeks; i++) uD += 1 / o.weeks / D.c[j0 + 7 * i];
-      const aw = awAt(j0), base = (1 - r) / o.weeks, rw = [0.3, 0.3, 0.4];
-      const lv = fin(aw) && r > 0 ? [0.75, 1.5, 2.5].map((m) => Math.max(c0 - m * aw, 0.35 * c0)) : [];
+      const downNow = fin(dTs[j0]) ? dTs[j0] <= -20 : null, same = downNow === null ? allD : downNow ? dn : up;
+      const Sd = same.length >= MIN_N ? { xs: same, n: same.length } : { xs: allD, n: allD.length };
+      const lv = r > 0 && fin(a0) && a0 > 0 ? gridKs(Sd, N, prof, 'lung', c0, a0).ks.map((k) => c0 - k * a0) : [];
+      const base = (1 - r) / o.weeks, rw = weights(lv.length || 1, downNow ? SLOPE.falling : SLOPE.none);
       const filled = lv.map(() => false);
       let uS = 0, pool = 1 - r, resLeft = lv.length ? r : 0;
       if (!lv.length) pool = 1;
@@ -2187,20 +2390,201 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
       if (resLeft > 1e-12) uS += resLeft / D.c[end]; // rezerva neexecutată se investește la final
       const after = Math.min(lc, end + o.hold);
       const row = { j0, t0: D.T[j0], fall, lump: c0, dcaCost: 1 / uD, smartCost: 1 / uS, dcaVsLump: 1 / uD / c0 - 1, smartVsLump: 1 / uS / c0 - 1, smartVsDca: uD / uS - 1,
-        valLump: D.c[after] / c0 - 1, valDca: uD * D.c[after] - 1, valSmart: uS * D.c[after] - 1, holdDays: after - end, resFilled: filled.filter(Boolean).length };
+        valLump: D.c[after] / c0 - 1, valDca: uD * D.c[after] - 1, valSmart: uS * D.c[after] - 1, holdDays: after - end, resFilled: filled.filter(Boolean).length, resN: lv.length,
+        resDeep: lv.length ? 1 - lv[lv.length - 1] / c0 : null };
       all.push(row); if (fall) falling.push(row);
     }
     const use = falling.length >= 6 ? falling : all;
     const med = (a) => { if (!a.length) return null; const s = a.slice().sort((x, y) => x - y), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
     const share = (a, fn) => (a.length ? a.filter(fn).length / a.length : null);
-    return { n: use.length, nAll: all.length, onlyFalling: use === falling, weeks: o.weeks, reservePct: o.reservePct, usedFng: !!fg,
+    const withRes = use.filter((x) => x.resN > 0);
+    return { n: use.length, nAll: all.length, onlyFalling: use === falling, weeks: o.weeks, reservePct: o.reservePct, usedFng: !!fg, nOrders: N, depth: o.depth,
       medDca: med(use.map((x) => x.dcaVsLump)), medSmart: med(use.map((x) => x.smartVsLump)), medSmartVsDca: med(use.map((x) => x.smartVsDca)),
       smartBeatsLump: share(use, (x) => x.smartVsLump < 0), smartBeatsDca: share(use, (x) => x.smartVsDca < 0), dcaBeatsLump: share(use, (x) => x.dcaVsLump < 0),
       valLump: med(use.map((x) => x.valLump)), valDca: med(use.map((x) => x.valDca)), valSmart: med(use.map((x) => x.valSmart)),
+      resFillShare: withRes.length ? withRes.reduce((s, x) => s + x.resFilled / x.resN, 0) / withRes.length : null,
       holdDays: med(use.map((x) => x.holdDays)), rows: use, allRows: all };
   }
 
-  CE.ACC = { PHASES, phase, touchProb, ladder, dcaPlan, priceFactor, fngFactor, ladderBacktest, dcaBacktest };
+  CE.ACC = { PHASES, DEPTH, SLOPE, phase, touchProb, dropDist, pAt, kAt, gridKs, weights, ladder, dcaPlan, priceFactor, fngFactor, ladderBacktest, dcaBacktest };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+/* target.js — ținta ta: ce șanse are prețul să ajungă la un anumit nivel în timpul în care ții moneda.
+   • Simulare din mișcările reale ale monedei din ultimii ~2 ani: zilele (cu maximul și minimul lor) sunt luate
+     în bucăți de câte 20, amestecate și puse cap la cap în 2.000 de drumuri posibile. Bucățile păstrează
+     perioadele agitate și pe cele liniștite, deci și căderile și salturile mari care chiar apar în crypto.
+   • „Piață corectă”: scoatem tendința, așa încât în medie nici nu câștigi, nici nu pierzi (ipoteza neutră).
+     Separat: „dacă tendința din ultimii 2 ani continuă”.
+   • Verificare în istoric: de câte ori a făcut moneda o asemenea creștere într-o perioadă la fel de lungă.
+   • Treptele de vânzare spre țintă. Totul folosește doar lumânări închise. */
+(function (root) {
+  'use strict';
+  const CE = root.CE;
+  const { fin, clamp } = CE;
+
+  function rng(seed) { let a = seed >>> 0; return () => { a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  /* funcția de repartiție normală (precizie ~1e-7) */
+  function ncdf(x) {
+    const z = Math.abs(x) / Math.SQRT2, t = 1 / (1 + 0.5 * z);
+    const y = t * Math.exp(-z * z - 1.26551223 + t * (1.00002368 + t * (0.37409196 + t * (0.09678418 + t * (-0.18628806 + t * (0.27886807 + t * (-1.13520398 + t * (1.48851587 + t * (-0.82215223 + t * 0.17087277)))))))));
+    return x >= 0 ? 1 - y / 2 : y / 2;
+  }
+
+  /* mișcările zilnice (în log): închiderea, maximul și minimul zilei, toate față de închiderea zilei dinainte */
+  function moves(D, look) {
+    if (!D) return null;
+    const lc = D.lastClosed, from = Math.max(1, lc - (look || 730) + 1), r = [], u = [], d = [];
+    for (let i = from; i <= lc; i++) {
+      const p = D.c[i - 1];
+      if (!(p > 0) || !(D.c[i] > 0) || !(D.h[i] > 0) || !(D.l[i] > 0)) continue;
+      r.push(Math.log(D.c[i] / p)); u.push(Math.log(Math.max(D.h[i], D.c[i]) / p)); d.push(Math.log(Math.min(D.l[i], D.c[i]) / p));
+    }
+    const n = r.length;
+    if (n < 60) return null;
+    let m = 0, ex = 0, v = 0;
+    for (const x of r) { m += x; ex += Math.exp(x); }
+    m /= n; ex /= n;
+    for (const x of r) v += (x - m) * (x - m);
+    const sd = Math.sqrt(v / (n - 1));
+    return { r, u, d, n, mean: m, mart: Math.log(ex), martB: { 20: martBlock(r, 20) }, sd, sdYear: sd * Math.sqrt(365), trendYear: Math.exp(m * 365) - 1, from: D.t[from] };
+  }
+  /* corecția pentru „piață corectă” se calculează pe bucăți întregi (așa sunt luate în simulare):
+     media lui e^(suma unei bucăți) trebuie să fie 1, adică în medie nu câștigi și nu pierzi */
+  function martBlock(r, B) {
+    const n = r.length;
+    let S = 0, acc = 0;
+    for (let k = 0; k < B; k++) S += r[k % n];
+    for (let s = 0; s < n; s++) { acc += Math.exp(S); S += r[(s + B) % n] - r[s]; }
+    return Math.log(acc / n) / B;
+  }
+
+  /* drumuri posibile: mode „fair” = în medie nu câștigi, nu pierzi; „trend” = ca în ultimii 2 ani */
+  function simulate(M, T, opt) {
+    const o = Object.assign({ paths: 2000, block: 20, seed: 7, mode: 'fair' }, opt || {});
+    const n = M.n, adj = o.mode === 'fair' ? (M.martB && fin(M.martB[o.block]) ? M.martB[o.block] : martBlock(M.r, o.block)) : 0, days = Math.max(1, Math.round(T));
+    const P = Math.max(400, Math.min(o.paths, Math.round(4e6 / days)));
+    const R = rng(o.seed), maxX = new Float64Array(P), minX = new Float64Array(P), endX = new Float64Array(P);
+    const r = M.r, u = M.u, d = M.d, B = o.block;
+    for (let p = 0; p < P; p++) {
+      let x = 0, mx = 0, mn = 0, t = 0;
+      while (t < days) {
+        let s = Math.floor(R() * n);
+        for (let k = 0; k < B && t < days; k++, t++) {
+          const hi = x + u[s] - adj, lo = x + d[s] - adj;
+          if (hi > mx) mx = hi;
+          if (lo < mn) mn = lo;
+          x += r[s] - adj;
+          if (++s >= n) s = 0;
+        }
+      }
+      maxX[p] = mx; minX[p] = mn; endX[p] = x;
+    }
+    return { P, days, mode: o.mode, maxX, minX, endX };
+  }
+  const share = (arr, f) => { let c = 0; for (let i = 0; i < arr.length; i++) if (f(arr[i])) c++; return c / arr.length; };
+  const pTouch = (S, mult) => { const b = Math.log(mult) - 1e-12; return share(S.maxX, (x) => x >= b); };
+  const pEnd = (S, mult) => { const b = Math.log(mult); return share(S.endX, (x) => x >= b); };
+  const pDown = (S, mult) => { const b = Math.log(mult) + 1e-12; return share(S.minX, (x) => x <= b); };
+  function quant(arr, q) {
+    const a = Float64Array.from(arr).sort(), pos = clamp(q, 0, 1) * (a.length - 1), i = Math.floor(pos), f = pos - i;
+    return i + 1 < a.length ? a[i] + f * (a[i + 1] - a[i]) : a[a.length - 1];
+  }
+
+  /* formula pentru o piață corectă cu mișcări „normale” (fără zile extreme): verificare și timpul pentru 50% */
+  function pTouchFormula(mult, sdYear, years) {
+    const b = Math.log(mult);
+    if (b <= 0) return 1;
+    if (!(years > 0) || !(sdYear > 0)) return 0;
+    const s = sdYear * Math.sqrt(years), h = sdYear * sdYear * years / 2;
+    return ncdf((-b - h) / s) + Math.exp(-b) * ncdf((-b + h) / s);
+  }
+  function t50(mult, sdYear) {
+    if (!(mult > 1) || !(sdYear > 0) || 1 / mult <= 0.5) return null; // peste dublul prețului, șansa nu trece de 50% oricât ai aștepta
+    let lo = 0, hi = 200;
+    if (pTouchFormula(mult, sdYear, hi) < 0.5) return null;
+    for (let k = 0; k < 80; k++) { const m = (lo + hi) / 2; if (pTouchFormula(mult, sdYear, m) >= 0.5) hi = m; else lo = m; }
+    return hi;
+  }
+
+  /* în istoric: pornind din fiecare zi (sau săptămână), a ajuns prețul la țintă în perioada următoare? */
+  function history(D, Wk, days, mult, down) {
+    const useW = days > 120 && Wk && Wk.lastClosed > 0, X = useW ? Wk : D;
+    const w = useW ? Math.max(1, Math.round(days / 7)) : Math.max(1, Math.round(days)), unit = useW ? 'săptămâni' : 'zile';
+    if (!X) return { n: 0, w, unit };
+    const lc = X.lastClosed, qh = [], ql = [];
+    let hH = 0, hL = 0, n = 0, up = 0, dn = 0, best = -Infinity, worst = Infinity;
+    for (let k = 1; k <= lc; k++) {
+      while (qh.length > hH && X.h[qh[qh.length - 1]] <= X.h[k]) qh.pop();
+      qh.push(k);
+      while (ql.length > hL && X.l[ql[ql.length - 1]] >= X.l[k]) ql.pop();
+      ql.push(k);
+      const j = k - w;
+      if (j < 0) continue;
+      while (qh[hH] <= j) hH++;
+      while (ql[hL] <= j) hL++;
+      const c0 = X.c[j];
+      if (!(c0 > 0)) continue;
+      const hiM = X.h[qh[hH]] / c0, loM = X.l[ql[hL]] / c0;
+      n++;
+      if (hiM >= mult) up++;
+      if (loM <= down) dn++;
+      if (hiM > best) best = hiM;
+      if (loM < worst) worst = loM;
+    }
+    return { n, w, unit, p: n ? up / n : null, pDown: n ? dn / n : null, best: n ? best : null, worst: n ? worst : null, from: X.t[0] };
+  }
+
+  /* treptele de vânzare: la o treime și la două treimi din drum (în procente compuse) și la țintă */
+  function sellLevels(mult) {
+    if (!(mult > 1)) return [];
+    if (mult < 1.15) return [{ mult, w: 1 }];
+    if (mult < 1.5) return [{ mult: Math.sqrt(mult), w: 0.5 }, { mult, w: 0.5 }];
+    return [{ mult: Math.pow(mult, 1 / 3), w: 0.3 }, { mult: Math.pow(mult, 2 / 3), w: 0.3 }, { mult, w: 0.4 }];
+  }
+  const VERDICT = [[0.6, 'pos', 'Realistă'], [0.35, 'pos', 'Posibilă'], [0.15, 'warn', 'Ambițioasă'], [0.05, 'warn', 'Foarte ambițioasă'], [-1, 'neg', 'Foarte puțin probabilă']];
+  function verdictOf(p) {
+    if (!fin(p)) return null;
+    const v = VERDICT.find((x) => p >= x[0]);
+    return { tone: v[1], label: v[2] };
+  }
+  /* „cam 3 din 10”, „cam 1 din 25” */
+  function odds(p, P) {
+    if (!fin(p)) return '';
+    if (p >= 0.95) return 'aproape de fiecare dată';
+    if (p >= 0.095) return 'cam ' + Math.round(p * 10) + ' din 10';
+    if (p > 0) return 'cam 1 din ' + CE.fmtNum(Math.round(1 / p), 0);
+    return 'practic niciodată (0 din ' + CE.fmtNum(P || 2000, 0) + ')';
+  }
+
+  /* păstrez mișcările și drumurile pentru aceleași lumânări: când schimbi doar ținta sau suma, nu se mai simulează din nou */
+  const cacheM = new WeakMap(), cacheS = new WeakMap();
+  function movesFor(D) { if (!D || typeof D !== 'object') return null; if (!cacheM.has(D)) cacheM.set(D, moves(D, 730)); return cacheM.get(D); }
+  function simFor(D, M, days, mode) { let m = cacheS.get(D); if (!m) { m = new Map(); cacheS.set(D, m); } const k = days + '|' + mode; if (!m.has(k)) m.set(k, simulate(M, days, { mode, seed: 11 })); return m.get(k); }
+  /* totul despre ținta ta. price și target sunt în aceeași monedă (perechea ta) */
+  function analyze(o) {
+    const days = clamp(Math.round(o.days), 1, 3650), mult = o.target / o.price;
+    if (!fin(mult) || mult <= 0) return null;
+    const M = movesFor(o.D);
+    const res = { days, mult, pct: mult - 1, M, below: mult <= 1.0001, ever: mult > 1 ? 1 / mult : 1 };
+    if (res.below) return res;
+    res.perYear = days >= 365 ? Math.pow(mult, 365 / days) - 1 : null;
+    res.hist = history(o.D, o.Wk, days, mult, 0.5);
+    if (M) {
+      const fair = simFor(o.D, M, days, 'fair'), trend = simFor(o.D, M, days, 'trend');
+      res.fair = fair; res.trend = trend; res.paths = fair.P;
+      res.pTouch = pTouch(fair, mult); res.pEnd = pEnd(fair, mult); res.pHalf = pDown(fair, 0.5);
+      res.pTouchTrend = pTouch(trend, mult); res.pEndTrend = pEnd(trend, mult);
+      res.lvl50 = Math.exp(quant(fair.maxX, 0.5)); res.lvl25 = Math.exp(quant(fair.maxX, 0.75));
+      res.endQ = [0.1, 0.5, 0.9].map((q) => Math.exp(quant(fair.endX, q)));
+      res.t50 = t50(mult, M.sdYear);
+      res.formula = pTouchFormula(mult, M.sdYear, days / 365);
+    }
+    res.sell = sellLevels(mult).map((x) => Object.assign(x, { p: M ? pTouch(res.fair, x.mult) : null }));
+    res.verdict = verdictOf(res.pTouch);
+    return res;
+  }
+
+  CE.TGT = { moves, simulate, pTouch, pEnd, pDown, quant, pTouchFormula, t50, history, sellLevels, verdictOf, odds, analyze, ncdf };
 })(typeof window !== 'undefined' ? window : globalThis);
 
 /* binance.js — ia datele publice direct de la Binance (fără cont, fără chei). */
@@ -2327,11 +2711,13 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     const x = d && Array.isArray(d.symbols) ? d.symbols.find((y) => y.symbol === symbol) : null;
     if (!x) { const err = new Error('Perechea ' + symbol + ' nu există'); err.status = 400; throw err; }
     const f = (t) => (x.filters || []).find((y) => y.filterType === t) || {};
-    const pf = f('PRICE_FILTER'), ls = f('LOT_SIZE'), nt = f('NOTIONAL'), mn = f('MIN_NOTIONAL');
+    const pf = f('PRICE_FILTER'), ls = f('LOT_SIZE'), nt = f('NOTIONAL'), mn = f('MIN_NOTIONAL'), pp = f('PERCENT_PRICE_BY_SIDE'), p2 = f('PERCENT_PRICE');
     const v = { symbol, status: String(x.status || ''), base: String(x.baseAsset || ''), quote: String(x.quoteAsset || ''),
       tick: +pf.tickSize > 0 ? +pf.tickSize : null, tickDec: decs(pf.tickSize), minPrice: +pf.minPrice || 0,
       step: +ls.stepSize > 0 ? +ls.stepSize : null, stepDec: decs(ls.stepSize), minQty: +ls.minQty || 0,
-      minNotional: +(nt.minNotional || mn.minNotional) || 0 };
+      minNotional: +(nt.minNotional || mn.minNotional) || 0,
+      bidDown: +pp.bidMultiplierDown > 0 ? +pp.bidMultiplierDown : +p2.multiplierDown > 0 ? +p2.multiplierDown : 0, // o cumpărare nu poate fi mai jos de bidDown × prețul mediu recent
+      askUp: +pp.askMultiplierUp > 0 ? +pp.askMultiplierUp : +p2.multiplierUp > 0 ? +p2.multiplierUp : 0 }; // nici o vânzare mai sus de askUp × prețul mediu recent
     infoCache[symbol] = { at: Date.now(), v };
     return v;
   }
@@ -2499,7 +2885,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
    Online (GitHub Pages): primește setările de pe laptop și oferă instalarea ca aplicație (Edge, Chrome). */
 (function () {
   'use strict';
-  const VERSION = '202611271816'; // înlocuit la asamblare: AAAALLZZOOMM
+  const VERSION = '202611271931'; // înlocuit la asamblare: AAAALLZZOOMM
   const UKEY = 'analizor-online', OFF = 'analizor-upd-off', IOFF = 'analizor-install-off';
   const isFile = location.protocol === 'file:';
   const $ = (s) => document.querySelector(s);
@@ -2862,6 +3248,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     if (!coin) { setMsg('auto', 'Scrie o monedă (ex. BTC).', true); return; }
     if (S.auto.busy) return;
     S.auto.busy = true; renderPanels();
+    if (window.ACCUI) window.ACCUI.status(); // tab-ul Plan arată că se iau datele
     const need = fetchList();
     try {
       setMsg('auto', 'Caut perechea ' + (S.quote === 'AUTO' ? 'cea mai lichidă' : coin + '/' + S.quote) + '…');
@@ -2905,6 +3292,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
       if (e && e.kind === 'net') { S.auto.ok = false; }
     } finally {
       S.auto.busy = false; renderPanels();
+      if (window.ACCUI && window.ACCUI.isOpen()) window.ACCUI.render(); else if (window.ACCUI) window.ACCUI.status();
     }
   }
   /* istoric mai lung pentru testul pe trecut: intrare până la 3000 de lumânări, filtru, zilnic (pentru forța relativă) și Bitcoin pe 1 zi */
@@ -3159,7 +3547,8 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     return CE.BN.roundTo(px * c.ratio, c.t.info.tick, c.t.info.tickDec, mode || 'near');
   }
   function tradeQty(q) { const c = tradeConv(); if (!c || !fin(q)) return null; return CE.BN.roundTo(q, c.t.info.step, c.t.info.stepDec, 'down'); }
-  Object.assign(H, { nowS, setupTrade, tradeConv, tradePx, tradeQty, startLive });
+  const tradeMid = () => (S.trade && S.live ? midOf(S.live[S.trade.sym]) : null); // prețul live pe perechea ta
+  Object.assign(H, { nowS, setupTrade, tradeConv, tradePx, tradeQty, tradeMid, startLive });
 
   function analyzeKlines(fromAuto) {
     const sets = Object.entries(S.sets).map(([interval, v]) => ({ interval, candles: v.candles, capturedAt: v.capturedAt }));
@@ -3250,6 +3639,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     S.auto.ok = ok;
     if (ok && (!S.mode || S.mode === 'paste' || S.mode === 'manual') && !S.report) S.mode = 'auto';
     renderPanels();
+    if (window.ACCUI && window.ACCUI.isOpen()) window.ACCUI.render(); // tab-ul Plan spune dacă Binance răspunde
     if (ok && andRun) autoAnalyze();
   }
   function boot() {
@@ -3296,14 +3686,15 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   H.EXAMPLE = EXAMPLE;
 })();
 
-/* app3.js — tab-ul „Acumulare”: unde e piața, planul de ordine (termen scurt sau lung), testul pe istoric, cum pui ordinele.
-   Plus datele din alte surse (Fear & Greed, CoinGecko), afișate și în „Analiză”. */
+/* app3.js — tab-ul „Plan”: spui ce vrei să faci (suma, cât timp ții moneda, prețul la care crezi că ajunge), alegi moneda,
+   iar programul îți spune ce e cel mai bine de făcut acum: ce cumperi, unde pui ordinele, unde vinzi și ce șanse ai.
+   Dedesubt: ordinele (termen scurt sau lung), unde e piața, datele din alte surse, testul pe istoric și pașii din Binance. */
 (function () {
   'use strict';
-  const CE = window.CE, S = window.APP, H = window.HELP, A = CE.ACC;
+  const CE = window.CE, S = window.APP, H = window.HELP, A = CE.ACC, TG = CE.TGT;
   const { $, esc } = H;
-  const { fin, fmtNum, fmtPrice, fmtPct, fmtDate, fmtCompact, parseNum } = CE;
-  S.acc = Object.assign({ amount: '', horizon: 'lung', weeks: '12', reserve: '30', pair: 'USDC' }, S.acc || {});
+  const { fin, clamp, fmtNum, fmtPrice, fmtPct, fmtDate, fmtCompact, parseNum } = CE;
+  S.acc = Object.assign({ amount: '', holdN: '1', holdU: 'ani', target: '', pair: 'USDC', n: '5', depth: 'echilibrat', weeks: 'auto', reserve: '30' }, S.acc || {});
   S.ext = S.ext || null;
 
   const kv = (label, val, cls) => '<div class="' + (cls || '') + '"><span>' + esc(label) + '</span><b>' + esc(val) + '</b></div>';
@@ -3312,6 +3703,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   const pc = (x, d) => (fin(x) ? fmtNum(x * 100, d === undefined ? 0 : d) + '%' : '—');
   const sc = (x) => CE.fmtScore(x);
   const money = (x, q) => (fin(x) ? fmtNum(x, x >= 100 ? 0 : 2) + ' ' + q : '—');
+  const b = (x) => '<b>' + esc(x) + '</b>';
 
   /* ---------- datele din alte surse ---------- */
   let extSeq = 0;
@@ -3330,6 +3722,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   }
   /* în „Analiză”, la secțiunea despre piață */
   function renderSent() {
+    if (window.UI && window.UI.updateRisk) window.UI.updateRisk(); // locul monedei după capitalizare, în „Risc”
     const el = $('#sentBox'); if (!el) return;
     const e = S.ext;
     if (!e || H.IN_CLAUDE) { el.innerHTML = ''; return; }
@@ -3356,59 +3749,158 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     else if (t && t.missing) note = t.sym.replace(/(USDC|EUR|USDT)$/, '/$1') + ' nu există pe Binance Spot: prețurile sunt pe ' + R.symbol + '. Alege altă pereche mai sus.';
     else if (H.IN_CLAUDE) note = 'Prețurile sunt pe perechea analizată; pe perechea ta pot diferi foarte puțin. În aplicație, le primești exacte, pe perechea ta.';
     else note = 'Prețurile sunt pe ' + R.symbol + ' (aștept prețul live pe perechea ta ca să le convertesc exact).';
-    return { ok, info, pxOf, qtyOf, fmt, fq, note, minOrder: ok && info.minNotional ? info.minNotional : 0 };
+    const mid = ok && H.tradeMid ? H.tradeMid() : null, minBuy = ok && info.bidDown > 0 && fin(mid) && mid > 0 ? info.bidDown * mid : 0;
+    const maxSell = ok && info.askUp > 0 && fin(mid) && mid > 0 ? info.askUp * mid : 0; // Binance nu primește vânzări mai sus de atât
+    return { ok, info, pxOf, qtyOf, fmt, fq, note, minOrder: ok && info.minNotional ? info.minNotional : 0, minBuy, maxSell };
   }
 
-  /* ---------- tab-ul Acumulare ---------- */
-  const isOpen = () => { const v = $('#v-acumulare'); return v && !v.hidden; };
+  /* ---------- tab-ul Plan ---------- */
+  const isOpen = () => { const v = $('#v-plan'); return !!(v && !v.hidden); };
   function setNum(k) { const v = parseNum(S.acc[k]); return fin(v) ? v : null; }
-  function inputsHtml(q) {
-    const a = S.acc, opt = (k, list) => list.map(([v, l]) => '<option value="' + esc(v) + '"' + (String(a[k]) === v ? ' selected' : '') + '>' + esc(l) + '</option>').join('');
-    let h = '<div class="sec"><h2>Acumulare: cumperi treptat, mai ales când piața scade</h2>';
-    h += '<p>Aici nu cauți „momentul perfect”. Împarți suma în mai multe cumpărări, la prețuri și momente diferite, ca să nu depinzi de o singură zi. Programul îți spune unde e piața acum, unde să pui ordinele și ce a mers istoric pe această monedă.</p>';
-    h += '<div class="form">';
-    h += '<label>Suma pe care vrei s-o acumulezi<input data-f="a.amount" inputmode="decimal" autocomplete="off" value="' + esc(a.amount) + '" placeholder="de exemplu 500"><em>În ' + esc(a.pair) + '. Doar bani de care nu ai nevoie în următorii ani.</em><span class="echo-slot"></span></label>';
-    h += '<label>Orizontul<select data-f="a.horizon">' + opt('horizon', [['scurt', 'Scurt: zile–săptămâni'], ['lung', 'Lung: luni–ani']]) + '</select><em>' + (a.horizon === 'scurt' ? 'Ordine limită eșalonate, cu stop și ținte.' : 'Cumpărare săptămânală + rezervă pentru căderi.') + '</em></label>';
-    if (a.horizon !== 'scurt') {
-      h += '<label>În cât timp cumperi<select data-f="a.weeks">' + opt('weeks', [['8', '8 săptămâni'], ['12', '12 săptămâni'], ['26', '26 de săptămâni'], ['52', '52 de săptămâni']]) + '</select><em>12 săptămâni ≈ 3 luni.</em></label>';
-      h += '<label>Rezervă pentru căderi<select data-f="a.reserve">' + opt('reserve', [['0', 'fără'], ['20', '20%'], ['30', '30% (recomandat)'], ['40', '40%'], ['50', '50%']]) + '</select><em>Din sumă, pentru ordine mult sub preț.</em></label>';
-    }
-    h += '<label>Perechea pe care cumperi<select data-f="a.pair">' + opt('pair', [['USDC', esc(q) + '/USDC'], ['EUR', esc(q) + '/EUR'], ['USDT', esc(q) + '/USDT']]) + '</select><em>În UE, Binance nu mai are perechi spot cu USDT: folosește USDC sau EUR.</em></label>';
-    h += '</div></div>';
-    return h;
+  const UNIT = { zile: [1, 'zi', 'zile'], sapt: [7, 'săptămână', 'săptămâni'], luni: [30.4375, 'lună', 'luni'], ani: [365.25, 'an', 'ani'] };
+  /* cât timp ții moneda: în zile, în cuvinte și ce fel de plan înseamnă (până la 90 de zile = termen scurt) */
+  function hold() {
+    const n = setNum('holdN'), u = UNIT[S.acc.holdU] ? S.acc.holdU : 'ani';
+    if (!fin(n) || n <= 0) return null;
+    const raw = Math.round(n * UNIT[u][0]), days = clamp(raw, 1, 3650);
+    const txt = n === 1 ? '1 ' + UNIT[u][1] : Number.isInteger(n) ? CE.nDe(n, UNIT[u][2]) : fmtNum(n, 1) + ' ' + UNIT[u][2];
+    return { days, txt, capped: raw > 3650, kind: days <= 90 ? 'scurt' : 'lung' };
   }
-  function render() {
+  /* pe termen lung, cumperi în cam o treime din timpul în care ții moneda */
+  function autoWeeks(days) { const w = days / 21; let best = 4; for (const x of [4, 8, 12, 26, 52]) if (x <= w) best = x; return best; }
+  const yearsTxt = (y) => (y < 1 / 12 ? CE.nDe(Math.max(1, Math.round(y * 365)), 'zile') : y < 1 ? (Math.round(y * 12) === 1 ? '1 lună' : CE.nDe(Math.round(y * 12), 'luni')) : (Math.abs(y - Math.round(y)) < 0.05 ? (Math.round(y) === 1 ? '1 an' : CE.nDe(Math.round(y), 'ani')) : fmtNum(y, 1) + ' ani'));
+  const DEPTH_EM = {
+    aproape: 'Primul ordin ~85% șanse, ultimul ~40%: se execută mai des, la prețuri mai puțin bune.',
+    echilibrat: 'Primul ordin a avut istoric ~75% șanse să se execute, ultimul ~20%.',
+    adanc: 'Primul ordin ~60% șanse, ultimul ~10%: prețuri mai bune, dar se execută mai rar.'
+  };
+  function holdEm(hd) {
+    if (!hd) return 'Scrie un număr, de exemplu 1 (an) sau 30 (de zile).';
+    return (hd.kind === 'scurt' ? 'Termen scurt: tranzacție cu ordine limită, stop și ținte.' : 'Termen lung: cumperi treptat + rezervă pentru căderi.') + (hd.capped ? ' Calculez pentru cel mult 10 ani.' : '');
+  }
+  function planMsg() {
+    if (S.auto && S.auto.busy) return 'Iau datele pentru ' + S.coin + ' de la Binance…';
+    if (S.err && S.err.auto && S.msg && S.msg.auto) return S.msg.auto;
+    const R = S.report;
+    if (R && R.auto && S.auto && S.auto.at) return 'Date de la Binance pentru ' + (S.auto.symbol || R.symbol) + ', ' + fmtDate(S.auto.at) + '. Prețul se actualizează live.';
+    return '';
+  }
+  function inputsHtml() {
+    const a = S.acc, q = a.pair, hd = hold(), R = S.report, coin = R && R.baseCoin ? R.baseCoin : S.coin;
+    const opt = (k, list) => list.map(([v, l]) => '<option value="' + esc(v) + '"' + (String(a[k]) === v ? ' selected' : '') + '>' + esc(l) + '</option>').join('');
+    let h = '<div class="sec planin"><h2>Planul tău</h2>';
+    h += '<p>Spui ce vrei să faci și alegi moneda. Programul îți spune ce e cel mai bine de făcut acum: ce cumperi, unde pui ordinele, unde vinzi și ce șanse ai. Fiecare cifră e explicată.</p>';
+    if (!H.IN_CLAUDE) {
+      const same = R && R.auto && R.baseCoin === S.coin;
+      h += '<div class="coinrow"><label class="fld"><span>Moneda</span><input id="planCoin" autocomplete="off" autocapitalize="characters" spellcheck="false" value="' + esc(S.coin || '') + '"></label>' +
+        '<button class="btn" id="planGo"' + (S.auto.busy ? ' disabled' : '') + '>' + esc(S.auto.busy ? 'Iau datele…' : same ? 'Actualizează' : 'Arată planul') + '</button></div>';
+      if (S.favs && S.favs.length) h += '<div class="favs" aria-label="Monedele tale"><span class="small">Monedele tale:</span>' + S.favs.map((c) => '<button data-fav="' + esc(c) + '">' + esc(c) + '</button>').join('') + '</div>';
+      h += '<p class="small mute" id="planMsg" aria-live="polite">' + esc(planMsg()) + '</p>';
+    } else h += '<p class="small mute">Aici, în Claude, planul folosește lumânările lipite în „Analiză” (modul „Date complete”). În aplicația de pe telefon sau laptop alegi moneda direct aici, iar datele vin singure.</p>';
+    h += '<div class="form">';
+    h += '<label>Suma pe care o investești<input data-f="a.amount" inputmode="decimal" autocomplete="off" value="' + esc(a.amount) + '" placeholder="de exemplu 500"><em>În ' + esc(q) + '. Doar bani de care nu ai nevoie cât ții moneda.</em><span class="echo-slot"></span></label>';
+    h += '<label>Cât timp ții moneda<span class="two"><input data-f="a.holdN" inputmode="decimal" autocomplete="off" value="' + esc(a.holdN) + '" aria-label="Cât timp ții moneda: numărul"><select data-f="a.holdU" aria-label="Cât timp ții moneda: unitatea">' + opt('holdU', [['zile', 'zile'], ['sapt', 'săptămâni'], ['luni', 'luni'], ['ani', 'ani']]) + '</select></span><em id="holdEm">' + esc(holdEm(hd)) + '</em></label>';
+    h += '<label>Prețul la care crezi că ajunge<input data-f="a.target" inputmode="decimal" autocomplete="off" value="' + esc(a.target) + '" placeholder="opțional"><em>Ținta ta, în ' + esc(q) + '. Îți spun ce șanse are și cum vinzi.</em><span class="echo-slot"></span></label>';
+    h += '<label>Perechea pe care cumperi<select data-f="a.pair">' + opt('pair', [['USDC', coin + '/USDC'], ['EUR', coin + '/EUR'], ['USDT', coin + '/USDT']]) + '</select><em>În UE, Binance nu mai are perechi spot cu USDT: folosește USDC sau EUR.</em></label>';
+    h += '</div><div id="tgtChips" class="chips"></div>';
+    h += '<details class="adv"' + (S.advOpen ? ' open' : '') + '><summary>Setări avansate (opționale)</summary><div class="form">';
+    h += '<label>Câte ordine limită<select data-f="a.n">' + opt('n', [['5', '5'], ['6', '6'], ['7', '7'], ['8', '8']]) + '</select><em>Recomandat: 5. Pe termen scurt, ordinele eșalonate; pe termen lung, cele din rezervă. Fiecare trece de minimul Binance pe ordin.</em></label>';
+    h += '<label>Cât de jos<select data-f="a.depth">' + opt('depth', [['aproape', 'Aproape de preț'], ['echilibrat', 'Echilibrat'], ['adanc', 'Adânc']]) + '</select><em>' + esc((a.depth === 'echilibrat' ? 'Recomandat. ' : 'Recomandat: Echilibrat. ') + (DEPTH_EM[a.depth] || DEPTH_EM.echilibrat)) + '</em></label>';
+    h += '<label>În cât timp cumperi<select data-f="a.weeks">' + opt('weeks', [['auto', 'Automat'], ['4', '4 săptămâni'], ['8', '8 săptămâni'], ['12', '12 săptămâni'], ['26', '26 de săptămâni'], ['52', '52 de săptămâni']]) + '</select><em>Doar pe termen lung. Recomandat: Automat, adică cam o treime din timpul în care ții moneda' + (hd && hd.kind === 'lung' ? ' (acum ' + CE.nDe(autoWeeks(hd.days), 'săptămâni') + ')' : '') + '.</em></label>';
+    h += '<label>Rezervă pentru căderi<select data-f="a.reserve">' + opt('reserve', [['0', 'fără'], ['20', '20%'], ['30', '30%'], ['40', '40%'], ['50', '50%']]) + '</select><em>Doar pe termen lung: partea din sumă pusă în ordine limită mai jos. Recomandat: 30%.</em></label>';
+    h += '</div></details>';
+    return h + '</div>';
+  }
+  /* force = redesenez și formularul chiar dacă scrii în el (după o alegere dintr-o listă) */
+  function render(force) {
     const box = $('#acc'); if (!box) return;
-    const R = S.report, coin = R && R.baseCoin ? R.baseCoin : S.coin;
-    box.innerHTML = inputsHtml(coin) + '<div id="accOut"></div>';
+    const ae = document.activeElement;
+    if (!force && ae && box.contains(ae) && ae.tagName === 'INPUT' && $('#accOut')) { status(); renderOut(); return; } // nu-ți strica scrisul
+    box.innerHTML = inputsHtml() + '<div id="accOut"></div>';
     for (const el of box.querySelectorAll('input[data-f]')) { const slot = el.parentElement.querySelector('.echo-slot'); if (slot && el.value) slot.innerHTML = echo(el.value); }
     renderOut();
   }
-  const echo = (v) => { const n = parseNum(v); return n === null ? '<span class="echo bad">nu înțeleg numărul</span>' : '<span class="echo">= ' + esc(fmtNum(n, n >= 100 ? 0 : 2)) + '</span>'; };
+  /* butonul și mesajul de sus, fără să redesenez formularul */
+  function status() {
+    const b0 = $('#planGo'), R = S.report;
+    if (b0) { b0.disabled = !!(S.auto && S.auto.busy); b0.textContent = S.auto && S.auto.busy ? 'Iau datele…' : (R && R.auto && R.baseCoin === S.coin ? 'Actualizează' : 'Arată planul'); }
+    const m = $('#planMsg'); if (m) m.textContent = planMsg();
+    const pcn = $('#planCoin'); if (pcn && document.activeElement !== pcn) pcn.value = S.coin || '';
+  }
+  const echo = (v) => { const n = parseNum(v); return n === null ? '<span class="echo bad">nu înțeleg numărul</span>' : '<span class="echo">= ' + esc(H.fmtExact ? H.fmtExact(n) : fmtNum(n, n >= 100 ? 0 : 2)) + '</span>'; };
   let outT = null;
   function onInput(key) {
-    const el = document.querySelector('#acc input[data-f="a.' + key + '"]');
-    if (el) { const slot = el.parentElement.querySelector('.echo-slot'); if (slot) slot.innerHTML = el.value ? echo(el.value) : ''; }
+    const el = document.querySelector('#acc [data-f="a.' + key + '"]');
+    if (el && el.tagName === 'INPUT') { const slot = el.parentElement.querySelector('.echo-slot'); if (slot) slot.innerHTML = el.value ? echo(el.value) : ''; }
     clearTimeout(outT);
-    if (key === 'horizon') { render(); return; }
     if (key === 'pair' && H.setupTrade) H.setupTrade();
-    outT = setTimeout(renderOut, key === 'amount' ? 450 : 0);
+    if (key === 'holdU' || key === 'depth' || key === 'pair') { render(true); return; }
+    if (key === 'holdN') { const em = $('#holdEm'); if (em) em.textContent = holdEm(hold()); }
+    outT = setTimeout(renderOut, ['amount', 'holdN', 'target'].includes(key) ? 450 : 0);
   }
   function needData() {
-    if (H.IN_CLAUDE) return 'Planul de acumulare are nevoie de lumânările pe 1 zi (și ideal pe 1 săptămână). Aici, în Claude, lipește-le în modul „Date complete”; în aplicația de pe telefon sau laptop le ia singur, în modul Automat.';
-    return 'Fă întâi o analiză în modul Automat (sau lipește lumânările pe 1 zi și 1 săptămână în „Lipire”). Planul de acumulare are nevoie de istoricul pe 1 zi.';
+    if (H.IN_CLAUDE) return 'Planul are nevoie de lumânările pe 1 zi (și ideal pe 1 săptămână). Aici, în Claude, lipește-le în „Analiză”, modul „Date complete”. În aplicația de pe telefon sau laptop le ia singur.';
+    if (S.auto && S.auto.busy) return 'Iau datele de la Binance…';
+    if (S.auto && S.auto.ok === false) return 'Nu pot contacta Binance acum (fără internet sau acces blocat în rețea). Încearcă din nou cu „Arată planul” sau lipește datele în „Analiză” → „Lipire”.';
+    return 'Scrie moneda sus și apasă „Arată planul”. Programul ia singur datele de la Binance.';
   }
   function renderOut() {
     const box = $('#accOut'); if (!box) return;
     const R = S.report;
-    if (!R || R.source !== 'klines' || !S.tfs || !S.tfs['1d']) { box.innerHTML = '<div class="sec"><p class="mute">' + esc(needData()) + '</p></div>'; return; }
+    if (!R || R.source !== 'klines' || !S.tfs || !S.tfs['1d']) { box.innerHTML = '<div class="sec"><p class="mute">' + esc(needData()) + '</p></div>'; chips(null); return; }
     const ext = S.ext && S.ext.coin === R.baseCoin ? S.ext : (S.ext && !S.ext.coin ? S.ext : null);
     const extIn = { fng: ext && ext.fng, funding: S.autoExtra && fin(S.autoExtra.funding) && R.auto ? S.autoExtra.funding : null };
     const ph = A.phase(S.tfs, R.per, extIn);
-    if (!ph) { box.innerHTML = '<div class="sec"><p class="mute">Prea puțin istoric pe 1 zi pentru un plan (am nevoie de cel puțin 60 de zile).</p></div>'; return; }
-    const q = S.acc.pair, h = [phaseHtml(R, ph, ext), S.acc.horizon === 'scurt' ? shortHtml(R, ph, q) : longHtml(R, ph, q, ext), fundHtml(R, ext), testHtml(R), howHtml(R, q)];
-    box.innerHTML = h.join('');
+    if (!ph) { box.innerHTML = '<div class="sec"><p class="mute">Prea puțin istoric pe 1 zi pentru un plan (am nevoie de cel puțin 60 de zile). Moneda e probabil foarte nouă pe Binance.</p></div>'; chips(null); return; }
+    const hd = hold();
+    if (!hd) { box.innerHTML = '<div class="sec"><p><b>Scrie cât timp ții moneda</b> (de exemplu 1 an) ca să-ți fac planul.</p></div>'; chips(null); return; }
+    const C = context(R, ph, ext, hd);
+    chips(C);
+    box.innerHTML = [coinNote(R), adviceHtml(C), targetHtml(C), hd.kind === 'scurt' ? shortHtml(C) : longHtml(C), phaseHtml(R, ph, ext), fundHtml(R, ext), testHtml(R), howHtml(C)].join('');
     if (S.accBt && S.accBt.coin === R.baseCoin) renderTest();
+  }
+  /* tot ce trebuie pentru plan, calculat o singură dată */
+  function context(R, ph, ext, hd) {
+    const st = H.settingsNum(), q = S.acc.pair, tc = tradeCtx(R), P0 = R.livePrice, amount = setNum('amount');
+    const C = { R, ph, ext, hd, st, q, tc, P0, amount, coin: R.baseCoin, now: tc.pxOf(P0, 'near') || P0 };
+    const mid = tc.ok && H.tradeMid ? H.tradeMid() : null;
+    C.live = fin(mid) && mid > 0 ? mid : C.now; // prețul live pe perechea ta, pentru cumpărarea de azi
+    if (hd.kind === 'scurt') {
+      C.valid = clamp(Math.round(hd.days / 3), 3, 10); C.timeStop = clamp(hd.days, 3, 90);
+      C.L = A.ladder({ D: S.tfs['1d'], Wk: S.tfs['1w'] || null, price: P0, levels: R.levels, phase: ph.phase, sD: ph.sD, amount, capital: st.capital, riskPct: fin(st.riskPct) ? st.riskPct : 1, fee: fin(st.feePct) ? st.feePct / 100 : 0.001, minOrder: tc.minOrder, n: setNum('n'), depth: S.acc.depth, h: C.valid, timeStop: C.timeStop });
+    } else {
+      C.weeks = S.acc.weeks === 'auto' || !fin(setNum('weeks')) ? autoWeeks(hd.days) : setNum('weeks');
+      C.P = A.dcaPlan({ D: S.tfs['1d'], Wk: S.tfs['1w'], price: P0, levels: R.levels, phase: ph.phase, sD: ph.sD, amount, weeks: C.weeks, reservePct: setNum('reserve'), fngValue: ext && ext.fng ? ext.fng.value : null, now: H.nowS ? H.nowS() : Date.now(), minOrder: tc.minOrder, n: setNum('n'), depth: S.acc.depth });
+    }
+    C.ath = athOf(R, ph, ext, tc);
+    const tg = setNum('target');
+    if (fin(tg) && tg > 0) { C.tg = tg; C.T = TG.analyze({ D: S.tfs['1d'], Wk: S.tfs['1w'] || null, price: C.now, target: tg, days: hd.days }); }
+    return C;
+  }
+  /* maximul istoric: din lumânările Binance; dacă pe toate bursele (CoinGecko) a fost mai sus, acela */
+  function athOf(R, ph, ext, tc) {
+    let px = ph.hi, t = ph.hiT, src = 'Binance';
+    const ci = ext && ext.coinInfo;
+    if (ci && /(USDT|USDC|FDUSD)$/.test(R.symbol) && fin(ci.ath) && fin(px) && ci.ath > px * 1.03) { px = ci.ath; t = ci.athDate; src = 'CoinGecko'; }
+    return fin(px) && px > 0 ? { px: tc.pxOf(px, 'near') || px, t, src } : null;
+  }
+  const roundPx = (C, v) => (C.tc.ok && CE.BN ? CE.BN.roundTo(v, C.tc.info.tick, C.tc.info.tickDec, 'near') : +(+v).toPrecision(5));
+  /* un număr scris fără ambiguitate, oricare ar fi setarea telefonului (virgulă sau punct): 1,2340 nu poate fi citit ca 1.234 de unități */
+  function plainNum(v) { let s = String(+(+v).toPrecision(12)).replace('.', ','); if (/^[1-9]\d*,\d{3}$/.test(s)) s += '0'; return s; }
+  /* variante pentru țintă, un clic și se completează */
+  function chips(C) {
+    const el = $('#tgtChips'); if (!el) return;
+    if (!C) { el.innerHTML = ''; return; }
+    const now = C.now, list = [], seen = [];
+    const add = (label, v) => { if (!fin(v) || v <= now * 1.05 || seen.some((x) => Math.abs(x / v - 1) < 0.03)) return; seen.push(v); list.push([label, roundPx(C, v)]); };
+    if (C.ath) add('Maximul istoric', C.ath.px);
+    if (C.R.levels && fin(C.R.levels.hi52)) add('Maximul pe 1 an', C.tc.pxOf(C.R.levels.hi52, 'near') || C.R.levels.hi52);
+    add('×2', now * 2); add('×3', now * 3); add('×5', now * 5);
+    el.innerHTML = '<span class="small">Variante pentru țintă:</span>' + list.map(([l, v]) => '<button data-tgt="' + esc(plainNum(v)) + '">' + esc(l + ' · ' + C.tc.fmt(v)) + '</button>').join('') + (S.acc.target ? '<button data-tgt="">Fără țintă</button>' : '');
+  }
+  function coinNote(R) {
+    if (H.IN_CLAUDE || !S.coin || R.baseCoin === S.coin) return '';
+    return '<div class="sec"><p class="msg err">Planul de mai jos e pentru ' + esc(R.baseCoin) + '. Apasă „Arată planul” ca să-l faci pentru ' + esc(S.coin) + '.</p></div>';
   }
 
   function phaseHtml(R, ph, ext) {
@@ -3423,41 +3915,198 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     return h + more('acumulare', 'Cum funcționează acumularea') + '</div>';
   }
 
-  function shortHtml(R, ph, q) {
-    const st = H.settingsNum(), fp = (x) => fmtPrice(x, ph.price);
-    const tc = tradeCtx(R);
-    const L = A.ladder({ D: S.tfs['1d'], price: R.livePrice, levels: R.levels, phase: ph.phase, amount: setNum('amount'), capital: st.capital, riskPct: fin(st.riskPct) ? st.riskPct : 1, fee: fin(st.feePct) ? st.feePct / 100 : 0.001, minOrder: tc.minOrder });
+  const ordTxt = (n) => (n === 1 ? 'un singur ordin' : CE.nDe(n, 'ordine'));
+  const distTxt = (dd) => (dd.fallback || dd.down === null ? 'din tot istoricul' + (dd.fallback ? ' (zilele asemănătoare cu azi au fost prea puține)' : '') : dd.down ? 'care au început cu trend descendent pe 1 zi, ca acum' : 'care au început fără trend descendent pe 1 zi, ca acum');
+  function orderRows(list, tc, R, q, digits) {
+    return list.map((o, i) => {
+      const px = tc.pxOf(o.px, 'down'), qn = tc.qtyOf(o.amt, px), low = tc.minBuy && px < tc.minBuy;
+      return '<tr><td><b>' + (i + 1) + '. la ' + esc(tc.fmt(px)) + '</b> <span class="small">(−' + esc(pc(o.dist, digits)) + ')</span><br><span class="small mute">' + esc(o.why) + '</span>' +
+        (low ? '<br><span class="small lwarn2">Binance nu acceptă acum un ordin de cumpărare atât de jos (cel mai jos: ' + esc(tc.fmt(tc.minBuy)) + '). Îl pui când prețul se apropie.</span>' : '') + '</td>' +
+        '<td class="n">' + esc(o.amt !== null ? money(o.amt, q) : pc(o.w)) + (qn !== null ? '<br><span class="small mute">' + esc(tc.fq(qn) + ' ' + R.baseCoin) + '</span>' : '') + '</td><td class="n">' + esc(fin(o.p) ? pc(o.p) : '—') + '</td></tr>';
+    }).join('');
+  }
+
+  /* prețul mediu după câte ordine se execută, din prețurile rotunjite pe care le scrii în Binance */
+  function scenR(list, tc, P0) {
+    const base = tc.pxOf(P0, 'near') || P0;
+    let inv = 0, qn = 0;
+    return list.map((o, i) => { const px = tc.pxOf(o.px, 'down'); inv += o.w; qn += o.w / px; return { m: i + 1, w: inv, avg: inv / qn, drop: 1 - inv / qn / base }; });
+  }
+  /* ---------- ce să faci acum ---------- */
+  function commonNotes(C) {
+    const w = [], why = [], ci = C.ext && C.ext.coinInfo, st = C.st, R = C.R, T = C.T;
+    if (T && !T.below && fin(T.pTouch)) {
+      why.push('Ținta ta (' + C.tc.fmt(C.tg) + ') e „' + T.verdict.label.toLowerCase() + '”: ' + pc(T.pTouch) + ' șanse s-o atingă în ' + C.hd.txt + '.');
+      if (T.pTouch < 0.05) w.push('Ținta ta are șanse foarte mici în ' + C.hd.txt + '. Pentru prima vânzare, ia în calcul o țintă mai mică (vezi „Ținta ta”) sau un timp mai lung.');
+    }
+    if (ci && fin(ci.fdv) && fin(ci.mcap) && ci.mcap > 0 && ci.fdv / ci.mcap >= 1.5) w.push('Atenție la deblocări: doar cam ' + pc(ci.mcap / ci.fdv) + ' din monedele ' + C.coin + ' sunt în circulație. Restul intră treptat pe piață și de obicei apasă prețul.');
+    if (fin(C.amount) && fin(st.capital) && st.capital > 0) {
+      const s = C.amount / st.capital;
+      if (s > 1.001) w.push('Suma (' + money(C.amount, C.q) + ') e mai mare decât capitalul tău din „Risc” (' + money(st.capital, C.q) + ').');
+      else if (!/^(BTC|ETH)$/.test(C.coin) && s > 0.1) w.push('Suma e ' + pc(s) + ' din capitalul tău. Într-o singură monedă mai mică, mulți investitori cu experiență nu pun peste 5–10% din bani.');
+    }
+    const m = R.market;
+    if (!R.isBtc && m && m.rsPos === false && fin(m.rsChg30) && m.rsChg30 < 0) why.push(C.coin + ' e mai slabă decât Bitcoin: ' + fmtPct(m.rsChg30, 0) + ' față de BTC în 30 de zile.');
+    if (C.ext && C.ext.fng) why.push('Sentimentul pieței (Fear & Greed): ' + fmtNum(C.ext.fng.value, 0) + ' · ' + C.ext.fng.label + '.');
+    return { w, why };
+  }
+  function adviceLong(C) {
+    const { P, ph, q, tc, coin, hd, T } = C, steps = [], why = [];
+    let tone = 'flat', title = 'Cumpără treptat, fără grabă';
+    if (ph.phase === 'falling') { tone = 'warn'; title = 'Cumpără treptat și cu sume mici: piața e în cădere'; }
+    else if (ph.phase === 'exhaustion') { tone = 'pos'; title = 'Zonă bună de acumulare treptată: vânzătorii par obosiți'; }
+    else if (ph.phase === 'base') { tone = 'pos'; title = 'Zonă bună de acumulare treptată: prețul s-a stabilizat'; }
+    else if (ph.phase === 'recovery') { tone = 'pos'; title = 'Cumpără treptat: pe termen scurt, trendul s-a întors în sus'; }
+    else if (ph.phase === 'pullback') { tone = 'pos'; title = 'Cumpără treptat: e o corecție într-un trend mare ascendent'; }
+    else if (P.f < 0.95) { tone = 'warn'; title = 'Cumpără mai puțin acum: prețul e scump față de media lui'; }
+    const resN = P.reserve.length, last = P.sched.length ? P.sched[P.sched.length - 1].t : null;
+    const sum = 'Ții moneda ' + hd.txt + ', așa că planul e de acumulare: cumperi treptat în ' + CE.nDe(P.weeks, 'săptămâni') + (resN ? ', iar ' + pc(P.r) + ' din sumă stă în ordine limită mai jos, pentru căderi' : '') + '. Nu cumperi totul odată, pentru că nimeni nu știe dacă azi e cel mai bun preț.';
+    steps.push(P.thisWeek !== null ? 'Azi cumperi ' + b(money(P.thisWeek, q)) + ' de ' + esc(coin) + ' (tranșa din săptămâna 1' + (Math.abs(P.f - 1) > 0.04 ? ', ' + (P.f > 1 ? 'mărită' : 'micșorată') + ' de factorul ' + esc(fmtNum(P.f, 2)) : '') + '), cu ordin Market sau Limit la prețul de acum (≈ ' + b(tc.fmt(roundPx(C, C.live))) + ').' : 'Scrie sus suma pe care o investești ca să-ți spun exact cât cumperi azi.');
+    if (resN) {
+      const f = P.reserve[0], l = P.reserve[resN - 1];
+      steps.push('Pui rezerva' + (P.amount !== null ? ' (' + esc(money(P.amount * P.r, q)) + ')' : '') + ' în ' + esc(ordTxt(resN)) + ' Limit de cumpărare, între ' + b(tc.fmt(tc.pxOf(f.px, 'down'))) + ' (−' + esc(pc(f.dist)) + ') și ' + b(tc.fmt(tc.pxOf(l.px, 'down'))) + ' (−' + esc(pc(l.dist)) + '). Prețurile și sumele exacte sunt în tabelul „Rezerva”.' + (fin(P.rExpFill) ? ' Istoric, s-ar fi executat cam ' + esc(pc(P.rExpFill)) + ' din ea.' : ''));
+    }
+    steps.push('Apoi, o dată pe săptămână' + (last ? ' până pe ' + esc(fmtDate(last, false)) : '') + ', deschizi aplicația și cumperi suma din „Săptămâna aceasta”. Când prețul e jos, suma crește; când e scump, scade.');
+    if (T && !T.below && T.sell && T.sell.length) {
+      const L0 = T.sell.map((x, i) => b(tc.fmt(i === T.sell.length - 1 ? roundPx(C, C.tg) : roundPx(C, C.now * x.mult))));
+      const how = T.sell.length === 1 ? 'toate monedele la ' + L0[0] : T.sell.length === 2 ? esc(pc(T.sell[0].w)) + ' din monede la ' + L0[0] + ' și restul la ' + L0[1] : esc(pc(T.sell[0].w)) + ' din monede la ' + L0[0] + ', încă ' + esc(pc(T.sell[1].w)) + ' la ' + L0[1] + ' și restul (' + esc(pc(T.sell[2].w)) + ') la ' + L0[2];
+      steps.push('Ca să vinzi, pui ordine Limit de vânzare spre ținta ta: ' + how + '. Detaliile sunt la „Ținta ta”.');
+    }
+    else if (!T) steps.push('Scrie sus ținta ta (prețul la care crezi că ajunge) ca să-ți fac și planul de vânzare.');
+    steps.push('Ții moneda ' + esc(hd.txt) + '. Dacă prețul scade mult, nu vinde din panică: rezerva e făcută exact pentru asta. Vinzi doar după plan.');
+    why.push(ph.info.name + ': ' + ph.info.text);
+    if (fin(P.d)) why.push('Prețul e ' + fmtPct(P.d * 100, 0) + ' față de media lungă (' + P.maName + '). De aceea factorul de săptămâna aceasta e ' + fmtNum(P.f, 2) + (P.pf.why || P.ff.why ? ': ' + [P.pf.why, P.ff.why].filter(Boolean).join('; ') : '') + '.');
+    const cn = commonNotes(C);
+    return { tone, title, sum, steps, warn: cn.w, why: why.concat(cn.why) };
+  }
+  function adviceShort(C) {
+    const { L, R, ph, q, tc, coin, hd } = C, st = R.entry && R.entry.status, code = st ? st.code : null, p = R.plan, steps = [], why = [];
+    const signal = code === 'buy' && p && fin(p.stop) && fin(p.t1);
+    let tone, title, sum;
+    if (signal) { tone = 'pos'; title = 'Semnal de cumpărare: poți intra acum, cu stop'; sum = 'Regulile din „Analiză” sunt îndeplinite. Intri o singură dată, cu stop sub ultimul minim, și vinzi în două trepte.'; }
+    else if (code === 'avoid' || code === 'market' || ph.phase === 'falling') { tone = 'neg'; title = code === 'market' ? 'Bitcoin scade: pe termen scurt, cel mai sigur e să aștepți' : 'Trend în jos: pe termen scurt, cel mai sigur e să nu cumperi acum'; sum = 'Pe ' + hd.txt + ', o cumpărare împotriva trendului pierde des. Dacă totuși cumperi, doar cu ordinele limită de mai jos: mai jos de prețul de acum, cu sumă calculată după risc și cu stop.'; }
+    else if (code === 'extended') { tone = 'warn'; title = 'Prețul a urcat prea repede: nu cumpăra acum'; sum = 'După un salt mare, riscul unei corecții e mare. Pune ordine limită mai jos și lasă prețul să vină la tine.'; }
+    else if (code === 'prepare') { tone = 'warn'; title = 'Aproape: retragerea a avut loc, lipsește semnalul de reluare'; sum = 'Poți pune ordinele limită de mai jos sau poți aștepta semnalul din „Analiză”.'; }
+    else if (code === 'wait_pullback') { tone = 'flat'; title = 'Trend bun, dar fără retragere: cumpără doar mai jos'; sum = 'Nu cumpăra după o creștere. Ordinele limită de mai jos prind o retragere, dacă vine.'; }
+    else if (code === 'rr') { tone = 'warn'; title = 'Rezistența e prea aproape: așteaptă sau cumpără mai jos'; sum = 'Până la prima rezistență, câștigul posibil e mic față de risc. Ordinele limită de mai jos îmbunătățesc raportul.'; }
+    else { tone = 'flat'; title = 'Fără semnal clar: doar ordine limită, cu stop'; sum = 'Semnalele nu sunt clare. Varianta prudentă: ordinele limită de mai jos, cu stop comun.'; }
+    if (signal) {
+      const e = tc.pxOf(p.entry, 'near'), qn = fin(p.notional) ? tc.qtyOf(p.notional, e) : null;
+      steps.push(qn !== null ? 'Cumperi ' + b(tc.fq(qn) + ' ' + coin) + ' (≈ ' + esc(money(p.notional, q)) + '), cu ordin Limit la ' + b(tc.fmt(e)) + '.' : 'Cumperi cu ordin Limit la ' + b(tc.fmt(e)) + '. Pune capitalul în „Risc” ca să-ți spun exact câte monede.');
+      steps.push('Pui imediat stopul (Stop-Limit de vânzare) la ' + b(tc.fmt(tc.pxOf(p.stop, 'near'))) + (fin(p.lossAtStop) ? ': dacă prețul ajunge acolo, ieși cu o pierdere de cel mult ' + b(money(p.lossAtStop, q)) : '') + '.');
+      steps.push('Vinzi jumătate la ' + b(tc.fmt(tc.pxOf(p.t1, 'near'))) + ' și restul la ' + b(tc.fmt(tc.pxOf(p.t2, 'near'))) + '. După prima vânzare, muți stopul la prețul de intrare.');
+      steps.push('Dacă în ' + esc(CE.nDe(C.timeStop, 'zile')) + ' prețul n-a ajuns la prima țintă, ieși.');
+    } else if (L) {
+      const N = L.orders.length, f = L.orders[0], l = L.orders[N - 1];
+      if (tone === 'neg') steps.push('Cel mai sigur: nu cumperi acum și verifici din nou peste câteva zile. Dacă totuși cumperi, urmează pașii de mai jos.');
+      steps.push('Pui ' + esc(ordTxt(N)) + ' Limit de cumpărare' + (L.amount !== null ? ' (în total ' + esc(money(L.amount, q)) + ')' : '') + ', între ' + b(tc.fmt(tc.pxOf(f.px, 'down'))) + ' și ' + b(tc.fmt(tc.pxOf(l.px, 'down'))) + '. Prețurile exacte sunt în tabelul de mai jos.' + (fin(L.expFill) ? ' Istoric, s-ar fi executat cam ' + esc(pc(L.expFill)) + ' din sumă în ' + esc(CE.nDe(L.validDays, 'zile')) + '.' : ''));
+      steps.push('Când se execută primul ordin, pui stopul comun la ' + b(tc.fmt(tc.pxOf(L.stop, 'near'))) + (L.lossAll !== null ? ' (pierdere maximă ' + esc(money(L.lossAll, q)) + ', dacă se execută tot)' : '') + '.');
+      steps.push('Vinzi jumătate la ' + b(tc.fmt(tc.pxOf(L.tp1, 'near'))) + ' și restul la ' + b(tc.fmt(tc.pxOf(L.tp2, 'near'))) + '. După prima vânzare, muți stopul la prețul mediu.');
+      steps.push('Dacă în ' + esc(CE.nDe(L.validDays, 'zile')) + ' nu se execută nimic, anulezi ordinele și refaci planul. Ieși cel târziu după ' + esc(CE.nDe(L.timeStopDays, 'zile')) + '.');
+    }
+    if (st) why.push('Semnalul din „Analiză”: ' + st.title + '.' + (st.text ? ' ' + st.text : ''));
+    why.push(ph.info.name + ': ' + ph.info.text);
+    const cn = commonNotes(C);
+    if (!signal && L && L.budget === null && L.lossAll !== null) cn.w.unshift('Nu ai scris capitalul în „Risc”, așa că nu pot verifica dacă pierderea maximă (' + money(L.lossAll, q) + ') e potrivită pentru tine. Regula: cel mult 1% din toți banii pe o tranzacție.');
+    return { tone, title, sum, steps, warn: cn.w, why: why.concat(cn.why) };
+  }
+  function adviceHtml(C) {
+    if (C.hd.kind === 'lung' && !C.P) return '';
+    const X = C.hd.kind === 'scurt' ? adviceShort(C) : adviceLong(C);
+    let h = '<div class="sec advice" id="advice"><h2>Ce să faci acum cu ' + esc(C.coin) + '</h2>';
+    h += '<div class="status ' + X.tone + '"><h3>' + esc(X.title) + '</h3><p>' + esc(X.sum) + '</p></div>';
+    h += '<ol class="steps">' + X.steps.map((s) => '<li>' + s + '</li>').join('') + '</ol>';
+    h += X.warn.map((w) => '<p class="small lwarn2">' + esc(w) + '</p>').join('');
+    if (X.why.length) h += '<details class="why"><summary>De ce acest plan</summary>' + X.why.map((w) => '<p>' + esc(w) + '</p>').join('') + '</details>';
+    h += '<p class="small mute">Planul se refă cu prețul și datele de acum de fiecare dată când îl deschizi. Aplică reguli pe date și nu știe viitorul: nu e un sfat financiar.</p>';
+    return h + '</div>';
+  }
+
+  /* ---------- ținta ta ---------- */
+  function targetHtml(C) {
+    const { T, hd, tc, coin } = C;
+    let h = '<div class="sec" id="secTarget"><h2>Ținta ta</h2>';
+    if (!T) return h + '<p>Scrie sus prețul la care crezi că poate ajunge ' + esc(coin) + ' (sau atinge o variantă de sub formular). Îți spun ce șanse are în ' + esc(hd.txt) + ', ce s-a întâmplat în istoricul monedei și cum vinzi în trepte.</p>' + more('tinta', 'Cum se calculează șansele') + '</div>';
+    if (T.below) return h + '<p>Ținta ta (' + esc(tc.fmt(C.tg)) + ') e sub prețul de acum (' + esc(tc.fmt(C.now)) + '): ai atins-o deja. Dacă vrei să cumperi mai jos, folosește ordinele limită de mai jos.</p></div>';
+    const up = (x) => fmtPct((x - 1) * 100, x >= 1.5 ? 0 : 1), upN = (x) => fmtNum((x - 1) * 100, x >= 1.5 ? 0 : 1) + '%';
+    h = '<div class="sec" id="secTarget"><h2>Ținta ta: ' + esc(tc.fmt(C.tg)) + ' în ' + esc(hd.txt) + '</h2>';
+    let intro = 'De la ' + tc.fmt(C.now) + ' la ' + tc.fmt(C.tg) + ' înseamnă ' + up(T.mult) + (fin(T.perYear) && T.days > 400 ? ', adică în medie cam ' + fmtPct(T.perYear * 100, 0) + ' pe an' : '') + '.';
+    if (C.ath) { const r = C.tg / C.ath.px, d = fmtDate(C.ath.t, false); intro += r > 1.02 ? ' Ar fi un maxim istoric nou: cel de până acum e ' + tc.fmt(C.ath.px) + ' (' + d + ').' : r >= 0.9 ? ' E aproape de maximul istoric (' + tc.fmt(C.ath.px) + ', ' + d + ').' : ' E cu ' + pc(1 - r) + ' sub maximul istoric (' + tc.fmt(C.ath.px) + ', ' + d + ').'; }
+    h += '<p>' + esc(intro) + '</p>';
+    if (!fin(T.pTouch)) return h + '<p class="mute">Moneda are prea puțin istoric (sub 60 de zile) ca să calculez șansele.</p></div>';
+    const v = T.verdict;
+    h += '<div class="status ' + v.tone + '"><h3>' + esc(v.label + ': ' + pc(T.pTouch) + ' șanse s-o atingă în ' + hd.txt) + '</h3><p>' + esc('Pe ' + CE.nDe(T.paths, 'drumuri') + ' posibile de ' + hd.txt + ', prețul atinge ' + tc.fmt(C.tg) + ' măcar o dată în ' + pc(T.pTouch) + ' din ele (' + TG.odds(T.pTouch, T.paths) + '). Calculul nu ghicește direcția: e o piață corectă, în care câștigul mediu e zero.') + '</p></div>';
+    h += '<div class="kv">' + kv('S-o atingă măcar o dată', pc(T.pTouch)) + kv('Să fie peste ea la final', pc(T.pEnd)) + kv('Să scadă la jumătate pe drum', pc(T.pHalf), 'stop') +
+      kv('Atins în jumătate din cazuri', tc.fmt(roundPx(C, C.now * T.lvl50)) + ' (' + up(T.lvl50) + ')') + '</div>';
+    const lines = [], H0 = T.hist;
+    if (H0 && H0.n >= 20) lines.push('În istoricul ' + coin + ' de pe Binance (' + CE.nDe(H0.n, 'perioade') + ' de câte ' + CE.nDe(H0.w, H0.unit) + ', din ' + fmtDate(H0.from, false) + '), prețul a urcat cu cel puțin ' + upN(T.mult) + ' în ' + pc(H0.p) + ' din ele. Cea mai mare creștere într-o astfel de perioadă: ' + up(H0.best) + '. Tot în ' + pc(H0.pDown) + ' din ele a scăzut, la un moment dat, la jumătate. Perioadele se suprapun și includ piețe diferite de cea de acum.');
+    else lines.push('Moneda are prea puțin istoric pe Binance ca să verific perioade de ' + hd.txt + (H0 && H0.n ? ' (doar ' + CE.nDe(H0.n, 'perioade') + ')' : '') + '.');
+    const med = T.endQ[1], medTxt = T.days >= 365 ? fmtPct((Math.pow(med, 365 / T.days) - 1) * 100, 0) + ' pe an' : fmtPct((med - 1) * 100, 0) + ' în ' + hd.txt;
+    lines.push('Dacă moneda ar continua cum a făcut în ultimii ~2 ani (în medie ' + fmtPct(T.M.trendYear * 100, 0) + ' pe an), șansa ar fi ' + pc(T.pTouchTrend) + '. Cifra principală e mai prudentă: într-o piață corectă, o monedă atât de agitată are de obicei un drum tipic în coborâre (aici ' + medTxt + '), iar doar câteva drumuri urcă mult. Tendința trecută nu se repetă neapărat.');
+    lines.push(T.t50 !== null && T.t50 <= 10 ? 'Ca șansa să ajungă la 50%, ar trebui să ții moneda cam ' + yearsTxt(T.t50) + '.' : 'Oricât ai aștepta, într-o piață corectă șansa ca prețul să ajungă vreodată la ținta ta nu trece de cam ' + pc(T.ever) + ' (1 din ' + fmtNum(T.mult, 1) + '). Regula: pentru o țintă de N ori prețul de acum, cam 1 din N.');
+    if (T.pTouch < 0.15) lines.push('O țintă intermediară mai realistă pentru ' + hd.txt + ': ' + tc.fmt(roundPx(C, C.now * T.lvl50)) + ' (atinsă în jumătate din cazuri) sau ' + tc.fmt(roundPx(C, C.now * T.lvl25)) + ' (în 1 din 4 cazuri).');
+    h += lines.map((t) => '<p class="small">' + esc(t) + '</p>').join('');
+    h += '<h3 style="margin-top:12px">Cum vinzi spre țintă</h3><p class="small">Nu aștepta totul la țintă. Vinzi în trepte: iei o parte din profit chiar dacă prețul nu ajunge până sus.</p>';
+    h += '<div class="scroll"><table class="orders sell"><thead><tr><th>Ordin Limit de vânzare</th><th class="n">Din monedele tale</th><th class="n">Șansa în ' + esc(hd.txt) + '</th></tr></thead><tbody>' +
+      T.sell.map((x, i) => {
+        const px = i === T.sell.length - 1 ? roundPx(C, C.tg) : roundPx(C, C.now * x.mult), high = tc.maxSell && px > tc.maxSell;
+        return '<tr><td><b>' + (i + 1) + '. la ' + esc(tc.fmt(px)) + '</b> <span class="small">(' + esc(up(x.mult)) + ')</span>' + (high ? '<br><span class="small lwarn2">Binance nu acceptă acum o vânzare atât de sus (cel mult ' + esc(tc.fmt(tc.maxSell)) + '). O pui când prețul se apropie.</span>' : '') + '</td><td class="n">' + esc(pc(x.w)) + '</td><td class="n">' + esc(pc(x.p)) + '</td></tr>';
+      }).join('') + '</tbody></table></div>';
+    h += '<details class="why"><summary>Cum am calculat șansele</summary><p><b>Drumurile posibile.</b> ' + esc('Am luat mișcările zilnice reale ale ' + coin + ' din ultimele ' + CE.nDe(T.M.n, 'zile') + ' (cu tot cu zilele de panică și de euforie), le-am tăiat în bucăți de câte 20 de zile și le-am pus cap la cap la întâmplare, de ' + CE.nDe(T.paths, 'ori') + ', pentru o perioadă de ' + hd.txt + '. Bucățile păstrează cât de agitată e moneda și cât de des face salturi sau căderi mari.') + '</p>' +
+      '<p><b>Fără să ghicim direcția.</b> ' + esc('Am scos tendința: pe aceste drumuri, câștigul mediu e zero, ca într-o piață corectă (așa calculează și bursele de opțiuni). Cât se mișcă moneda într-un an, de obicei (volatilitatea): ±' + pc(T.M.sdYear) + '.') + '</p>' +
+      '<p><b>Șansa</b> = în câte drumuri prețul atinge ținta măcar o dată. Contează și maximul zilei, pentru că acolo se execută un ordin Limit de vânzare.</p>' +
+      '<p><b>Limitele.</b> E un calcul statistic, nu o prognoză. Știrile, deblocările de monede, un hack sau un ciclu nou al pieței pot schimba totul. Folosește-l ca să-ți potrivești așteptările și treptele de vânzare.</p></details>';
+    return h + more('tinta', 'Cum se calculează șansele') + '</div>';
+  }
+
+  function shortHtml(C) {
+    const { R, ph, q, st, P0, tc, L } = C, fp = (x) => fmtPrice(x, P0);
     if (!L) return '<div class="sec"><h2>Planul pe termen scurt</h2><p class="mute">Nu pot calcula volatilitatea (ATR) pe 1 zi.</p></div>';
-    const prob = A.touchProb(S.tfs['1d'], L.orders.map((o) => o.k), L.validDays, true);
-    let h = '<div class="sec"><h2>Planul pe termen scurt: ordine eșalonate, cu stop</h2>';
-    h += '<p>Pui ' + L.orders.length + ' ordine de cumpărare (Limit) sub prețul de acum, cu sume mai mari mai jos, ca prețul mediu să fie cât mai bun. Toate au același stop: dacă prețul îl atinge, ieși, pentru că scenariul de revenire nu s-a confirmat.</p>';
+    const N = L.orders.length, dd = L.dist, sc = scenR(L.orders, tc, P0);
+    let h = '<div class="sec"><h2>Planul pe termen scurt: ' + ordTxt(N) + ' limită, cu stop</h2>';
+    h += '<p>Pui ' + ordTxt(N) + ' de cumpărare (Limit) sub prețul de acum.' + (N > 1 ? ' Cele de sus au șanse mari să se execute; cele de jos prind căderile mai mari, la prețuri mai bune, și au sume mai mari.' : '') + ' Stopul e comun: dacă prețul îl atinge, ieși, pentru că revenirea nu s-a confirmat.</p>';
     if (ph.phase === 'none' || ph.phase === 'pullback' || ph.phase === 'recovery') h += '<p class="small">Piața nu e acum într-o cădere. Pentru o cumpărare pe termen scurt, regula din „Analiză” (retragere + semnal de reluare) e mai potrivită; planul de mai jos rămâne valabil pentru cumpărări la scădere.</p>';
     const riskTxt = L.budget !== null ? 'Riscul tău pe tranzacție e ' + fmtNum(st.riskPct, 1) + '% din capital' + (L.riskMul < 1 ? ', iar în această fază folosesc ' + (L.riskMul === 0.5 ? 'jumătate' : fmtNum(L.riskMul * 100, 0) + '%') + ' din el, pentru că cumperi împotriva trendului' : '') + ': cel mult ' + money(L.budget, q) + ' pierdere dacă se execută tot și se atinge stopul.' : 'Pune capitalul în tab-ul „Risc” ca să calculez suma maximă potrivită pentru riscul tău.';
     h += '<p class="small">' + esc(riskTxt) + '</p>';
     if (L.amount === null) h += '<p><b>Scrie suma sus</b> (sau capitalul în „Risc”) ca să-ți arăt sumele și cantitățile.</p>';
     else if (L.want !== null && L.maxAmt !== null && L.want > L.maxAmt * 1.001) h += '<p class="small"><b>Suma ta (' + esc(money(L.want, q)) + ') e prea mare pentru riscul ales.</b> Planul folosește ' + esc(money(L.amount, q)) + '. Restul îl poți folosi pe termen lung (cumpărare săptămânală) sau după un semnal din „Analiză”.</p>';
     else if (L.want === null && L.maxAmt !== null) h += '<p class="small">N-ai scris o sumă, așa că folosesc maximul potrivit pentru riscul tău: ' + esc(money(L.amount, q)) + '.</p>';
-    if (L.tooSmall) h += '<p class="small lwarn2">Suma e sub minimul unui ordin pe Binance (' + esc(money(L.minOrder, q)) + '): mărește suma sau riscul.</p>';
-    else if (L.fewer) h += '<p class="small">Suma e mică pentru 3 ordine (pe Binance un ordin trebuie să valoreze cel puțin ' + esc(money(L.minOrder, q)) + '), așa că planul folosește ' + (L.orders.length === 1 ? 'un singur ordin' : L.orders.length + ' ordine') + '.</p>';
-    h += '<div class="scroll"><table class="orders"><thead><tr><th>Ordin Limit de cumpărare</th><th class="n">Sumă</th><th class="n">Șansa în ' + L.validDays + ' zile</th></tr></thead><tbody>' +
-      L.orders.map((o, i) => { const px = tc.pxOf(o.px, 'down'), qn = tc.qtyOf(o.amt, px); return '<tr><td><b>' + (i + 1) + '. la ' + esc(tc.fmt(px)) + '</b> <span class="small">(−' + esc(pc(o.dist, 1)) + ')</span><br><span class="small mute">' + esc(o.why) + '</span></td><td class="n">' + esc(o.amt !== null ? money(o.amt, q) : pc(o.w)) + (qn !== null ? '<br><span class="small mute">' + esc(tc.fq(qn) + ' ' + R.baseCoin) + '</span>' : '') + '</td><td class="n">' + esc(pc(prob.p[i])) + '</td></tr>'; }).join('') + '</tbody></table></div>';
+    const byRisk = L.maxAmt !== null && (L.want === null || L.want > L.maxAmt * 1.001);
+    if (L.tooSmall) h += '<p class="small lwarn2">Suma e sub minimul unui ordin pe Binance (' + esc(money(L.minOrder, q)) + '): mărește suma' + (byRisk ? ' sau riscul' : '') + '.</p>';
+    else if (L.fewer) h += '<p class="small lwarn2">Pentru ' + L.nWant + ' ordine îți trebuie cel puțin ' + esc(money(L.needFor, q)) + ' (pe Binance, un ordin trebuie să valoreze cel puțin ' + esc(money(L.minOrder, q)) + '). Cu suma de acum, planul folosește ' + esc(ordTxt(N)) + ', răspândite pe toată zona.' + (byRisk ? ' Suma e limitată de risc: mărește riscul sau capitalul în „Risc”.' : '') + '</p>';
+    else if (L.equal) h += '<p class="small">Ca fiecare ordin să treacă de minimul Binance (' + esc(money(L.minOrder, q)) + '), sumele sunt egale.</p>';
+    h += '<div class="scroll"><table class="orders"><thead><tr><th>Ordin Limit de cumpărare</th><th class="n">Sumă</th><th class="n">Șansa în ' + L.validDays + ' zile</th></tr></thead><tbody>' + orderRows(L.orders, tc, R, q, 1) + '</tbody></table></div>';
     h += '<p class="small">' + esc(tc.note) + '</p>';
-    h += '<p class="small mute">„Șansa istorică” = cât de des a coborât prețul până acolo în următoarele ' + L.validDays + ' zile, ' + (prob.onlyFalling ? 'în zilele cu trend descendent pe 1 zi' : 'în toate zilele (prea puține zile cu trend descendent)') + ' (' + CE.nDe(prob.n, 'zile analizate') + '). Distanțele se măsoară în ATR, adică în mișcarea zilnică obișnuită.</p>';
-    h += '<div class="kv">' + kv('Stop pentru toate', tc.fmt(tc.pxOf(L.stop, 'near')) + ' (−' + pc(1 - L.stop / ph.price, 1) + ')', 'stop') + kv('Preț mediu, dacă se execută tot', tc.fmt(tc.pxOf(L.avg, 'near'))) +
+    h += '<p class="small mute">' + esc(dd.useD ? '„Șansa” = cât de des a coborât prețul până la acel ordin în următoarele ' + L.validDays + ' zile, în ' + CE.nDe(dd.n, 'perioade') + ' din istoricul ' + R.baseCoin + ' ' + distTxt(dd) + '.' : 'Istoricul e prea scurt pentru a calcula șansele: ordinele sunt la distanțe fixe, măsurate în ATR (mișcarea zilnică obișnuită).') + '</p>';
+    if (fin(L.expFill)) h += '<p class="small">Istoric, s-ar fi executat în medie cam <b>' + pc(L.expFill) + '</b> din sumă' + (L.amount !== null ? ' (≈ ' + esc(money(L.amount * L.expFill, q)) + ')' : '') + ' în ' + L.validDays + ' zile. Un ordin la care prețul nu ajunge nu te costă nimic: doar nu cumperi.</p>';
+    if (N > 1) {
+      h += '<h3 style="margin-top:12px">Dacă se execută doar o parte</h3><div class="scroll"><table class="scen"><thead><tr><th>Se execută</th><th class="n">Investit</th><th class="n">Preț mediu</th></tr></thead><tbody>' +
+        sc.map((s) => '<tr><td>' + (s.m === 1 ? 'primul ordin' : s.m === N ? 'toate cele ' + N : 'primele ' + s.m) + '</td><td class="n">' + esc(L.amount !== null ? money(L.amount * s.w, q) : pc(s.w)) + '</td><td class="n">' + esc(tc.fmt(s.avg)) + ' <span class="small mute">(−' + esc(pc(s.drop, 1)) + ')</span></td></tr>').join('') + '</tbody></table></div>';
+    }
+    h += '<div class="kv">' + kv('Stop pentru toate', tc.fmt(tc.pxOf(L.stop, 'near')) + ' (−' + pc(1 - L.stop / P0, 1) + ')', 'stop') + kv('Preț mediu, dacă se execută tot', tc.fmt(sc[sc.length - 1].avg)) +
       kv('Ținta 1: vinzi jumătate', tc.fmt(tc.pxOf(L.tp1, 'near')), 'tgt') + kv('Ținta 2: restul', tc.fmt(tc.pxOf(L.tp2, 'near')), 'tgt') + kv('Câștig/risc la ținta 1', fmtNum(L.rr1, 2)) +
       (L.lossAll !== null ? kv('Pierdere maximă (tot + stop)', money(L.lossAll, q)) : '') + '</div>';
-    h += '<details class="why"><summary>De unde vin prețurile</summary><p>Stop: ' + esc(L.stopWhy) + '. Ținta 1: ' + esc(L.tp1Why) + '. Ținta 2: ' + esc(L.tp2Why) + '. ATR pe 1 zi = ' + esc(fp(L.A)) + ' (mișcarea obișnuită într-o zi).</p></details>';
-    h += '<h3 style="margin-top:12px">Regulile planului</h3><ul class="small"><li>Ordinele stau ' + L.validDays + ' zile. Dacă nu se execută niciunul, le anulezi și refaci planul cu prețurile de atunci.</li><li>La ținta 1 vinzi jumătate și muți stopul la prețul mediu: restul nu mai poate deveni pierdere.</li><li>Dacă după ' + L.timeStopDays + ' de zile prețul n-a ajuns la ținta 1, ieși: revenirea nu a venit.</li><li>Nu adăuga ordine sub stop „ca să faci media”: așa se transformă o pierdere mică într-una mare.</li></ul>';
+    h += '<details class="why"><summary>Cum am ales prețurile</summary>' + methodHtml(L, R, P0, 'scurt') + '<p><b>Stopul și țintele.</b> Stop: ' + esc(L.stopWhy) + '. Ținta 1: ' + esc(L.tp1Why) + '. Ținta 2: ' + esc(L.tp2Why) + '.</p></details>';
+    h += '<h3 style="margin-top:12px">Regulile planului</h3><ul class="small"><li>Ordinele stau ' + L.validDays + ' zile. Dacă nu se execută niciunul, le anulezi și refaci planul cu prețurile de atunci.</li><li>La ținta 1 vinzi jumătate și muți stopul la prețul mediu: restul nu mai poate deveni pierdere.</li><li>Dacă după ' + CE.nDe(L.timeStopDays, 'zile') + ' prețul n-a ajuns la ținta 1, ieși: revenirea nu a venit.</li><li>Nu adăuga ordine sub stop „ca să faci media”: așa se transformă o pierdere mică într-una mare.</li></ul>';
     return h + '</div>';
   }
+  /* explicația metodei, aceeași pentru ordinele pe termen scurt și pentru rezervă */
+  function methodHtml(X, R, P0, mode) {
+    const fp = (x) => fmtPrice(x, P0), dd = mode === 'scurt' ? X.dist : X.rDist, pr = X.pRange, list = mode === 'scurt' ? X.orders : X.reserve, N = list.length;
+    const hTxt = mode === 'scurt' ? CE.nDe(dd.h, 'zile') : CE.nDe(Math.round(dd.h / 7), 'săptămâni'), A1 = mode === 'scurt' ? X.A : S.tfs['1d'].atr[S.tfs['1d'].lastClosed], kMax = mode === 'scurt' ? X.kMax : X.rKMax;
+    let h = '<p><b>1. Cât coboară de obicei.</b> ' + esc(dd.useD ? 'Din ' + CE.nDe(dd.n, 'perioade') + ' de câte ' + hTxt + ' din istoricul ' + R.baseCoin + ' (' + distTxt(dd) + '), programul a măsurat cât de jos a ajuns prețul, în ATR. ATR pe 1 zi = ' + fp(A1) + ' (' + pc(A1 / P0, 1) + '), adică mișcarea obișnuită într-o zi. Măsurat așa, se potrivește și când moneda devine mai liniștită sau mai agitată.' : 'Istoricul e prea scurt, așa că distanțele sunt fixe, în ATR (' + fp(A1) + ' pe 1 zi, adică ' + pc(A1 / P0, 1) + ').') + '</p>';
+    h += '<p><b>2. Unde stau ordinele („' + esc(X.depthName) + '”).</b> ' + esc((dd.useD ? 'Primul ordin e acolo unde prețul a ajuns în ~' + pc(pr[0]) + ' din perioade, ultimul unde a ajuns în ~' + pc(pr[1]) + ', iar celelalte între ele, tot mai rar spre jos. ' : '') + (fin(kMax) ? 'Cel mai jos ordin nu coboară mai mult de ' + pc(kMax * A1 / P0, 0) + ' sub preț.' : '')) + '</p>';
+    h += '<p><b>3. Niveluri reale.</b> Dacă aproape de un ordin e un suport (o zonă din care prețul s-a întors de mai multe ori), o medie mobilă urmărită de mulți sau un număr rotund, ordinul se mută puțin deasupra lui: mulți cumpărători așteaptă exact pe nivel și prețul se întoarce des înainte să-l atingă.</p>';
+    if (N > 1) h += '<p><b>4. Sumele</b> ' + esc(X.equal ? 'sunt egale, ca fiecare ordin să treacă de minimul Binance.' : 'cresc spre ordinele de jos (de la ' + pc(list[0].w) + ' la ' + pc(list[N - 1].w) + ' din ' + (mode === 'scurt' ? 'sumă' : 'rezervă') + '), ca prețul mediu să fie mai bun dacă piața scade mai mult. Într-o cădere activă, diferența e mai mare.') + '</p>';
+    h += '<p><b>' + (N > 1 ? '5' : '4') + '. Regulile Binance.</b> Prețurile sunt rotunjite la pasul de preț al perechii, cantitățile la pasul de cantitate, iar fiecare ordin trece de valoarea minimă pe ordin.</p>';
+    return h;
+  }
 
-  function longHtml(R, ph, q, ext) {
-    const fp = (x) => fmtPrice(x, ph.price), fv = ext && ext.fng ? ext.fng.value : null;
-    const tc = tradeCtx(R);
-    const P = A.dcaPlan({ D: S.tfs['1d'], Wk: S.tfs['1w'], price: R.livePrice, levels: R.levels, amount: setNum('amount'), weeks: setNum('weeks'), reservePct: setNum('reserve'), fngValue: fv, now: H.nowS ? H.nowS() : Date.now(), minOrder: tc.minOrder });
+  function longHtml(C) {
+    const { R, q, tc, P0, P } = C, fp = (x) => fmtPrice(x, P0);
     if (!P) return '';
     let h = '<div class="sec"><h2>Planul pe termen lung: cumpărare săptămânală + rezervă</h2>';
-    h += '<p>Împarți suma în ' + P.weeks + ' cumpărări săptămânale. Cumperi mai mult când prețul e jos față de media lui lungă și când piața e speriată, și mai puțin când e scump. O parte din sumă (rezerva) stă în ordine limită mult mai jos, pentru căderile mari.</p>';
+    h += '<p>Împarți suma în ' + P.weeks + ' cumpărări săptămânale. Cumperi mai mult când prețul e jos față de media lui lungă și când piața e speriată, și mai puțin când e scump. O parte din sumă (rezerva) stă în ordine limită sub preț, pentru căderi.</p>';
     if (P.amount === null) h += '<p><b>Scrie suma sus</b> ca să-ți arăt sumele exacte.</p>';
     h += '<div class="kv">' + (P.amount !== null ? kv('Suma totală', money(P.amount, q)) + kv('Pe săptămână (bază)', money(P.base, q)) + kv('Rezervă pentru căderi', money(P.amount * P.r, q) + ' (' + pc(P.r) + ')') : kv('Rezervă pentru căderi', pc(P.r))) +
       kv('Media lungă', P.ma !== null ? fp(P.ma) : '—') + kv('Prețul față de medie', fin(P.d) ? fmtPct(P.d * 100, 0) : '—') + '</div>';
@@ -3466,11 +4115,15 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     if (P.weekTooSmall) h += '<p class="small lwarn2">Suma de săptămâna aceasta e sub minimul unui ordin pe Binance (' + esc(money(P.minOrder, q)) + '). Alege mai puține săptămâni sau o sumă mai mare.</p>';
     h += '<details class="why"><summary>Cum se calculează factorul</summary><p>Prețul față de ' + esc(P.maName) + ': cu peste 30% sub medie × 1,5; sub medie × 1,25; aproape de medie × 1; peste medie × 0,75; cu peste 40% peste × 0,5. Sentimentul (Fear & Greed): frică extremă × 1,25; frică × 1,1; lăcomie × 0,9; lăcomie extremă × 0,75. Rezultatul e între 0,5 și 2. Dacă factorii sunt mari mult timp, suma se termină mai repede; la final cumperi ce a rămas.</p></details>';
     if (P.reserve.length) {
-      const prob = A.touchProb(S.tfs['1d'], P.reserve.map((o) => o.k || 0), P.weeks * 7, true);
-      h += '<h3 style="margin-top:12px">Rezerva: ordine limită pentru căderi mari</h3><div class="scroll"><table class="orders"><thead><tr><th>Ordin Limit de cumpărare</th><th class="n">Sumă</th><th class="n">Șansa în ' + P.weeks + ' săpt.</th></tr></thead><tbody>' +
-        P.reserve.map((o, i) => { const px = tc.pxOf(o.px, 'down'), qn = tc.qtyOf(o.amt, px); return '<tr><td><b>' + (i + 1) + '. la ' + esc(tc.fmt(px)) + '</b> <span class="small">(−' + esc(pc(o.dist, 0)) + ')</span><br><span class="small mute">' + esc(o.why) + '</span></td><td class="n">' + esc(o.amt !== null ? money(o.amt, q) : pc(o.w)) + (qn !== null ? '<br><span class="small mute">' + esc(tc.fq(qn) + ' ' + R.baseCoin) + '</span>' : '') + '</td><td class="n">' + esc(pc(prob.p[i])) + '</td></tr>'; }).join('') + '</tbody></table></div>';
+      const N = P.reserve.length, dd = P.rDist;
+      h += '<h3 style="margin-top:12px">Rezerva: ' + esc(ordTxt(N)) + ' limită pentru căderi</h3>';
+      if (P.rFewer) h += '<p class="small lwarn2">Pentru ' + P.nWant + ' ordine, rezerva trebuie să fie de cel puțin ' + esc(money(P.rNeedFor, q)) + ' (pe Binance, un ordin trebuie să valoreze cel puțin ' + esc(money(P.minOrder, q)) + ')' + (P.r > 0 ? ', adică o sumă totală de cel puțin ' + esc(money(P.rNeedFor / P.r, q)) : '') + '. Acum rezerva are ' + esc(ordTxt(N)) + ', răspândite pe toată zona.</p>';
+      else if (P.equal) h += '<p class="small">Ca fiecare ordin să treacă de minimul Binance (' + esc(money(P.minOrder, q)) + '), sumele sunt egale.</p>';
+      h += '<div class="scroll"><table class="orders"><thead><tr><th>Ordin Limit de cumpărare</th><th class="n">Sumă</th><th class="n">Șansa în ' + P.weeks + ' săpt.</th></tr></thead><tbody>' + orderRows(P.reserve, tc, R, q, 0) + '</tbody></table></div>';
       h += '<p class="small">' + esc(tc.note) + '</p>';
-      h += '<p class="small mute">Dacă rezerva nu se execută până la final, o investești treptat în ultimele săptămâni sau o păstrezi pentru următoarea cădere. „Șansa” e cât de des a coborât prețul până acolo în ' + CE.nDe(P.weeks, 'săptămâni') + ', ' + (prob.onlyFalling ? 'pornind din zile cu trend descendent' : 'pornind din orice zi') + '.</p>';
+      if (fin(P.rExpFill)) h += '<p class="small">Istoric, s-ar fi executat în medie cam <b>' + pc(P.rExpFill) + '</b> din rezervă în ' + esc(CE.nDe(P.weeks, 'săptămâni')) + '.' + (N > 1 ? (() => { const z = scenR(P.reserve, tc, P0)[N - 1]; return ' Dacă se execută toate ordinele, prețul mediu al rezervei e ' + esc(tc.fmt(z.avg)) + ' (−' + esc(pc(z.drop)) + ' față de acum).'; })() : '') + '</p>';
+      h += '<p class="small mute">' + esc((dd && dd.useD ? '„Șansa” = cât de des a coborât prețul până la acel ordin în ' + CE.nDe(P.weeks, 'săptămâni') + ', în ' + CE.nDe(dd.n, 'perioade') + ' din istoric ' + distTxt(dd) + '. ' : '') + 'Dacă rezerva nu se execută până la final, o investești treptat în ultimele săptămâni sau o păstrezi pentru următoarea cădere.') + '</p>';
+      h += '<details class="why"><summary>Cum am ales prețurile rezervei</summary>' + methodHtml(P, R, P0, 'lung') + '</details>';
     }
     if (P.reserveTooSmall) h += '<p class="small">Rezerva e sub minimul unui ordin pe Binance, așa că o cumperi odată cu tranșele săptămânale.</p>';
     if (P.amount !== null) {
@@ -3537,10 +4190,11 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
       } catch (e) { note = 'Nu am putut lua istoricul lung; testul folosește doar lumânările deja descărcate.'; }
       try { fng = await CE.SRC.fngHistory(); } catch (e) { fng = null; }
     }
-    const weeks = setNum('weeks') || 12, reserve = fin(setNum('reserve')) ? setNum('reserve') : 30, st = H.settingsNum();
+    const hd = hold(), weeks = S.acc.weeks === 'auto' || !fin(setNum('weeks')) ? autoWeeks(hd ? hd.days : 365) : setNum('weeks'), reserve = fin(setNum('reserve')) ? setNum('reserve') : 30, st = H.settingsNum(), nOrd = setNum('n') || 5, depth = S.acc.depth;
+    const valid = hd && hd.kind === 'scurt' ? clamp(Math.round(hd.days / 3), 3, 10) : 10, maxDays = hd && hd.kind === 'scurt' ? clamp(hd.days, 3, 90) : 20;
     let res;
     try {
-      res = { coin: R.baseCoin, note, days: D.lastClosed + 1, weeks, reserve, short: A.ladderBacktest(D, { fee: fin(st.feePct) ? st.feePct / 100 : 0.001 }), long: A.dcaBacktest(D, Wk, { weeks, reservePct: reserve, fng: Array.isArray(fng) ? fng : null }) };
+      res = { coin: R.baseCoin, note, days: D.lastClosed + 1, weeks, reserve, nOrd, depth, short: A.ladderBacktest(D, { fee: fin(st.feePct) ? st.feePct / 100 : 0.001, n: nOrd, depth, valid, maxDays: Math.max(maxDays, valid) }), long: A.dcaBacktest(D, Wk, { weeks, reservePct: reserve, fng: Array.isArray(fng) ? fng : null, n: nOrd, depth }) };
     } catch (e) { res = { coin: R.baseCoin, error: 'Testul a eșuat: ' + (e && e.message ? e.message : 'eroare') }; }
     S.accBt = res;
     if (b) { b.disabled = false; b.textContent = 'Rulează din nou'; }
@@ -3554,42 +4208,59 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     h += '<h3>Termen scurt: ordine eșalonate în zile cu trend descendent</h3>';
     if (!s.n) h += '<p>' + (s.placed ? 'Ordinele s-au plasat de ' + s.placed + ' ori, dar nu s-au executat niciodată.' : 'Nu au existat suficiente zile cu trend descendent pentru test.') + '</p>';
     else {
-      h += '<div class="kv">' + kv('Planuri plasate', fmtNum(s.placed, 0)) + kv('Cu cel puțin un ordin executat', pc(s.fillRate)) + kv('Pe plus', pc(s.winRate)) + kv('Rezultat mediu', fR(s.avgR)) + kv('Ieșiri: țintă / stop / timp', s.why.tinta + ' / ' + s.why.stop + ' / ' + s.why.timp, 'txt') + '</div>';
+      h += '<div class="kv">' + kv('Planuri plasate', fmtNum(s.placed, 0)) + kv('Cu cel puțin un ordin executat', pc(s.fillRate)) + kv('Executat în medie din sumă', pc(s.avgFilled)) + kv('Pe plus', pc(s.winRate)) + kv('Rezultat mediu', fR(s.avgR)) + kv('Ieșiri: țintă / stop / timp', s.why.tinta + ' / ' + s.why.stop + ' / ' + s.why.timp, 'txt') + '</div>';
       const v = s.n < 20 ? 'Eșantion mic (' + s.n + '): rezultatul poate fi întâmplător.' : s.avgR > 0.1 ? 'Pe ' + r.coin + ', cumpărările eșalonate în cădere au avut istoric un avantaj: rezultatul mediu a fost pozitiv.' : s.avgR < 0 ? 'Pe ' + r.coin + ', cumpărările eșalonate în cădere au pierdut bani istoric. Preferă acumularea lentă pe termen lung sau așteaptă semnalul din „Analiză”.' : 'Rezultat aproape de zero: fără avantaj clar pe această monedă.';
-      h += '<p>' + esc(v) + ' <span class="small mute">R = pierderea maximă a planului (dacă se execută tot și se atinge stopul). Testul folosește trepte de 1,5 / 3 / 4,5 × ATR, stop la 5,5 × ATR, ieșire la MA(25) pe 1 zi sau după 20 de zile.</span></p>';
+      h += '<p>' + esc(v) + ' <span class="small mute">R = pierderea maximă a planului (dacă se execută tot și se atinge stopul). Testul folosește aceeași metodă ca planul, doar cu ce se știa în fiecare zi: ' + esc(ordTxt(s.nOrders) + ' („' + ((A.DEPTH[r.depth] || A.DEPTH.echilibrat).name) + '”)') + ', ordinele stau ' + esc(CE.nDe(s.valid, 'zile')) + ', stop cu 1 × ATR sub ultimul ordin, ieșire la MA(25) pe 1 zi sau după ' + esc(CE.nDe(s.maxDays, 'zile')) + '. Nu mută ordinele pe suporturi.</span></p>';
     }
-    h += '<h3 style="margin-top:14px">Termen lung: ' + CE.nDe(r.weeks, 'săptămâni') + ', rezervă ' + r.reserve + '%</h3>';
+    h += '<h3 style="margin-top:14px">Termen lung: ' + CE.nDe(r.weeks, 'săptămâni') + ', rezervă ' + r.reserve + '%' + (r.reserve > 0 ? ' în ' + esc(ordTxt(l.nOrders)) : '') + '</h3>';
     if (!l.n) h += '<p>Istoricul e prea scurt pentru ' + CE.nDe(r.weeks, 'săptămâni') + '.</p>';
     else {
       h += '<div class="scroll"><table><thead><tr><th>Metoda</th><th class="n">Preț mediu față de „totul odată”</th><th class="n">Rezultat la ~' + Math.round(l.holdDays / 30) + ' luni după</th></tr></thead><tbody>' +
         '<tr><td>Totul odată, în prima zi</td><td class="n">0%</td><td class="n">' + esc(fP(l.valLump)) + '</td></tr>' +
         '<tr><td>Treptat, sume egale</td><td class="n">' + esc(fP(l.medDca)) + '</td><td class="n">' + esc(fP(l.valDca)) + '</td></tr>' +
         '<tr><td>Treptat, cu factor și rezervă (planul)</td><td class="n">' + esc(fP(l.medSmart)) + '</td><td class="n">' + esc(fP(l.valSmart)) + '</td></tr></tbody></table></div>';
-      h += '<p>' + esc('Din ' + CE.nDe(l.n, 'situații') + ' ' + (l.onlyFalling ? 'în care trendul pe 1 săptămână era descendent' : 'din tot istoricul (prea puține cu trend descendent)') + ' (valori mediane): planul a obținut un preț mediu mai bun decât „totul odată” în ' + pc(l.smartBeatsLump) + ' din cazuri și mai bun decât sumele egale în ' + pc(l.smartBeatsDca) + '.') + '</p>';
+      h += '<p>' + esc('Din ' + CE.nDe(l.n, 'situații') + ' ' + (l.onlyFalling ? 'în care trendul pe 1 săptămână era descendent' : 'din tot istoricul (prea puține cu trend descendent)') + ' (valori mediane): planul a obținut un preț mediu mai bun decât „totul odată” în ' + pc(l.smartBeatsLump) + ' din cazuri și mai bun decât sumele egale în ' + pc(l.smartBeatsDca) + '.' + (fin(l.resFillShare) ? ' Din ordinele rezervei s-au executat în medie ' + pc(l.resFillShare) + '.' : '')) + '</p>';
       h += '<p class="small mute">' + esc('Negativ în coloana a doua = ai plătit mai puțin decât dacă cumpărai totul în prima zi. ' + (l.usedFng ? 'Factorul a folosit și istoricul Fear & Greed. ' : 'Factorul a folosit doar prețul (fără istoricul Fear & Greed). ') + 'Situațiile pornesc la 2 săptămâni una de alta și se suprapun, deci nu sunt independente. Într-o piață care urcă tot timpul, „totul odată” câștigă de obicei; cumpărarea treptată te protejează când nu știi ce urmează.') + '</p>';
     }
     out.innerHTML = h;
   }
 
   /* ---------- cum pui ordinele în Binance ---------- */
-  function howHtml(R, q) {
-    const pair = R.baseCoin + '/' + q;
+  function howHtml(C) {
+    const { R, q, hd, T, tc } = C, pair = R.baseCoin + '/' + q;
     let h = '<div class="sec"><h2>Cum pui ordinele în Binance</h2>';
-    if (S.acc.horizon === 'scurt') {
+    if (hd.kind === 'scurt') {
+      const vd = C.L ? C.L.validDays : 10;
       h += '<ol><li>Deschide <b>' + esc(pair) + '</b> → Spot → <b>Limit</b> → Cumpără. Scrie prețul și suma din tabel; repetă pentru fiecare ordin. Ordinele Limit care stau în carte plătesc de obicei comisionul mai mic (maker).</li>' +
+        '<li>Un ordin deschis îți blochează suma în ' + esc(q) + ' până se execută sau îl anulezi, așa că ai nevoie în cont de suma tuturor ordinelor.</li>' +
         '<li>Când se execută primul ordin, pune protecția: Vinde → <b>OCO</b>: „Limit” la ținta 1 pentru jumătate din cantitate și „Stop-Limit” la stop (cu prețul limită puțin sub stop). Pentru cealaltă jumătate pune un „Stop-Limit” la același stop.</li>' +
-        '<li>La fiecare ordin nou executat, actualizează cantitățile din ordinele de vânzare.</li><li>După ' + 10 + ' zile fără execuții, anulează ordinele (Ordine deschise → Anulează) și refă planul.</li></ol>';
+        '<li>La fiecare ordin nou executat, actualizează cantitățile din ordinele de vânzare.</li><li>După ' + esc(CE.nDe(vd, 'zile')) + ' fără execuții, anulează ordinele (Ordine deschise → Anulează) și refă planul.</li></ol>';
     } else {
       h += '<ol><li>Cumpărarea săptămânală: deschide <b>' + esc(pair) + '</b> → Spot și cumpără suma din „Săptămâna aceasta” (Limit la prețul curent sau Market pentru sume mici). Poți folosi și cumpărarea recurentă (Auto-Invest) din aplicația Binance, dacă e disponibilă pentru contul tău; atunci ajustezi manual doar diferența dată de factor.</li>' +
-        '<li>Rezerva: pune ordinele <b>Limit</b> din tabel; rămân active până se execută sau până le anulezi.</li><li>Notează fiecare cumpărare (data, prețul, suma). Prețul tău mediu = suma totală plătită / cantitatea totală.</li></ol>';
+        '<li>Rezerva: pune ordinele <b>Limit</b> din tabel; rămân active până se execută sau până le anulezi. Cât stau deschise, suma lor e blocată în ' + esc(q) + '.</li><li>Notează fiecare cumpărare (data, prețul, suma). Prețul tău mediu = suma totală plătită / cantitatea totală.</li></ol>';
     }
-    const tc = tradeCtx(R);
+    if (T && !T.below && T.sell && T.sell.length) h += '<h3 style="margin-top:10px">Vânzarea spre țintă</h3><ol><li>După ce ai cumpărat, deschide <b>' + esc(pair) + '</b> → Spot → <b>Limit</b> → Vinde.</li><li>Pentru fiecare treaptă din „Cum vinzi spre țintă”, scrie prețul și cantitatea: procentul din monedele pe care le ai (de exemplu 30% din 1.000 de monede = 300).</li><li>Ordinele de vânzare rămân deschise până se execută și blochează monedele lor. Când mai cumperi, mărește cantitățile.</li></ol>';
     h += '<p class="small">' + esc(tc.ok ? 'Prețurile și cantitățile din tabele sunt deja pe ' + pair + ', rotunjite la regulile Binance, așa că le poți copia exact.' : 'Prețurile sunt calculate pe ' + R.symbol + '. Pe ' + pair + ' sunt practic aceleași, dar verifică-le înainte de a trimite ordinul.') + ' Planul aplică reguli fixe pe date: nu știe viitorul și nu e un sfat financiar.</p>';
     return h + '</div>';
   }
 
-  document.addEventListener('click', (e) => { const t = e.target.closest('button'); if (t && t.id === 'runAcc') runTest(); });
-  window.ACCUI = { render, renderOut, onInput, fetchExtras, renderSent, isOpen };
+  /* ---------- butoane ---------- */
+  async function planGo() {
+    const inp = $('#planCoin'); if (!inp || (S.auto && S.auto.busy)) return;
+    const c = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 15);
+    if (!c) { const m = $('#planMsg'); if (m) m.textContent = 'Scrie o monedă, de exemplu BTC.'; return; }
+    const top = $('#coin'); if (top) { top.value = c; top.dispatchEvent(new Event('change', { bubbles: true })); }
+    if (H.autoAnalyze) await H.autoAnalyze();
+  }
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('button'); if (!t) return;
+    if (t.id === 'runAcc') { runTest(); return; }
+    if (t.id === 'planGo') { planGo(); return; }
+    if (t.dataset.tgt !== undefined && t.closest('#tgtChips')) { S.acc.target = t.dataset.tgt; if (H.save) H.save(); render(true); }
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target && e.target.id === 'planCoin') { e.preventDefault(); planGo(); } });
+  document.addEventListener('toggle', (e) => { if (e.target && e.target.matches && e.target.matches('details.adv')) S.advOpen = e.target.open; }, true);
+  window.ACCUI = { render, renderOut, onInput, fetchExtras, renderSent, isOpen, status, hold };
 })();
 
 /* app2.js — afișarea rezultatelor, grafice, backtest, risc, lecții */
@@ -3653,7 +4324,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
         tr = 'Perechea ta: <b>' + esc(pairOf(t.sym)) + ' ' + esc(fmtPx(b.last, t.info)) + '</b> <span class="lmute">· cumperi la ' + esc(fmtPx(b.ask, t.info)) + (fin(sp) ? ' · diferență cumpărare/vânzare ' + esc(fmtNum(sp, 2)) + '%' : '') + '</span>';
         if (fin(sp) && sp > 0.3) warn = 'Pe ' + pairOf(t.sym) + ' diferența dintre cumpărare și vânzare e mare: folosește doar ordine Limit, nu Market.';
       } else tr = '<span class="lmute">Aștept prețul pe ' + esc(pairOf(t.sym)) + '…</span>';
-    } else if (t && t.missing) warn = pairOf(t.sym) + ' nu există pe Binance Spot. Alege altă pereche în „Acumulare” → „Perechea pe care cumperi” (USDC sau EUR).';
+    } else if (t && t.missing) warn = pairOf(t.sym) + ' nu există pe Binance Spot. Alege altă pereche în „Plan” → „Perechea pe care cumperi” (USDC sau EUR).';
     put('lvTrade', tr);
     const mv = a.last / R.livePrice - 1, sn = R.per[R.roles.setup], atrP = sn && fin(sn.snap.atr) ? sn.snap.atr / R.livePrice : null;
     put('lvAn', '<span class="lmute">Analiza e făcută la ' + esc(fp(R.livePrice)) + ', ' + esc(ago(now - R.liveAt)) + '; de atunci ' + esc(fmtPct(mv * 100, 2)) + '. Se reface singură la închiderea fiecărei lumânări de ' + esc(R.roles.setup || '') + '.</span>');
@@ -3867,7 +4538,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     const fig = $('#chartFig');
     if (fig && 'ResizeObserver' in window) { chartRO = new ResizeObserver(() => drawChart()); chartRO.observe(fig); } else drawChart();
     if (S.bt) renderBt(); // afișează și testul pe 12 monede, dacă există
-    updateCalc();
+    updateCalc(); updateRisk();
     if (window.ACCUI) { window.ACCUI.renderSent(); if (window.ACCUI.isOpen()) window.ACCUI.render(); }
     for (const k of Object.keys(last)) delete last[k];
     renderLive();
@@ -4063,59 +4734,140 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     svg.innerHTML = g;
   }
 
-  /* ---------- Plan și risc ---------- */
+  /* ---------- Risc: banii tăi, pe înțeles ---------- */
+  const b = (x) => '<b>' + esc(x) + '</b>';
+  const RISK_GLOSS = [
+    ['Stop-loss (stop)', 'Prețul la care vinzi ca să oprești pierderea. Îl alegi înainte să cumperi și îl pui ca ordin în Binance (Stop-Limit), ca să funcționeze și când nu ești la telefon.'],
+    ['Ținta (take-profit)', 'Prețul la care vinzi cu profit, de obicei cu un ordin Limit de vânzare pus din timp.'],
+    ['R (suma riscată)', 'Cât pierzi dacă prețul ajunge la stop. „2R” = de două ori suma riscată. Așa compari tranzacții de mărimi diferite.'],
+    ['Câștig/risc', 'Cât poți câștiga până la țintă împărțit la cât poți pierde până la stop. 2 înseamnă că riști 10 ca să câștigi 20.'],
+    ['Ordin Limit', 'Cumperi sau vinzi doar la prețul tău sau mai bine. Poate să nu se execute, dacă prețul nu ajunge acolo.'],
+    ['Ordin Market', 'Cumperi sau vinzi imediat, la prețul pieței. Sigur se execută, dar prețul poate fi puțin mai prost.'],
+    ['OCO', 'Două ordine de vânzare legate: ținta și stopul. Când se execută unul, celălalt se anulează singur.'],
+    ['Levier, lichidare', 'Levierul înseamnă bani împrumutați de la bursă. Dacă prețul merge puțin împotriva ta, bursa îți închide forțat poziția (lichidare) și pierzi tot ce ai pus în ea.']
+  ];
   function renderRisk() {
     const box = $('#risk');
-    const st = S.settings;
+    const st = S.settings, Q = (S.acc && S.acc.pair) || (H.curQuote ? H.curQuote() : 'USDC');
     const f = (key, label, hint) => '<label>' + esc(label) + '<input data-f="s.' + key + '" inputmode="decimal" autocomplete="off" value="' + esc(st[key] || '') + '">' + (hint ? '<em>' + esc(hint) + '</em>' : '') + '<span class="echo-slot"></span></label>';
-    const c = (id, label) => '<label>' + esc(label) + '<input id="' + id + '" inputmode="decimal" autocomplete="off"><span class="echo-slot"></span></label>';
-    let h = '<div class="calc"><div>';
-    h += '<div class="sec"><h2>Setările tale</h2><div class="form">' + f('capital', 'Capitalul pentru tranzacționare', 'În moneda de cotare (ex. USDC). Doar bani pe care îi poți pierde.') + f('riskPct', 'Risc pe tranzacție (%)', 'Recomandat 0,5–1%. Maxim 2%.') + f('feePct', 'Comision pe fiecare parte (%)', 'Binance spot: 0,1% (0,075% plătind cu BNB).') + '</div><p class="small mute">Se folosesc în plan (cantitate, pierdere la stop) și în calculatorul de mai jos. Rămân doar pe acest dispozitiv.</p></div>';
-    h += '<div class="sec"><h2>Calculatorul de poziție</h2><div class="form">' + c('cEntry', 'Prețul de intrare') + c('cStop', 'Stop-loss') + c('cTarget', 'Ținta') + '</div><div class="btns"><button class="btn" id="usePlan" style="background:var(--ink);color:var(--bg)">Folosește planul din analiză</button></div><div id="calcOut"></div></div>';
+    const c = (id, label, hint) => '<label>' + esc(label) + '<input id="' + id + '" inputmode="decimal" autocomplete="off">' + (hint ? '<em>' + esc(hint) + '</em>' : '') + '<span class="echo-slot"></span></label>';
+    let h = '<div class="sec"><h2>Riscul, pe înțeles</h2><div class="status flat"><h3>Regula de aur: într-o tranzacție nu pierzi mai mult de 1% din bani</h3>' +
+      '<p>Nu poți controla cât câștigi, dar poți controla cât pierzi. Înainte să cumperi, alegi prețul la care recunoști că te-ai înșelat (stop-loss) și cumperi doar atâtea monede încât, dacă prețul ajunge acolo, să pierzi cel mult 1% din capital. Așa, chiar și 10 greșeli la rând te costă doar cam 10%.</p></div>' +
+      '<p>Aici alegi cât riști, afli câte monede să cumperi și vezi de ce contează. Setările de aici se folosesc în tot programul: în „Plan” și în „Analiză”.</p></div>';
+    h += '<div class="calc"><div>';
+    h += '<div class="sec"><h2>Banii tăi</h2><div class="form">' + f('capital', 'Capitalul (toți banii pentru crypto)', 'În ' + Q + '. Doar bani pe care îi poți pierde fără să-ți afecteze viața.') +
+      f('riskPct', 'Cât riști pe o tranzacție (%)', 'Din capital. Începători: 0,5–1%. Cel mult 2%.') + f('feePct', 'Comisionul Binance (%)', '0,1% la cumpărare și tot 0,1% la vânzare (0,075% dacă plătești comisionul în BNB).') + '</div>';
+    h += '<div class="chips" id="riskChips"><span class="small">Alege rapid:</span><button data-risk="0.5">Prudent · 0,5%</button><button data-risk="1">Normal · 1%</button><button data-risk="2">Curajos · 2%</button></div>';
+    h += '<div id="riskSay"></div></div>';
+    h += '<div class="sec"><h2>Câte monede să cumperi</h2><p class="small">Scrii la ce preț cumperi și unde ieși dacă greșești. Programul îți spune câte monede să cumperi ca să nu pierzi mai mult decât ai ales mai sus.</p><div class="form">' +
+      c('cEntry', 'La ce preț cumperi', 'Intrarea.') + c('cStop', 'Unde ieși dacă greșești', 'Stop-loss: sub prețul de cumpărare.') + c('cTarget', 'Unde iei profitul', 'Ținta. Opțional.') + '</div>' +
+      '<div class="btns"><button class="btn" id="usePlan" style="background:var(--ink);color:var(--bg)">Folosește planul din analiză</button></div><div id="calcOut"></div></div>';
+    h += '<div class="sec" id="alloc"></div>';
     h += '</div><div>';
-    h += '<div class="sec"><h2>Matematica profitului</h2><p>Rezultatul mediu al unei tranzacții, în R (R = suma riscată): <b>câștig mediu = rata de câștig × raportul câștig/risc − rata de pierdere</b>. Verde = câștigi pe termen lung, roșu = pierzi.</p>';
+    h += '<div class="sec" id="streak"></div>';
+    h += '<div class="sec"><h2>De ce pierderile mari sunt atât de periculoase</h2><p>După o pierdere, ai nevoie de un câștig mai mare ca să revii de unde ai plecat:</p><div class="scroll"><table><thead><tr><th>Dacă pierzi</th><th class="n">Ca să revii, trebuie să câștigi</th></tr></thead><tbody>' +
+      [10, 20, 30, 50, 70, 90].map((x) => '<tr><td>−' + x + '%</td><td class="n">+' + fmtNum(x / (100 - x) * 100, 0) + '%</td></tr>').join('') + '</tbody></table></div>' +
+      '<p class="small">În crypto, căderi de 50–90% s-au întâmplat des, chiar și la monede mari. De aceea, la tranzacții pui stop-loss, iar la acumularea pe termen lung pui doar bani pe care îi poți lăsa acolo ani de zile.</p></div>';
     const rrs = [1, 1.5, 2, 3], ps = [0.3, 0.4, 0.5, 0.6];
-    h += '<div class="scroll"><table><thead><tr><th>Câștigi în…</th>' + rrs.map((r) => '<th class="n">R:R ' + fmtNum(r, r % 1 ? 1 : 0) + '</th>').join('') + '</tr></thead><tbody>' + ps.map((p) => '<tr><td>' + fmtNum(p * 100, 0) + '% din cazuri</td>' + rrs.map((r) => { const e = p * r - (1 - p); return '<td class="n" style="color:' + (e > 0.001 ? 'var(--up)' : e < -0.001 ? 'var(--dn)' : 'var(--mute)') + '">' + (e > 0 ? '+' : '') + fmtNum(e, 2) + ' R</td>'; }).join('') + '</tr>').join('') + '</tbody></table></div>';
-    h += '<p class="small">Cu raport 2:1 ești profitabil chiar dacă ai dreptate doar în 40% din cazuri. Cu raport 1:1 ai nevoie de peste 50% (plus comisioane). De aceea programul cere R:R ≥ 2.</p></div>';
-    h += '<div class="sec"><h2>Lista de verificare înainte de fiecare tranzacție</h2><ul class="checks">' + ['Trendul pe intervalul mare (filtrul) e în direcția mea.', 'Intru după o retragere, nu după un salt.', 'Am un semnal de reluare (închidere peste maximul anterior).', 'Știu exact unde e stop-ul și l-am pus ca ordin.', 'Risc cel mult 1% din capital; cantitatea e calculată.', 'Până la prima rezistență am cel puțin de 2 ori riscul.', 'Am verificat trendul BTC: nu e în cădere puternică.', 'Nu sunt știri sau deblocări mari în zilele următoare.', 'Nu intru din plictiseală, frică de a rata (FOMO) sau ca să recuperez o pierdere.', 'Scriu tranzacția în jurnal: motiv, intrare, stop, țintă.'].map((t, i) => '<li><input type="checkbox" id="pc' + i + '" style="width:24px;height:24px;min-height:0;margin:2px 0 0"><label for="pc' + i + '">' + esc(t) + '</label></li>').join('') + '</ul></div>';
+    h += '<div class="sec"><h2>De ce poți câștiga chiar dacă greșești des</h2><p>Contează două lucruri: cât de des câștigi și cât câștigi față de cât pierzi. Dacă la fiecare tranzacție câștigul posibil e de 2 ori pierderea posibilă (riști 10 ca să câștigi 20), ajunge să ai dreptate în 4 din 10 tranzacții ca să ieși pe plus.</p>';
+    h += '<div class="scroll"><table><thead><tr><th>Câștigi în…</th>' + rrs.map((r) => '<th class="n">câștig = ' + (r === 1 ? 'pierderea' : fmtNum(r, r % 1 ? 1 : 0) + ' × pierderea') + '</th>').join('') + '</tr></thead><tbody>' +
+      ps.map((p) => '<tr><td>' + fmtNum(p * 10, 0) + ' din 10 tranzacții</td>' + rrs.map((r) => { const e = p * r - (1 - p); return '<td class="n" style="color:' + (e > 0.001 ? 'var(--up)' : e < -0.001 ? 'var(--dn)' : 'var(--mute)') + '">' + (e > 0.001 ? '+' : '') + fmtNum(e, 2) + '</td>'; }).join('') + '</tr>').join('') + '</tbody></table></div>';
+    h += '<p class="small">Cifrele = cât câștigi (verde) sau pierzi (roșu) în medie pe tranzacție, ca parte din suma riscată. De exemplu, +0,20 cu 10 ' + esc(Q) + ' riscați înseamnă +2 ' + esc(Q) + ' în medie la fiecare tranzacție. Comisioanele scad puțin aceste cifre. De aceea programul caută tranzacții în care câștigul posibil e de cel puțin 2 ori pierderea.</p></div>';
+    h += '<div class="sec"><h2>Riscurile pe care nu le vezi pe grafic</h2><ul class="small">' + [
+      '<b>Volatilitatea.</b> O scădere de 30–50% în câteva săptămâni e normală în crypto, chiar și la Bitcoin. Nu cumpăra cu bani de care ai nevoie curând.',
+      '<b>Levierul.</b> Cu bani împrumutați (marjă, futures), o mișcare mică împotriva ta îți poate lichida toată poziția. Evită-l până ai un istoric de câștiguri.',
+      '<b>Deblocările de monede.</b> Când intră pe piață multe monede noi (de la echipă și investitori), prețul scade de obicei. Verifică programul pe Tokenomist sau CoinMarketCap.',
+      '<b>Lichiditatea.</b> La monedele mici, diferența dintre prețul de cumpărare și cel de vânzare e mare, iar un ordin mare mișcă prețul.',
+      '<b>Bursa.</b> Ține pe bursă doar ce tranzacționezi. Activează verificarea în doi pași (2FA, cu aplicație sau cheie fizică) și lista de adrese aprobate pentru retrageri.',
+      '<b>Înșelătoriile.</b> Nimeni de la Binance nu îți cere parola sau codurile. Grupurile de „semnale” și promisiunile de câștig sigur sunt aproape mereu înșelătorii.',
+      '<b>Emoțiile.</b> Frica de a rata (FOMO) și graba de a recupera o pierdere sunt cele mai scumpe greșeli. Un plan scris dinainte te ferește de ele.',
+      '<b>Impozitul.</b> În România, câștigul din crypto se impozitează cu 16% și se declară în Declarația unică.'
+    ].map((t) => '<li>' + t + '</li>').join('') + '</ul></div>';
+    h += '<div class="sec"><h2>Lista de verificare înainte de fiecare tranzacție</h2><ul class="checks">' + ['Trendul mare e în direcția mea (în „Analiză”, filtrul e verde).', 'Cumpăr după o scădere temporară, nu după un salt.', 'Am un semnal că scăderea s-a oprit.', 'Știu exact unde e stop-loss-ul și l-am pus ca ordin.', 'Risc cel mult 1% din capital; cantitatea e calculată aici.', 'Câștigul posibil e de cel puțin 2 ori pierderea posibilă.', 'Bitcoin nu e într-o cădere puternică.', 'Nu sunt știri sau deblocări mari de monede în zilele următoare.', 'Nu cumpăr din plictiseală, din frică de a rata (FOMO) sau ca să recuperez o pierdere.', 'Notez tranzacția: de ce, intrarea, stopul, ținta.'].map((t, i) => '<li><input type="checkbox" id="pc' + i + '" style="width:24px;height:24px;min-height:0;margin:2px 0 0"><label for="pc' + i + '">' + esc(t) + '</label></li>').join('') + '</ul></div>';
+    h += '<div class="sec"><h2>Cuvintele de pe această pagină</h2><dl class="gloss">' + RISK_GLOSS.map(([t, d]) => '<dt>' + esc(t) + '</dt><dd>' + esc(d) + '</dd>').join('') + '</dl>' + more('glosar', 'Toate cuvintele din aplicație') + '</div>';
     h += '</div></div>';
     box.innerHTML = h;
     for (const el of $$('#risk input[data-f]')) { const slot = el.parentElement.querySelector('.echo-slot'); const v = parseNum(el.value); if (slot && el.value) slot.innerHTML = v === null ? '<span class="echo bad">nu înțeleg numărul</span>' : '<span class="echo">= ' + esc(H.fmtExact(v)) + '</span>'; }
-    updateCalc();
+    updateRisk();
+  }
+  /* partea care depinde de setări: riscul în bani, pierderile la rând, cât într-o singură monedă */
+  function updateRisk() {
+    const st = H.settingsNum(), Q = (S.acc && S.acc.pair) || (H.curQuote ? H.curQuote() : 'USDC'), cap = fin(st.capital) && st.capital > 0 ? st.capital : null, rp = fin(st.riskPct) && st.riskPct > 0 ? st.riskPct : null;
+    const say = $('#riskSay');
+    if (say) {
+      let t;
+      if (cap && rp) t = '<p>Cu ' + b(fmtNum(cap, cap >= 100 ? 0 : 2) + ' ' + Q) + ' și ' + b(fmtNum(rp, 1) + '%') + ': la o tranzacție pierzi cel mult ' + b(fmtNum(cap * rp / 100, 2) + ' ' + Q) + ' (plus comisioane), dacă respecți stop-loss-ul.' + (rp > 2 ? ' <span class="lwarn2">Peste 2% e mult: 10 pierderi la rând ar însemna ' + esc(fmtPct(-(1 - Math.pow(1 - rp / 100, 10)) * 100, 0)) + ' din bani.</span>' : '') + '</p>';
+      else if (rp) t = '<p class="small">Scrie capitalul ca să-ți arăt în bani cât riști pe o tranzacție.</p>';
+      else t = '<p class="small">Scrie cât riști pe o tranzacție (recomandat 1%).</p>';
+      say.innerHTML = t;
+    }
+    const sk = $('#streak');
+    if (sk) {
+      const risks = [1, 2, 5, 10], ks = [3, 5, 10], mine = rp && !risks.includes(rp) && rp < 50 ? rp : null;
+      const cols = mine ? risks.concat([mine]).sort((x, y) => x - y) : risks;
+      let h = '<h2>Ce se întâmplă după mai multe pierderi la rând</h2><p>Chiar și o metodă bună are serii de 5–10 pierderi. Cât îți rămâne din bani, după cât riști pe fiecare tranzacție:</p>';
+      h += '<div class="scroll"><table><thead><tr><th>Pierderi la rând</th>' + cols.map((r) => '<th class="n"' + (r === rp ? ' style="color:var(--ink);text-decoration:underline"' : '') + '>' + fmtNum(r, r % 1 ? 1 : 0) + '%' + (r === rp ? ' (tu)' : '') + '</th>').join('') + '</tr></thead><tbody>' +
+        ks.map((k) => '<tr><td>' + k + '</td>' + cols.map((r) => { const left = Math.pow(1 - r / 100, k); return '<td class="n" style="color:' + (left >= 0.85 ? 'var(--up)' : left >= 0.6 ? 'var(--warn)' : 'var(--dn)') + '">' + esc(fmtPct(-(1 - left) * 100, 0)) + (cap ? '<br><span class="small mute">' + esc(fmtNum(cap * left, 0)) + '</span>' : '') + '</td>'; }).join('') + '</tr>').join('') + '</tbody></table></div>';
+      h += '<p class="small">Cu 1% pe tranzacție, după 10 pierderi la rând mai ai cam 90% din bani și poți continua liniștit. Cu 10%, îți rămâne doar o treime și ar trebui să-ți triplezi banii ca să revii.</p>';
+      sk.innerHTML = h;
+    }
+    const al = $('#alloc');
+    if (al) {
+      const R = S.report, coin = R && R.baseCoin ? R.baseCoin : S.coin, ci = S.ext && S.ext.coinInfo && S.ext.coin === coin ? S.ext.coinInfo : null;
+      const rank = ci && fin(ci.rank) ? ci.rank : null, cls = /^(BTC|ETH)$/.test(coin) ? 'baza' : rank !== null ? (rank <= 50 ? 'mare' : 'mica') : null;
+      const lim = { baza: null, mare: 0.15, mica: 0.05 };
+      let h = '<h2>Cât să pui într-o singură monedă</h2><p>Reguli folosite de mulți investitori prudenți, ca o singură monedă să nu-ți poată distruge portofoliul:</p><ul class="small">' +
+        '<li><b>Bitcoin și Ethereum</b>: cele mai vechi și mai lichide. Pot fi baza: jumătate sau mai mult din banii pentru crypto.</li>' +
+        '<li><b>Monede mari</b> (primele ~50 după capitalizare): cel mult 10–15% într-una singură' + (cap ? ', adică până la ' + esc(fmtNum(cap * 0.15, 0) + ' ' + Q) : '') + '.</li>' +
+        '<li><b>Monede mici sau noi</b>: cel mult 2–5% într-una singură' + (cap ? ', adică până la ' + esc(fmtNum(cap * 0.05, 0) + ' ' + Q) : '') + '. Multe dispar de tot.</li></ul>';
+      if (coin && cls) h += '<p>' + esc(cls === 'baza' ? coin + ' e una dintre monedele de bază.' : coin + ' e pe locul ' + rank + ' după capitalizare (CoinGecko), deci ' + (cls === 'mare' ? 'o monedă mare' : 'o monedă mică') + ': ' + (cap ? 'cel mult cam ' + fmtNum(cap * lim[cls], 0) + ' ' + Q + ' din capitalul tău.' : 'cel mult ' + (cls === 'mare' ? '10–15%' : '2–5%') + ' din capital.')) + '</p>';
+      al.innerHTML = h;
+    }
   }
   function updateCalc() {
     const out = $('#calcOut'); if (!out) return;
     const e = parseNum(($('#cEntry') || {}).value), s = parseNum(($('#cStop') || {}).value), t = parseNum(($('#cTarget') || {}).value);
-    const st = H.settingsNum(), cap = st.capital, rp = fin(st.riskPct) && st.riskPct > 0 ? st.riskPct : 1, fee = fin(st.feePct) && st.feePct >= 0 ? st.feePct / 100 : 0.001;
+    const st = H.settingsNum(), cap = st.capital, rp = fin(st.riskPct) && st.riskPct > 0 ? st.riskPct : 1, fee = fin(st.feePct) && st.feePct >= 0 ? st.feePct / 100 : 0.001, Q = (S.acc && S.acc.pair) || (H.curQuote ? H.curQuote() : 'USDC');
     for (const [id, v] of [['cEntry', e], ['cStop', s], ['cTarget', t]]) { const el = $('#' + id); const slot = el && el.parentElement.querySelector('.echo-slot'); if (slot) slot.innerHTML = el.value ? (v === null ? '<span class="echo bad">nu înțeleg numărul</span>' : '<span class="echo">= ' + esc(H.fmtExact(v)) + '</span>') : ''; }
-    if (!fin(e) || !fin(s)) { out.innerHTML = '<p class="small mute">Introdu prețul de intrare și stop-loss-ul.</p>'; return; }
-    if (s >= e) { out.innerHTML = '<p class="small" style="color:var(--dn)">Pentru o cumpărare, stop-loss-ul trebuie să fie sub prețul de intrare.</p>'; return; }
-    const dist = e - s, per = dist + fee * (e + s);
+    if (!fin(e) || !fin(s)) { out.innerHTML = '<p class="small mute">Scrie la ce preț cumperi și unde ieși dacă greșești, sau apasă „Folosește planul din analiză”.</p>'; return; }
+    if (s >= e) { out.innerHTML = '<p class="small" style="color:var(--dn)">Prețul la care ieși dacă greșești (stop-loss) trebuie să fie sub prețul de cumpărare.</p>'; return; }
+    const dist = e - s, per = dist + fee * (e + s), fx = (v) => H.fmtExact(+v.toPrecision(8));
     let h = '<div class="kv">' + kv('Distanța până la stop', fmtPct(-dist / e * 100, 2), 'stop');
-    let W = null, L = null;
-    if (fin(t) && t > e) { const rr = (t - e) / dist; h += kv('Câștig/risc', fmtNum(rr, 2)); }
+    const rr = fin(t) && t > e ? (t - e) / dist : null;
+    if (rr !== null) h += kv('Câștig/risc', fmtNum(rr, 2));
     if (fin(cap) && cap > 0) {
       let qty = cap * rp / 100 / per, capped = false;
       if (qty * e * (1 + fee) > cap) { qty = cap / (e * (1 + fee)); capped = true; }
-      L = qty * per;
-      h += kv('Cantitate de cumpărat', fmtNum(qty, qty >= 100 ? 0 : 6)) + kv('Valoarea poziției', fmtNum(qty * e, 2)) + kv('Pierdere la stop', '−' + fmtNum(L, 2), 'stop');
-      if (fin(t) && t > e) { W = qty * (t - e) - fee * qty * (e + t); h += kv('Profit la țintă', '+' + fmtNum(W, 2), 'tgt'); }
+      const L = qty * per, W = rr !== null ? qty * (t - e) - fee * qty * (e + t) : null;
+      h += kv('Cantitate de cumpărat', fmtNum(qty, qty >= 100 ? 0 : 6)) + kv('Valoarea poziției', fmtNum(qty * e, 2) + ' ' + Q) + kv('Pierdere la stop', '−' + fmtNum(L, 2) + ' ' + Q, 'stop');
+      if (W !== null) h += kv('Profit la țintă', '+' + fmtNum(W, 2) + ' ' + Q, 'tgt');
       h += '</div>';
-      if (capped) h += '<p class="small">Poziția e limitată de capital (fără împrumut), deci riști mai puțin de ' + esc(fmtNum(rp, 1)) + '%.</p>';
-      if (W !== null && W > 0) h += '<p>Ca să nu pierzi bani pe termen lung cu aceste cifre, trebuie să câștigi în cel puțin <b>' + esc(fmtNum(L / (W + L) * 100, 0)) + '%</b> din tranzacții (comisioanele incluse).</p>';
-    } else h += '</div><p class="small mute">Pune capitalul în setări ca să afli cantitatea.</p>';
+      let p = 'Cumperi cam ' + b(fmtNum(qty, qty >= 100 ? 0 : 4)) + ' monede, adică ' + b(fmtNum(qty * e, 2) + ' ' + Q) + '. Dacă prețul coboară la ' + esc(fx(s)) + ', ieși și pierzi cam ' + b(fmtNum(L, 2) + ' ' + Q) + ' (' + esc(fmtNum(L / cap * 100, 1)) + '% din capital), cu tot cu comisioane.';
+      if (W !== null) p += ' Dacă urcă la ' + esc(fx(t)) + ', câștigi cam ' + b(fmtNum(W, 2) + ' ' + Q) + ', adică de ' + esc(fmtNum(W / L, 1)) + ' ori cât riști (după comisioane).';
+      h += '<p>' + p + '</p>';
+      if (capped) h += '<p class="small">Poziția e limitată de capital (fără bani împrumutați), deci riști mai puțin de ' + esc(fmtNum(rp, 1)) + '%.</p>';
+      if (dist / e > 0.25) h += '<p class="small lwarn2">Stop-loss-ul e foarte departe (peste 25% sub preț): cumperi puține monede, iar ținta ar trebui să fie foarte sus ca să merite.</p>';
+      if (rr !== null && rr < 1.5) h += '<p class="small lwarn2">Câștigul posibil e mic față de risc (sub 1,5 ori). Caută o intrare mai jos, un stop mai aproape sau o țintă mai sus.</p>';
+      if (W !== null && W > 0) h += '<p class="small">Ca să nu pierzi bani pe termen lung cu astfel de tranzacții, trebuie să câștigi în cel puțin <b>' + esc(fmtNum(L / (W + L) * 100, 0)) + '%</b> din ele (comisioanele incluse).</p>';
+    } else h += '</div><p class="small mute">Scrie capitalul la „Banii tăi” ca să afli câte monede să cumperi.</p>';
     out.innerHTML = h;
   }
   document.addEventListener('input', (e) => { if (['cEntry', 'cStop', 'cTarget'].includes(e.target.id)) updateCalc(); });
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('button[data-risk]'); if (!t) return;
+    const inp = $('#risk input[data-f="s.riskPct"]'); if (!inp) return;
+    inp.value = H.fmtExact(+t.dataset.risk); inp.dispatchEvent(new Event('input', { bubbles: true }));
+  });
 
   /* ---------- navigare: tab-uri, lecții, grafic ---------- */
-  const VIEWS = ['analiza', 'risc', 'acumulare', 'invata'];
+  const VIEWS = ['plan', 'analiza', 'risc', 'invata'];
   function showView(v) {
-    if (!VIEWS.includes(v)) v = 'analiza';
+    if (v === 'acumulare') v = 'plan'; // adresa veche a tab-ului
+    if (!VIEWS.includes(v)) v = H.IN_CLAUDE ? 'analiza' : 'plan'; // în aplicație pornești din planul tău
     for (const k of VIEWS) { $('#v-' + k).hidden = k !== v; $('#t-' + k).setAttribute('aria-selected', String(k === v)); }
     $('#heroAnaliza').hidden = v !== 'analiza';
     if (v === 'analiza') { if (S.tfs) drawChart(); }
-    if (v === 'acumulare' && window.ACCUI) window.ACCUI.render();
+    if (v === 'plan' && window.ACCUI) window.ACCUI.render(true);
   }
   function openLesson(id) {
     if (location.hash !== '#invata') location.hash = 'invata'; else showView('invata');
@@ -4143,7 +4895,8 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   let setT = null;
   window.UI = {
     render, renderLive, renderTrade,
-    onSettings() { clearTimeout(setT); setT = setTimeout(() => { updateCalc(); const keep = S.bt, keepM = S.multi; H.reanalyze(); if (keep) { S.bt = keep; S.multi = keepM; render(); } }, 400); }
+    updateRisk,
+    onSettings() { clearTimeout(setT); setT = setTimeout(() => { updateCalc(); updateRisk(); const keep = S.bt, keepM = S.multi; H.reanalyze(); if (keep) { S.bt = keep; S.multi = keepM; render(); } }, 400); }
   };
   renderRisk();
   showView(location.hash.slice(1));
