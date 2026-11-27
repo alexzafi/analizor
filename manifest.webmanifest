@@ -1,0 +1,17 @@
+{
+  "name": "Analizor crypto",
+  "short_name": "Analizor",
+  "description": "Analiză crypto cu date Binance, explicată pas cu pas.",
+  "lang": "ro",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#00463c",
+  "theme_color": "#00463c",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

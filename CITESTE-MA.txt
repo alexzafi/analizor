@@ -1,0 +1,29 @@
+ANALIZOR CRYPTO — aplicația ta, independentă de Claude
+=====================================================
+
+Ce face: scrii moneda (ex. BTC, PYTH), apeși „Analizează”, iar aplicația ia singură
+de la Binance prețul, lumânările (1h, 4h, 1 zi, 1 săptămână), cartea de ordine și
+datele de futures, apoi îți arată trendul, regula de cumpărare/ieșire, planul cu
+stop și ținte și testul pe istoric — fiecare cu explicația lui.
+Nu are nevoie de cont Binance și nici de chei API (datele sunt publice).
+
+INSTALARE PE IPHONE (o singură dată, gratuit, cu GitHub Pages)
+1. Dezarhivează acest ZIP în aplicația Fișiere (atinge arhiva).
+2. Fă-ți cont gratuit pe github.com.
+3. „+” → „New repository” → nume: analizor → Public → „Create repository”.
+4. „uploading an existing file” → alege TOATE fișierele din dosar
+   (index.html, manifest.webmanifest, sw.js, versiune.json, icon-180.png,
+   icon-192.png, icon-512.png, icon-maskable-512.png) → „Commit changes”.
+5. „Settings” → „Pages” → Branch: „main”, folder „/ (root)” → „Save”.
+   După 1–2 minute: https://NUMELE-TAU.github.io/analizor/
+6. Deschide adresa în Safari → butonul de partajare → „Adaugă pe ecranul principal”.
+
+PE CALCULATOR: deschide index.html cu dublu-clic (Chrome, Edge, Firefox, Safari).
+
+ACTUALIZARE: încarci din nou toate fișierele în același loc („Add file” →
+„Upload files”). Telefonul se actualizează singur la următoarea deschidere cu
+internet, iar laptopul la fel, dacă l-ai legat de adresa ta (bara verde
+„Actualizare automată” din programul de Windows).
+
+Important: programul aplică reguli fixe pe date. Nu poate ști sigur ce urmează și
+nu e sfat financiar. Riscă puțin pe fiecare tranzacție și folosește mereu stop-loss.
