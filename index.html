@@ -46,6 +46,7 @@ footer.band{padding-bottom:calc(clamp(22px,4vw,48px) + env(safe-area-inset-botto
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 18px}
 .tabs button{appearance:none;border:1px solid rgba(255,255,255,.22);background:transparent;color:var(--hink);font:600 15px Inter,sans-serif;border-radius:999px;padding:0 18px;min-height:44px;cursor:pointer}
 .tabs button[aria-selected=true]{background:var(--lime);color:#06352d;border-color:var(--lime)}
+@media(max-width:420px){.tabs{gap:5px}.tabs button{padding:0 12px}}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
 .grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
 @media(max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}}
@@ -100,7 +101,7 @@ select{appearance:auto}
 .brow{display:grid;grid-template-columns:minmax(0,1.2fr) 76px minmax(0,1.3fr) 44px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1)}
 .brow .h{font-weight:600;line-height:1.25}.brow .h small,.brow .tf small{display:block;color:var(--hmute);font-weight:400;font-size:12.5px;font-family:Inter,sans-serif}
 .brow .tf{font:700 16px/1.2 "Inter Tight",sans-serif;color:var(--lime)}
-.brow .lab{font-weight:600;line-height:1.25}.brow .sc{text-align:right;font-variant-numeric:tabular-nums}
+.brow .lab{font-weight:600;line-height:1.25}.brow .lab small{display:block;color:var(--hmute);font-weight:400;font-size:12.5px}.brow .sc{text-align:right;font-variant-numeric:tabular-nums}
 .brow .lab.up,.brow .lab.up2{color:var(--lime)}.brow .lab.down,.brow .lab.down2{color:var(--coral)}.brow .lab.na{color:var(--hmute);font-weight:400}
 .example{font-size:13px;color:var(--hmute);margin-top:10px}
 /* secțiuni */
@@ -128,7 +129,16 @@ details.why p{font-size:15px;margin:4px 0 0}
 .kv div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px}
 .kv span{display:block;font-size:13px;color:var(--mute)}.kv b{font:700 19px "Inter Tight",sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap}
 .kv .stop b{color:var(--dn)}.kv .tgt b{color:var(--up)}
-.kv div{min-width:0}.kv .txt b{white-space:normal;font-size:16px;line-height:1.25;overflow-wrap:anywhere}
+.kv div{min-width:0}
+table.orders td:first-child{min-width:150px}table.orders td{vertical-align:top}
+.live{display:flex;gap:10px;align-items:flex-start;margin:10px 0 4px;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.16);font-size:14.5px;line-height:1.45}
+.live .lrows{display:flex;flex-direction:column;gap:2px;min-width:0;overflow-wrap:anywhere}.live .lmute{opacity:.78}
+.live .dot{flex:0 0 auto;width:10px;height:10px;border-radius:50%;margin-top:6px;background:#9aa}
+.live .dot.on{background:#7ee08a;box-shadow:0 0 0 0 rgba(126,224,138,.7);animation:pulse 2s infinite}.live .dot.off{background:#ffb14d}.live .dot.wait{background:#9aa}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(126,224,138,.6)}70%{box-shadow:0 0 0 8px rgba(126,224,138,0)}100%{box-shadow:0 0 0 0 rgba(126,224,138,0)}}
+@media (prefers-reduced-motion:reduce){.live .dot.on{animation:none}}
+.lwarn{margin:6px 0 0;font-size:14px;color:#ffd6a8}.lwarn .btn{margin-left:6px;min-height:36px;padding:0 12px;background:var(--lime);color:#06352d}
+.lwarn2{color:var(--dn)}.kv .txt b{white-space:normal;font-size:16px;line-height:1.25;overflow-wrap:anywhere}
 table{border-collapse:collapse;width:100%;font-size:15px}
 th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-size:13px;color:var(--mute);font-weight:600}
@@ -205,7 +215,8 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     <p class="lede">Programul ia datele din Binance și îți arată trendul pe termen scurt, mediu și lung, dacă regulile permit cumpărarea sau ieșirea — și de ce, pentru fiecare cifră.</p>
     <nav class="tabs" role="tablist" aria-label="Secțiuni">
       <button role="tab" id="t-analiza" data-v="analiza" aria-selected="true">Analiză</button>
-      <button role="tab" id="t-risc" data-v="risc" aria-selected="false">Plan și risc</button>
+      <button role="tab" id="t-risc" data-v="risc" aria-selected="false">Risc</button>
+      <button role="tab" id="t-acumulare" data-v="acumulare" aria-selected="false">Acumulare</button>
       <button role="tab" id="t-invata" data-v="invata" aria-selected="false">Învață</button>
     </nav>
     <div id="updBar" hidden></div>
@@ -230,6 +241,9 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   </section>
   <section class="view" id="v-risc" aria-labelledby="t-risc" hidden>
     <div class="band"><div class="wrap" id="risk"></div></div>
+  </section>
+  <section class="view" id="v-acumulare" aria-labelledby="t-acumulare" hidden>
+    <div class="band"><div class="wrap" id="acc"></div></div>
   </section>
   <section class="view" id="v-invata" aria-labelledby="t-invata" hidden>
     <div class="band"><div class="wrap lessons" id="lessons">
@@ -389,6 +403,30 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
 <p><b>De ce te ajută.</b> Monedele care o iau înaintea pieței tind să rămână puternice o vreme, iar cele slabe tind să rămână slabe. Nu e o regulă fixă, de aceea programul o folosește doar în nota de calitate, nu ca o condiție obligatorie.</p>
 <p><b>Cum verifici singur în Binance:</b> deschide BTC/USDT pe 1 zi și uită-te dacă prețul e peste MA(99) și dacă MA(25) urcă. Pentru forța relativă, deschide perechea MONEDĂ/BTC (de exemplu ETH/BTC), dacă există: dacă graficul ei urcă, moneda bate Bitcoin. Dacă perechea nu există, compară variația pe 30 de zile a celor două.</p>
 </div></details>
+<details id="l-acumulare"><summary>Acumularea într-o piață care scade</summary><div class="lesson">
+<p><b>Ce înseamnă.</b> Nu cumperi totul într-o zi, ci în mai multe tranșe, la prețuri și momente diferite. Așa nu depinzi de o singură zi, iar când piața scade, aceeași sumă cumpără mai multe monede. Prețul tău mediu = suma totală plătită / cantitatea totală.</p>
+<p><b>Ce spun studiile.</b> Pe acțiuni, studiile (de exemplu Vanguard) arată că a investi totul odată a ieșit mai bine în aproximativ două treimi din cazuri, pentru că piețele urcă mai des decât scad. Cumpărarea treptată câștigă când prețul scade după ce ai început și te ferește de cel mai prost moment posibil. În crypto, mișcările sunt mult mai mari, deci și riscul unui moment prost e mai mare. Programul testează pe istoricul fiecărei monede care metodă a mers mai bine.</p>
+<h4>Termen lung (luni–ani): cumpărare săptămânală + rezervă</h4>
+<ul><li><b>Suma de bază</b> se împarte egal pe săptămâni.</li><li><b>Factorul</b>: cumperi mai mult când prețul e sub media lui lungă sau când piața e speriată (Fear & Greed mic) și mai puțin când e scump sau când e lăcomie. E o variantă simplă a „value averaging”.</li><li><b>Rezerva</b> (de obicei 20–40%) stă în ordine Limit mult sub preț. În piețele care scad, căderile bruște de 20–40% sunt frecvente; rezerva le prinde fără să trebuiască să stai cu ochii pe ecran.</li><li>Nu există stop-loss la acumularea pe ani, așa că riscul îl controlezi prin sumă: doar bani pe care îi poți lăsa acolo 2–4 ani.</li></ul>
+<h4>Termen scurt (zile–săptămâni): ordine eșalonate, cu stop</h4>
+<ul><li>3 ordine Limit sub preț, la suporturi sau la distanțe măsurate în ATR, cu sume mai mari mai jos (25% / 35% / 40%).</li><li>Ordinele stau puțin <b>peste</b> suport: mulți cumpărători așteaptă exact pe nivel și prețul se întoarce des înainte să-l atingă.</li><li>Un singur stop sub toate ordinele. Suma totală se calculează așa încât, dacă se execută tot și se atinge stopul, să pierzi cel mult riscul tău pe tranzacție. Într-o cădere activă, programul folosește jumătate din risc, pentru că atunci cumperi împotriva trendului.</li><li>Ținta 1 e de obicei MA(25) pe 1 zi: după căderi mari, prețul revine des spre medie. Acolo vinzi jumătate și muți stopul la prețul mediu.</li><li><b>Niciodată</b> nu adăuga ordine sub stop „ca să faci media”: așa se transformă o pierdere mică într-una mare.</li></ul>
+<h4>Semnele că vânzătorii obosesc</h4>
+<p>RSI foarte mic (sub 30 pe 1 zi, sub 35 pe 1 săptămână), divergența pozitivă (prețul face un minim mai jos, RSI nu), o zi roșie cu volum uriaș (capitulare), prețul foarte departe sub medie, frica extremă și funding-ul negativ (mulți pariază pe scădere, iar ieșirea lor bruscă poate urca prețul). Cu cât apar mai multe deodată, cu atât crește șansa unui minim apropiat, dar într-o criză lungă aceleași semne apar de mai multe ori.</p>
+<h4>Greșelile care costă cel mai mult</h4>
+<ul><li>Totul odată, „pentru că e ieftin”: ieftinul poate deveni și mai ieftin.</li><li>Levierul: o cădere în plus îți lichidează poziția exact înainte de revenire.</li><li>Acumularea unui altcoin fără viitor. Multe monede nu și-au mai revenit niciodată după o piață descendentă, așa că o parte din acumulare poate merge în BTC.</li><li>Lipsa unui plan de vânzare: iei profit tot în trepte, când prețul e mult peste media lungă sau când e lăcomie extremă.</li></ul>
+<h4>Ordinele din Binance</h4>
+<p><b>Limit</b> = cumperi doar la prețul tău sau mai bine; dacă stă în carte, plătești de obicei comisionul mic (maker). <b>Stop-Limit</b> = când prețul atinge stopul, se pune un ordin de vânzare. <b>OCO</b> = două ordine legate (ținta și stopul); când se execută unul, celălalt se anulează. <b>Auto-Invest</b> = cumpărare recurentă automată, unde e disponibilă. În UE folosești perechile cu USDC sau EUR.</p>
+</div></details>
+
+<details id="l-surse"><summary>Date din alte surse: sentiment, dominanță, ofertă</summary><div class="lesson">
+<p><b>Fear & Greed Index</b> (alternative.me) e un număr de la 0 la 100 calculat zilnic din volatilitate, volum, rețele sociale, dominanța Bitcoin și căutări pe internet. 0–24 = frică extremă, 75–100 = lăcomie extremă. Se folosește „invers”: frica extremă a fost istoric mai des o zonă bună de acumulare, iar lăcomia extremă una de prudență. Nu dă momentul exact: frica poate dura săptămâni.</p>
+<p><b>Dominanța Bitcoin</b> (CoinGecko) e procentul din valoarea întregii piețe crypto care e Bitcoin. Dacă dominanța crește într-o piață care scade, banii fug din altcoin-uri spre BTC, iar altcoin-urile scad de obicei mai mult.</p>
+<p><b>Capitalizarea</b> = preț × monede în circulație. <b>FDV</b> = preț × toate monedele care vor exista. Un raport FDV / capitalizare mare (peste 2) înseamnă că multe monede urmează să intre pe piață prin deblocări. Oferta nouă apasă de obicei prețul, de aceea e un risc important pentru acumularea pe termen lung.</p>
+<p><b>Distanța față de maximul istoric</b> arată cât a scăzut moneda. „−90% față de maxim” nu înseamnă „ieftin”: multe monede au mai scăzut încă 90% după aceea.</p>
+<p><b>Limitări.</b> Sursele externe sunt gratuite și fără cont. CoinGecko permite doar câteva cereri pe minut și uneori nu răspunde; datele lui vin de la toate bursele, deci pot diferi puțin de Binance. Dacă o sursă nu răspunde, programul merge mai departe doar cu datele Binance. Rezultatele se păstrează pe dispozitiv (sentimentul o oră, datele monedei câteva ore), ca să nu cerem prea des.</p>
+<p><b>USDT în Uniunea Europeană.</b> Din martie 2025, Binance nu mai are perechi spot cu USDT pentru utilizatorii din Spațiul Economic European (regulamentul MiCA). Programul analizează perechea cea mai lichidă (de obicei USDT, prețul e practic același), dar tu cumperi pe USDC sau EUR.</p>
+</div></details>
+
 <details id="l-risc"><summary>Managementul riscului: partea care te face profitabil</summary><div class="lesson">
 <h4>Regula de 1%</h4>
 <p>Pe o tranzacție pierzi cel mult 1% din capital (maxim 2%). Cu 1%, zece pierderi la rând înseamnă −9,6%: recuperabil. Cu 10% pe tranzacție, aceleași zece pierderi înseamnă −65%.</p>
@@ -407,7 +445,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
 <details id="l-plan"><summary>Planul de tranzacționare și jurnalul</summary><div class="lesson">
 <p>Înainte de fiecare intrare scrii: de ce intru, unde e stop-ul, unde iau profit, cât risc. Dacă nu poți scrie asta în două rânduri, nu intri.</p>
 <p><b>Jurnalul</b>: data, moneda, motivul, intrarea, stop-ul, ieșirea, rezultatul în R, ce ai învățat. După 20–30 de tranzacții vezi clar ce funcționează și ce nu. Fără jurnal repeți aceleași greșeli.</p>
-<p>Folosește lista de verificare din „Plan și risc” la fiecare tranzacție.</p>
+<p>Folosește lista de verificare din tab-ul „Risc” la fiecare tranzacție.</p>
 </div></details>
 
 <details id="l-psihologie"><summary>Psihologia: unde se pierd de fapt banii</summary><div class="lesson">
@@ -479,6 +517,12 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
 <li><b>DefiLlama</b>: veniturile și activitatea reală a proiectelor.</li></ul>
 <h4>Dacă descărcarea automată nu merge</h4>
 <p>(De exemplu în pagina din Claude, unde accesul direct e blocat, sau într-o rețea care blochează Binance.) Folosește „Lipire”: atingi un interval, se deschide pagina Binance cu lumânările, selectezi tot textul, îl copiezi și îl lipești în program. Sau „Manual”, cu valorile de pe ecranul Binance.</p>
+<h4>Prețul live și ordinele exacte</h4>
+<ul><li><b>Prețul live</b> vine printr-o conexiune directă cu Binance, cu o actualizare pe secundă: ultima tranzacție, prețul la care cumperi acum (cea mai bună ofertă de vânzare) și cel la care vinzi (cea mai bună ofertă de cumpărare). Diferența dintre ele e „spread-ul”. Dacă rețeaua blochează conexiunea live, programul cere prețul la fiecare 5 secunde și îți spune asta.</li>
+<li><b>Perechea analizată și perechea ta.</b> Semnalele se calculează pe perechea cu cel mai mare volum (de obicei USDT), pentru că acolo graficul e cel mai curat. Tu cumperi pe USDC sau EUR, așa că programul convertește prețurile după raportul live dintre cele două perechi.</li>
+<li><b>Regulile Binance pentru ordine:</b> pasul de preț (de exemplu 0,00001), pasul de cantitate (de exemplu 0,1) și valoarea minimă a unui ordin (de obicei 5 USDC). Un ordin care nu le respectă e refuzat. Programul rotunjește singur prețurile și cantitățile, ca să le poți scrie exact cum apar.</li>
+<li><b>Ora Binance.</b> O lumânare e „închisă” după ora bursei. Dacă ceasul telefonului e decalat, programul folosește ora Binance și te anunță.</li>
+<li><b>Actualizarea.</b> Analiza se reface singură când se închide o lumânare pe intervalul de intrare (atunci se schimbă semnalele). Între timp, prețul se actualizează live, iar dacă se mișcă mult față de analiză, apare butonul „Actualizează analiza”.</li></ul>
 </div></details>
 
 <details id="l-instalare"><summary>Instalează aplicația pe telefon (o singură dată)</summary><div class="lesson">
@@ -505,7 +549,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   </section>
 </main>
 <footer class="band"><div class="wrap">
-  <p class="small">Versiunea programului: 27.11.2026, 14:49</p>
+  <p class="small">Versiunea programului: 27.11.2026, 18:16</p>
   <p>Programul aplică reguli fixe pe date; nu poate ști ce urmează și nu e sfat financiar. Decizia și riscul sunt ale tale. Nu folosi bani de care ai nevoie și evită levierul până nu ai un istoric de tranzacții profitabile.</p>
 </div></footer>
 <script>
@@ -971,7 +1015,8 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     }
     let sw = 0, sc = 0;
     for (const x of comps) { sw += x.w; sc += x.w * x.c; }
-    const score = sw ? (sc / sw) * 100 : null;
+    // sub 40% din ponderi (de exemplu o monedă nouă pe 1 lună) nu dau un verdict: ar fi o concluzie din prea puține indicii
+    const score = sw >= 40 ? (sc / sw) * 100 : null;
     let label, cls;
     if (score === null) { label = 'Date insuficiente'; cls = 'na'; }
     else if (fin(s.adx) && s.adx < 18 && Math.abs(score) < 45) { label = 'Lateral (trend slab)'; cls = 'flat'; }
@@ -1732,7 +1777,11 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     if (isK) {
       for (const tf of avail) {
         const T = inp.tfs[tf];
-        if (T.n < 120) w.push('Doar ' + CE.nDe(T.n, 'lumânări') + ' pe ' + tf + ': MA(99) și structura sunt mai puțin sigure. Copiază cu limit=500 sau 1000.');
+        const longTf = ['3d', '1w', '1M'].includes(tf), cnt = T.n === 1 ? 'o lumânare' : CE.nDe(T.n, 'lumânări');
+        if (T.n < 100 && (longTf || inp.auto)) {
+          const none = !per[tf] || per[tf].trend.score === null;
+          w.push('Pe ' + tf + ' există doar ' + cnt + (tf === '1M' ? ' (luni de la listare)' : '') + ': atât istoric are perechea. MA(99) nu se poate calcula, așa că ' + (none ? 'pe ' + tfName(tf) + ' nu am destule date pentru un verdict.' : 'trendul pe ' + tfName(tf) + ' se bazează pe mai puține indicii și e mai puțin sigur.'));
+        } else if (T.n < 120 && !longTf && !inp.auto) w.push('Doar ' + cnt + ' pe ' + tf + ': MA(99) și structura sunt mai puțin sigure. Copiază cu limit=500 sau 1000.');
         const age = now - T.capturedAt;
         if (age > Math.max(2 * tfMs(tf), 2 * 36e5)) w.push('Datele pentru ' + tf + ' au fost luate acum ' + fmtAge(age) + '. Ia-le din nou pentru o analiză la zi.');
         const last = T.lastClosed >= 0 ? T.T[T.lastClosed] : null;
@@ -1874,6 +1923,286 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   Object.assign(CE, { backtest, variants, backtestText, buildTFs });
 })(typeof window !== 'undefined' ? window : globalThis);
 
+/* accum.js — acumularea într-o piață care scade:
+   • faza pieței (cădere activă, oboseală a vânzătorilor, stabilizare, revenire...);
+   • termen scurt: 3 ordine limită eșalonate la suporturi, cu stop comun și ținte, dimensionate după risc;
+   • termen lung: cumpărare săptămânală ajustată după preț și sentiment + o rezervă pentru căderi mari;
+   • testul fiecărei metode pe istoricul monedei. Totul folosește doar lumânări închise (fără viitor). */
+(function (root) {
+  'use strict';
+  const CE = root.CE;
+  const { fin, clamp, fmtNum, fmtPrice, snapAt } = CE;
+
+  const PHASES = {
+    falling: { name: 'Cădere activă', tone: 'neg', risk: 0.5, text: 'Prețul face minime noi și trendul e în jos. Nu încerca să prinzi minimul: cumperi puțin și treptat. Pe termen scurt, doar ordine departe de preț și cu stop; pe termen lung, sume mici și o rezervă mare.' },
+    exhaustion: { name: 'Cădere avansată, cu semne de oboseală a vânzătorilor', tone: 'warn', risk: 0.5, text: 'Trendul e încă în jos, dar apar semnele care apar de obicei aproape de minime. Nu e o garanție: căderea poate continua. Ordinele eșalonate au acum șanse mai bune decât de obicei, iar acumularea pe termen lung poate fi ceva mai curajoasă.' },
+    base: { name: 'Stabilizare: prețul nu mai face minime noi', tone: 'warn', risk: 0.75, text: 'Vânzările au încetinit și prețul se mișcă lateral. E zona clasică pentru acumulare treptată. Confirmarea revenirii vine abia când prețul rupe ultimul vârf.' },
+    recovery: { name: 'Revenire timpurie', tone: 'pos', risk: 1, text: 'Trendul pe 1 zi s-a întors în sus, cel pe 1 săptămână încă nu. Poți grăbi acumularea; urmărește și semnalul de cumpărare din „Analiză”.' },
+    pullback: { name: 'Corecție într-un trend mare ascendent', tone: 'pos', risk: 1, text: 'Pe 1 săptămână trendul e în sus, iar pe 1 zi prețul scade. Istoric, e cea mai bună situație pentru cumpărări la scădere.' },
+    none: { name: 'Piața nu e în cădere', tone: 'na', risk: 1, text: 'Nici pe 1 zi, nici pe 1 săptămână trendul nu e descendent. Pentru intrări folosește regula din „Analiză”; dacă acumulezi pe termen lung, cumpărarea treptată merge oricând.' }
+  };
+
+  /* ---------- unde e piața acum ---------- */
+  function phase(tfs, per, ext) {
+    const D = tfs && tfs['1d'];
+    if (!D || D.lastClosed < 60) return null;
+    const Wk = tfs['1w'] || null, lc = D.lastClosed, price = D.livePrice;
+    const sc = (tf) => (per && per[tf] && fin(per[tf].trend.score) ? per[tf].trend.score : null);
+    const sD = sc('1d'), sW = Wk ? sc('1w') : null;
+    let hi = -Infinity, hiT = null;
+    for (const T of [Wk, tfs['1M'], D]) if (T) for (let i = 0; i < T.n; i++) if (T.h[i] > hi) { hi = T.h[i]; hiT = T.t[i]; }
+    let low30 = Infinity, low5 = Infinity;
+    for (let k = Math.max(0, lc - 29); k <= lc; k++) { low30 = Math.min(low30, D.l[k]); if (k > lc - 5) low5 = Math.min(low5, D.l[k]); }
+    const newLow = low5 <= low30;
+    const sn = snapAt(D, lc), snW = Wk && Wk.lastClosed >= 30 ? snapAt(Wk, Wk.lastClosed) : null;
+    const vr = (k) => { let s = 0; for (let q = k - 20; q < k; q++) s += D.v[q]; return s > 0 ? D.v[k] / (s / 20) : null; };
+    let volMax = 0, volKnown = false;
+    for (let k = Math.max(20, lc - 4); k <= lc; k++) { const r = vr(k); if (fin(r)) { volKnown = true; if (D.c[k] < D.o[k]) volMax = Math.max(volMax, r); } }
+    const bull = (s) => !!(s && s.divergence && s.divergence.type === 'bull');
+    const fngV = ext && ext.fng && fin(ext.fng.value) ? ext.fng.value : null;
+    const fund = ext && fin(ext.funding) ? ext.funding : null;
+    const sig = [
+      { k: 'rsiD', name: 'RSI pe 1 zi sub 30 (vânzare excesivă)', ok: fin(sn.rsi) ? sn.rsi <= 30 : null, val: fin(sn.rsi) ? 'acum ' + fmtNum(sn.rsi, 0) : '' },
+      { k: 'rsiW', name: 'RSI pe 1 săptămână sub 35', ok: snW && fin(snW.rsi) ? snW.rsi <= 35 : null, val: snW && fin(snW.rsi) ? 'acum ' + fmtNum(snW.rsi, 0) : 'lipsește graficul de 1 săptămână' },
+      { k: 'div', name: 'Divergență pozitivă: prețul face un minim mai jos, RSI nu', ok: bull(sn) || bull(snW), val: '' },
+      { k: 'vol', name: 'Zi roșie cu volum foarte mare (cel puțin 2,5 × media) în ultimele 5 zile', ok: volKnown ? volMax >= 2.5 : null, val: volKnown && volMax > 0 ? 'cel mai mare: ' + fmtNum(volMax, 1) + ' × media' : '' },
+      { k: 'ext', name: 'Prețul e foarte departe sub MA(25) pe 1 zi (cel puțin 2,5 × ATR)', ok: fin(sn.ext) ? sn.ext <= -2.5 : null, val: fin(sn.ext) ? 'acum ' + fmtNum(Math.abs(sn.ext), 1) + ' × ATR ' + (sn.ext < 0 ? 'sub' : 'peste') + ' MA(25)' : '' },
+      { k: 'fng', name: 'Sentiment: frică extremă (Fear & Greed cel mult 20)', ok: fngV === null ? null : fngV <= 20, val: fngV === null ? 'indisponibil' : 'acum ' + fmtNum(fngV, 0) },
+      { k: 'fund', name: 'Funding negativ pe futures (mulți pariază pe scădere)', ok: fund === null ? null : fund < 0, val: fund === null ? 'indisponibil' : fmtNum(fund, 4) + '%' }
+    ];
+    const cnt = sig.filter((x) => x.ok === true).length;
+    const downD = fin(sD) && sD <= -20, downW = fin(sW) && sW <= -20;
+    let ph;
+    if (fin(sW) && sW >= 20 && downD) ph = 'pullback';
+    else if (!downD && !downW) ph = 'none';
+    else if (fin(sD) && sD >= 20) ph = 'recovery';
+    else if (!newLow && !downD) ph = 'base';
+    else ph = cnt >= 3 ? 'exhaustion' : 'falling';
+    const wl = Wk ? Wk.lastClosed : -1;
+    return { phase: ph, info: PHASES[ph], sD, sW, hi, hiT, dd: hi > 0 && fin(price) ? price / hi - 1 : null, newLow, low30, sig, cnt, price,
+      A: D.atr[lc], ma25: D.ma25[lc], ma99: D.ma99[lc], Aw: wl >= 0 ? Wk.atr[wl] : null, ma25w: wl >= 0 ? Wk.ma25[wl] : null, rsiD: sn.rsi, rsiW: snW ? snW.rsi : null };
+  }
+
+  /* cât de des, istoric, a coborât prețul cu cel puțin k × ATR (din închiderea zilei) în următoarele h zile.
+     Implicit doar din zilele cu trend descendent pe 1 zi; dacă sunt prea puține, din toate zilele. */
+  function touchProb(D, ks, h, onlyFalling) {
+    const lc = D.lastClosed, ts = onlyFalling ? CE.trendSeries(D) : null, drops = [];
+    for (let j = 30; j + h <= lc; j++) {
+      const a = D.atr[j];
+      if (!fin(a) || a <= 0) continue;
+      if (ts && !(fin(ts[j]) && ts[j] <= -20)) continue;
+      let mn = Infinity;
+      for (let k = j + 1; k <= j + h; k++) if (D.l[k] < mn) mn = D.l[k];
+      drops.push((D.c[j] - mn) / a);
+    }
+    if (onlyFalling && drops.length < 60) return Object.assign(touchProb(D, ks, h, false), { fallback: true });
+    return { n: drops.length, onlyFalling: !!onlyFalling, fallback: false, p: ks.map((k) => (drops.length ? drops.filter((x) => x >= k).length / drops.length : null)) };
+  }
+
+  /* ---------- termen scurt: 3 ordine limită eșalonate, cu stop comun ---------- */
+  const LW = { 3: [0.25, 0.35, 0.4], 2: [0.4, 0.6], 1: [1] };
+  function ladder(o) {
+    const D = o.D, lc = D.lastClosed, A = D.atr[lc], P = o.price;
+    if (!fin(A) || A <= 0 || !fin(P) || P <= 0) return null;
+    const fp = (x) => fmtPrice(x, P), sups = (o.levels && o.levels.supports) || [];
+    const picks = [], far = (px) => picks.every((q) => Math.abs(q.px - px) >= 0.75 * A);
+    for (const s of sups) {
+      if (picks.length >= 3) break;
+      if (s.cls === 'slab' || s.level >= P - 0.5 * A || s.level <= P - 5 * A) continue; // pe termen scurt, cel mult ~5 mișcări zilnice sub preț
+      const px = s.level + 0.15 * A; // puțin peste suport: mulți cumpărători așteaptă fix pe nivel și prețul se poate întoarce înainte
+      if (far(px)) picks.push({ px, why: 'puțin peste suportul ' + s.cls + ' de la ' + fp(s.level) });
+    }
+    for (const k of [1.5, 3, 4.5]) {
+      if (picks.length >= 3) break;
+      const px = P - k * A;
+      if (px > 0 && far(px)) picks.push({ px, why: fmtNum(k, 1) + ' × ATR sub prețul de acum (fără suport clar acolo)' });
+    }
+    if (!picks.length) return null;
+    picks.sort((a, b) => b.px - a.px);
+    // fiecare ordin trebuie să treacă de valoarea minimă a unui ordin pe Binance; dacă suma e mică, folosim mai puține ordine
+    const minOrder = fin(o.minOrder) && o.minOrder > 0 ? o.minOrder : 0;
+    for (let n = picks.length; n >= 1; n--) {
+      const r = build(picks.slice(0, n));
+      if (!minOrder || r.amount === null || r.orders.every((x) => x.amt >= minOrder * 1.02)) return Object.assign(r, { fewer: n < picks.length, minOrder });
+    }
+    return Object.assign(build(picks.slice(0, 1)), { fewer: picks.length > 1, tooSmall: true, minOrder });
+    function build(pk) {
+    const picks = pk, w = LW[picks.length], deep = picks[picks.length - 1];
+    let stop = deep.px - A, stopWhy = '1 × ATR sub cel mai jos ordin';
+    const under = sups.find((s) => s.cls !== 'slab' && s.level < deep.px && s.level > deep.px - 1.5 * A);
+    if (under && under.level - 0.25 * A < stop) { stop = under.level - 0.25 * A; stopWhy = 'sub suportul ' + under.cls + ' de la ' + fp(under.level); }
+    if (stop <= deep.px * 0.3) { stop = deep.px * 0.7; stopWhy = '30% sub cel mai jos ordin'; }
+    const fee = fin(o.fee) && o.fee >= 0 ? o.fee : 0.001;
+    const lossPer = picks.reduce((s, q, i) => s + w[i] * ((q.px - stop) / q.px + 2 * fee), 0); // pierderea la 1 USDC, dacă se execută tot și se atinge stopul
+    const riskMul = (PHASES[o.phase] || PHASES.falling).risk;
+    const budget = fin(o.capital) && o.capital > 0 && fin(o.riskPct) && o.riskPct > 0 ? o.capital * o.riskPct / 100 * riskMul : null;
+    const maxAmt = budget !== null ? budget / lossPer : null;
+    const want = fin(o.amount) && o.amount > 0 ? o.amount : null;
+    const amount = want !== null ? (maxAmt !== null ? Math.min(want, maxAmt) : want) : maxAmt;
+    const orders = picks.map((q, i) => ({ px: q.px, w: w[i], amt: amount !== null ? amount * w[i] : null, qty: amount !== null ? amount * w[i] / q.px : null, dist: 1 - q.px / P, k: (P - q.px) / A, why: q.why }));
+    const avg = 1 / picks.reduce((s, q, i) => s + w[i] / q.px, 0); // prețul mediu dacă se execută toate
+    const risk = avg - stop, ma25 = D.ma25[lc], ma99 = D.ma99[lc];
+    let tp1 = avg + 1.5 * risk, tp1Why = '1,5 × riscul peste prețul mediu';
+    if (fin(ma25) && ma25 > avg + 0.75 * risk) { tp1 = ma25; tp1Why = 'MA(25) pe 1 zi: după căderi mari, prețul revine des spre medie'; }
+    const cand = [];
+    if (fin(ma99) && ma99 > tp1 * 1.02) cand.push({ p: ma99, why: 'MA(99) pe 1 zi' });
+    const res = ((o.levels && o.levels.resistances) || []).find((r) => r.cls !== 'slab' && r.level > tp1 * 1.02);
+    if (res) cand.push({ p: res.level, why: 'rezistența ' + (res.cls === 'puternic' ? 'puternică' : res.cls === 'mediu' ? 'medie' : res.cls) + ' de la ' + fp(res.level) });
+    cand.sort((a, b) => a.p - b.p);
+    const tp2 = cand.length ? cand[0].p : avg + 3 * risk, tp2Why = cand.length ? cand[0].why : '3 × riscul peste prețul mediu';
+    return { orders, stop, stopWhy, avg, risk, tp1, tp1Why, tp2, tp2Why, rr1: (tp1 - avg) / risk, rr2: (tp2 - avg) / risk, amount, want, maxAmt, budget, riskMul,
+      lossPer, lossAll: amount !== null ? amount * lossPer : null, A, P, validDays: 10, timeStopDays: 20 };
+    }
+  }
+
+  /* ---------- termen lung: cumpărare săptămânală ajustată + rezervă ---------- */
+  function priceFactor(d) {
+    if (!fin(d)) return { f: 1, why: 'fără medie lungă: sumă egală' };
+    if (d <= -0.3) return { f: 1.5, why: 'prețul e cu peste 30% sub media lungă' };
+    if (d <= -0.1) return { f: 1.25, why: 'prețul e sub media lungă' };
+    if (d <= 0.1) return { f: 1, why: 'prețul e aproape de media lungă' };
+    if (d <= 0.4) return { f: 0.75, why: 'prețul e peste media lungă' };
+    return { f: 0.5, why: 'prețul e cu peste 40% peste media lungă' };
+  }
+  function fngFactor(v) {
+    if (!fin(v)) return { f: 1, why: '' };
+    if (v <= 20) return { f: 1.25, why: 'frică extremă în piață' };
+    if (v <= 40) return { f: 1.1, why: 'frică în piață' };
+    if (v <= 60) return { f: 1, why: 'sentiment neutru' };
+    if (v <= 80) return { f: 0.9, why: 'lăcomie în piață' };
+    return { f: 0.75, why: 'lăcomie extremă în piață' };
+  }
+  const RW = { 3: [0.3, 0.3, 0.4], 2: [0.4, 0.6], 1: [1] };
+  function dcaPlan(o) {
+    const D = o.D, Wk = o.Wk || null, lc = D.lastClosed, P = o.price, wl = Wk ? Wk.lastClosed : -1;
+    if (!fin(P) || P <= 0) return null;
+    const fp = (x) => fmtPrice(x, P);
+    const useW = wl >= 0 && fin(Wk.ma25[wl]);
+    const ma = useW ? Wk.ma25[wl] : fin(D.ma99[lc]) ? D.ma99[lc] : null;
+    const maName = useW ? 'MA(25) pe 1 săptămână (media ultimelor ~6 luni)' : 'MA(99) pe 1 zi (media ultimelor ~3 luni)';
+    const d = fin(ma) ? P / ma - 1 : null;
+    const pf = priceFactor(d), ff = fngFactor(o.fngValue), f = clamp(pf.f * ff.f, 0.5, 2);
+    const weeks = clamp(Math.round(fin(o.weeks) ? o.weeks : 12), 2, 104), r = clamp((fin(o.reservePct) ? o.reservePct : 30) / 100, 0, 0.6);
+    const amount = fin(o.amount) && o.amount > 0 ? o.amount : null;
+    const base = amount !== null ? amount * (1 - r) / weeks : null;
+    const Aw = wl >= 0 && fin(Wk.atr[wl]) ? Wk.atr[wl] : fin(D.atr[lc]) ? D.atr[lc] * Math.sqrt(7) : null;
+    const reserve = [];
+    if (r > 0 && fin(Aw) && Aw > 0) {
+      const far = (px) => reserve.every((q) => Math.abs(q.px - px) >= 0.5 * Aw);
+      for (const s of (o.levels && o.levels.supports) || []) {
+        if (reserve.length >= 3) break;
+        if (s.cls === 'slab' || s.level >= P - 0.6 * Aw || s.level <= P - 2.75 * Aw || s.level < 0.35 * P) continue;
+        const px = s.level + 0.1 * Aw;
+        if (far(px)) reserve.push({ px, why: 'puțin peste suportul ' + s.cls + ' de la ' + fp(s.level) });
+      }
+      for (const m of [0.75, 1.5, 2.5]) {
+        if (reserve.length >= 3) break;
+        const px = Math.max(P - m * Aw, 0.35 * P); // cel mult 65% sub preț
+        if (far(px)) reserve.push({ px, why: fmtNum(m, 2) + ' × ATR săptămânal sub prețul de acum' });
+      }
+      reserve.sort((a, b) => b.px - a.px);
+      // ca la ordinele pe termen scurt: fiecare ordin al rezervei trebuie să treacă de minimul Binance
+      const minOrder = fin(o.minOrder) && o.minOrder > 0 ? o.minOrder : 0;
+      while (minOrder && amount !== null && reserve.length && amount * r * Math.min(...(RW[reserve.length] || [1])) < minOrder * 1.02) reserve.pop();
+      const rw = RW[reserve.length] || [];
+      reserve.forEach((q, i) => { q.w = rw[i]; q.amt = amount !== null ? amount * r * rw[i] : null; q.qty = q.amt !== null ? q.amt / q.px : null; q.dist = 1 - q.px / P; q.k = fin(D.atr[lc]) && D.atr[lc] > 0 ? (P - q.px) / D.atr[lc] : null; });
+    }
+    const now = fin(o.now) ? o.now : Date.now();
+    const sched = Array.from({ length: weeks }, (_, i) => ({ t: now + i * 7 * 864e5, base }));
+    const minOrder = fin(o.minOrder) && o.minOrder > 0 ? o.minOrder : 0;
+    return { weeks, r, amount, base, f, pf, ff, d, ma, maName, thisWeek: base !== null ? base * f : null, reserve, Aw, sched, minOrder,
+      reserveTooSmall: r > 0 && amount !== null && !reserve.length, weekTooSmall: !!(minOrder && base !== null && base * f < minOrder) };
+  }
+
+  /* ---------- test pe istoric: termen scurt ---------- */
+  function ladderBacktest(D, opts) {
+    const o = Object.assign({ steps: [1.5, 3, 4.5], w: [0.25, 0.35, 0.4], stopK: 5.5, valid: 10, maxDays: 20, fee: 0.001 }, opts || {});
+    const lc = D.lastClosed, ts = CE.trendSeries(D), rows = [];
+    let j = 100;
+    while (j < lc - 1) {
+      if (!(fin(ts[j]) && ts[j] <= -20) || !fin(D.atr[j]) || D.atr[j] <= 0) { j++; continue; }
+      const A = D.atr[j], c = D.c[j], lv = o.steps.map((k) => c - k * A), stop = c - o.stopK * A;
+      if (stop <= 0) { j++; continue; }
+      const fills = lv.map(() => null);
+      let exit = null, why = null, k = j + 1;
+      for (; k <= Math.min(lc, j + o.maxDays); k++) {
+        if (k <= j + o.valid) lv.forEach((L, i) => { if (fills[i] === null && D.l[k] <= L) fills[i] = Math.min(D.o[k], L); });
+        if (!fills.some((x) => x !== null)) { if (k >= j + o.valid) break; continue; }
+        if (D.l[k] <= stop) { exit = Math.min(D.o[k], stop); why = 'stop'; break; } // prudent: umplere și stop în aceeași zi = stop
+        if (fin(D.ma25[k]) && D.c[k] >= D.ma25[k]) { exit = D.c[k]; why = 'țintă'; break; }
+      }
+      const filled = fills.map((x, i) => (x !== null ? { px: x, w: o.w[i] } : null)).filter(Boolean);
+      if (!filled.length) { rows.push({ j, filled: 0 }); j = Math.max(j + 1, Math.min(k, j + o.valid)); continue; }
+      if (exit === null) { k = Math.min(lc, j + o.maxDays); exit = D.c[k]; why = 'timp'; }
+      let inv = 0, pnl = 0;
+      for (const f of filled) { inv += f.w; pnl += f.w * (exit / f.px - 1) - o.fee * f.w * (1 + exit / f.px); }
+      const riskFull = o.w.reduce((s, w, i) => s + w * ((lv[i] - stop) / lv[i] + 2 * o.fee), 0);
+      rows.push({ j, jOut: k, tIn: D.T[j], filled: filled.length, inv, pnl, R: pnl / riskFull, ret: pnl / inv, why });
+      j = k + 1;
+    }
+    const f = rows.filter((x) => x.filled > 0), R = f.map((x) => x.R), sum = (a) => a.reduce((x, y) => x + y, 0);
+    const win = f.filter((x) => x.pnl > 0), loss = f.filter((x) => x.pnl <= 0);
+    return { placed: rows.length, n: f.length, fillRate: rows.length ? f.length / rows.length : null, winRate: f.length ? win.length / f.length : null,
+      avgR: f.length ? sum(R) / f.length : null, avgRet: f.length ? sum(f.map((x) => x.ret)) / f.length : null,
+      pf: loss.length ? sum(win.map((x) => x.pnl)) / Math.abs(sum(loss.map((x) => x.pnl)) || 1e-12) : win.length ? Infinity : null,
+      why: { stop: f.filter((x) => x.why === 'stop').length, tinta: f.filter((x) => x.why === 'țintă').length, timp: f.filter((x) => x.why === 'timp').length }, rows };
+  }
+
+  /* ---------- test pe istoric: termen lung (o dată vs treptat vs treptat cu factor și rezervă) ---------- */
+  function dcaBacktest(D, Wk, opts) {
+    const o = Object.assign({ weeks: 12, reservePct: 30, fng: null, hold: 182, step: 14 }, opts || {});
+    const lc = D.lastClosed, H = o.weeks * 7, r = clamp(o.reservePct / 100, 0, 0.6);
+    const wIdx = Wk ? CE.alignClosed(D, Wk) : null, wTs = Wk ? CE.trendSeries(Wk) : null, dTs = Wk ? null : CE.trendSeries(D);
+    const fg = Array.isArray(o.fng) && o.fng.length ? o.fng : null;
+    const fngAt = (t) => { // ultima valoare publicată până la acel moment
+      if (!fg) return null;
+      let lo = 0, hi = fg.length - 1, ans = -1;
+      while (lo <= hi) { const m = (lo + hi) >> 1; if (fg[m][0] <= t) { ans = m; lo = m + 1; } else hi = m - 1; }
+      return ans >= 0 && t - fg[ans][0] < 3 * 864e5 ? fg[ans][1] : null;
+    };
+    const maAt = (i) => { if (Wk) { const w = wIdx[i]; if (w >= 0 && fin(Wk.ma25[w])) return Wk.ma25[w]; } return fin(D.ma99[i]) ? D.ma99[i] : null; };
+    const awAt = (i) => { if (Wk) { const w = wIdx[i]; if (w >= 0 && fin(Wk.atr[w])) return Wk.atr[w]; } return fin(D.atr[i]) ? D.atr[i] * Math.sqrt(7) : null; };
+    const all = [], falling = [];
+    for (let j0 = 120; j0 + H <= lc; j0 += o.step) {
+      const tsv = Wk ? (wIdx[j0] >= 0 ? wTs[wIdx[j0]] : null) : dTs[j0];
+      const fall = fin(tsv) && tsv <= -20;
+      const c0 = D.c[j0], end = j0 + H - 1;
+      let uD = 0;
+      for (let i = 0; i < o.weeks; i++) uD += 1 / o.weeks / D.c[j0 + 7 * i];
+      const aw = awAt(j0), base = (1 - r) / o.weeks, rw = [0.3, 0.3, 0.4];
+      const lv = fin(aw) && r > 0 ? [0.75, 1.5, 2.5].map((m) => Math.max(c0 - m * aw, 0.35 * c0)) : [];
+      const filled = lv.map(() => false);
+      let uS = 0, pool = 1 - r, resLeft = lv.length ? r : 0;
+      if (!lv.length) pool = 1;
+      for (let k = j0; k <= end; k++) {
+        if (k > j0) lv.forEach((L, i) => { if (!filled[i] && L > 0 && D.l[k] <= L) { uS += r * rw[i] / Math.min(D.o[k], L); resLeft -= r * rw[i]; filled[i] = true; } });
+        if ((k - j0) % 7 === 0) {
+          const ma = maAt(k), dd = fin(ma) ? D.c[k] / ma - 1 : null;
+          const f = clamp(priceFactor(dd).f * fngFactor(fngAt(D.T[k])).f, 0.5, 2);
+          const last = k + 7 > end;
+          const amt = last ? pool : Math.min(pool, base * f);
+          uS += amt / D.c[k]; pool -= amt;
+        }
+      }
+      if (resLeft > 1e-12) uS += resLeft / D.c[end]; // rezerva neexecutată se investește la final
+      const after = Math.min(lc, end + o.hold);
+      const row = { j0, t0: D.T[j0], fall, lump: c0, dcaCost: 1 / uD, smartCost: 1 / uS, dcaVsLump: 1 / uD / c0 - 1, smartVsLump: 1 / uS / c0 - 1, smartVsDca: uD / uS - 1,
+        valLump: D.c[after] / c0 - 1, valDca: uD * D.c[after] - 1, valSmart: uS * D.c[after] - 1, holdDays: after - end, resFilled: filled.filter(Boolean).length };
+      all.push(row); if (fall) falling.push(row);
+    }
+    const use = falling.length >= 6 ? falling : all;
+    const med = (a) => { if (!a.length) return null; const s = a.slice().sort((x, y) => x - y), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+    const share = (a, fn) => (a.length ? a.filter(fn).length / a.length : null);
+    return { n: use.length, nAll: all.length, onlyFalling: use === falling, weeks: o.weeks, reservePct: o.reservePct, usedFng: !!fg,
+      medDca: med(use.map((x) => x.dcaVsLump)), medSmart: med(use.map((x) => x.smartVsLump)), medSmartVsDca: med(use.map((x) => x.smartVsDca)),
+      smartBeatsLump: share(use, (x) => x.smartVsLump < 0), smartBeatsDca: share(use, (x) => x.smartVsDca < 0), dcaBeatsLump: share(use, (x) => x.dcaVsLump < 0),
+      valLump: med(use.map((x) => x.valLump)), valDca: med(use.map((x) => x.valDca)), valSmart: med(use.map((x) => x.valSmart)),
+      holdDays: med(use.map((x) => x.holdDays)), rows: use, allRows: all };
+  }
+
+  CE.ACC = { PHASES, phase, touchProb, ladder, dcaPlan, priceFactor, fngFactor, ladderBacktest, dcaBacktest };
+})(typeof window !== 'undefined' ? window : globalThis);
+
 /* binance.js — ia datele publice direct de la Binance (fără cont, fără chei). */
 (function (root) {
   'use strict';
@@ -1974,7 +2303,193 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     }
     return null;
   }
-  CE.BN = { getJson, spot, ping, ticker, resolvePair, klines, klinesHistory, depth, futures };
+  /* ---------- ora Binance ----------
+     O lumânare e „închisă” după ora bursei, nu după ceasul telefonului. Dacă telefonul e decalat cu câteva minute,
+     fără corecția asta programul ar putea lua drept închisă o lumânare care încă se formează. */
+  let clock = null;
+  async function clockOffset() {
+    if (clock && Date.now() - clock.at < 10 * 6e4) return clock.off;
+    const t0 = Date.now(), d = await spot('/api/v3/time', 7000), t1 = Date.now(), st = +(d && d.serverTime);
+    if (!(st > 0)) throw new Error('fără oră');
+    clock = { at: Date.now(), off: st - (t0 + t1) / 2, rtt: t1 - t0 };
+    return clock.off;
+  }
+  const now = () => Date.now() + (clock ? clock.off : 0);
+  const clockInfo = () => clock;
+
+  /* ---------- regulile perechii: pasul de preț, pasul de cantitate, valoarea minimă a unui ordin ---------- */
+  const decs = (str) => { const t = String(str || ''), i = t.indexOf('.'); return i < 0 ? 0 : t.slice(i + 1).replace(/0+$/, '').length; };
+  const infoCache = {};
+  async function symbolInfo(symbol) {
+    const c = infoCache[symbol];
+    if (c && Date.now() - c.at < 6 * 36e5) return c.v;
+    const d = await spot('/api/v3/exchangeInfo?symbol=' + encodeURIComponent(symbol));
+    const x = d && Array.isArray(d.symbols) ? d.symbols.find((y) => y.symbol === symbol) : null;
+    if (!x) { const err = new Error('Perechea ' + symbol + ' nu există'); err.status = 400; throw err; }
+    const f = (t) => (x.filters || []).find((y) => y.filterType === t) || {};
+    const pf = f('PRICE_FILTER'), ls = f('LOT_SIZE'), nt = f('NOTIONAL'), mn = f('MIN_NOTIONAL');
+    const v = { symbol, status: String(x.status || ''), base: String(x.baseAsset || ''), quote: String(x.quoteAsset || ''),
+      tick: +pf.tickSize > 0 ? +pf.tickSize : null, tickDec: decs(pf.tickSize), minPrice: +pf.minPrice || 0,
+      step: +ls.stepSize > 0 ? +ls.stepSize : null, stepDec: decs(ls.stepSize), minQty: +ls.minQty || 0,
+      minNotional: +(nt.minNotional || mn.minNotional) || 0 };
+    infoCache[symbol] = { at: Date.now(), v };
+    return v;
+  }
+  /* rotunjire exactă la pas (fără erori de virgulă mobilă): „down” pentru cumpărări și cantități, „up”, sau la cel mai apropiat */
+  function roundTo(x, step, dec, mode) {
+    if (!(step > 0) || !Number.isFinite(x)) return x;
+    const k = x / step, n = mode === 'down' ? Math.floor(k + 1e-9) : mode === 'up' ? Math.ceil(k - 1e-9) : Math.round(k);
+    return +(n * step).toFixed(Math.min(20, Math.max(0, dec || 0)));
+  }
+
+  /* ---------- prețul live ----------
+     Conexiune live la Binance (WebSocket, o actualizare pe secundă: ultima tranzacție + cel mai bun preț de cumpărare și de vânzare).
+     Dacă nu merge, cere prețul la fiecare 5 secunde. */
+  const WSS = ['wss://data-stream.binance.vision', 'wss://stream.binance.com:9443'];
+  function live(symbols, onTick, onState) {
+    symbols = Array.from(new Set(symbols.filter(Boolean)));
+    let ws = null, host = 0, closed = false, poll = null, fails = 0, lastMsg = 0, retryT = null;
+    const state = (st) => { try { if (onState) onState(st); } catch (e) { /* ignor */ } };
+    const tick = (t) => { try { onTick(t); } catch (e) { /* ignor */ } };
+    async function pollOnce() {
+      if (closed || (typeof document !== 'undefined' && document.visibilityState === 'hidden')) return;
+      try {
+        const q = encodeURIComponent(JSON.stringify(symbols));
+        const [bt, pr] = await Promise.all([spot('/api/v3/ticker/bookTicker?symbols=' + q, 8000), spot('/api/v3/ticker/price?symbols=' + q, 8000)]);
+        const at = now();
+        for (const sym of symbols) {
+          const b = (Array.isArray(bt) ? bt : []).find((y) => y.symbol === sym), p = (Array.isArray(pr) ? pr : []).find((y) => y.symbol === sym);
+          if (b || p) tick({ symbol: sym, last: p ? +p.price : null, bid: b ? +b.bidPrice : null, ask: b ? +b.askPrice : null, at, via: 'rest' });
+        }
+      } catch (e) { state('error'); }
+    }
+    function startPoll() { if (poll || closed) return; state('rest'); pollOnce(); poll = setInterval(pollOnce, 5000); }
+    function stopPoll() { if (poll) { clearInterval(poll); poll = null; } }
+    function retry() {
+      if (closed) return;
+      if (fails >= 2) startPoll();
+      clearTimeout(retryT);
+      retryT = setTimeout(connect, Math.min(60000, 1000 * Math.pow(2, Math.min(fails, 6))));
+    }
+    function connect() {
+      if (closed) return;
+      if (typeof WebSocket === 'undefined') { startPoll(); return; }
+      const url = WSS[host % WSS.length] + '/stream?streams=' + symbols.map((x) => x.toLowerCase() + '@ticker').join('/');
+      let sock, opened = false;
+      try { sock = new WebSocket(url); } catch (e) { fails++; host++; retry(); return; }
+      ws = sock;
+      sock.onopen = () => { opened = true; lastMsg = Date.now(); };
+      sock.onmessage = (ev) => {
+        lastMsg = Date.now();
+        let m; try { m = JSON.parse(ev.data); } catch (e) { return; }
+        const d = m && m.data ? m.data : m;
+        if (!d || d.e !== '24hrTicker' || !d.s) return;
+        if (fails || poll) { fails = 0; stopPoll(); }
+        state('ws');
+        tick({ symbol: d.s, last: +d.c, bid: +d.b, ask: +d.a, at: +d.E > 0 ? +d.E : now(), via: 'ws', chg24: +d.P });
+      };
+      sock.onerror = () => { /* urmează onclose */ };
+      sock.onclose = () => { if (ws === sock) ws = null; if (closed) return; fails++; if (!opened) host++; retry(); };
+    }
+    // dacă legătura tace mai mult de 20 de secunde (ex. telefonul a fost blocat), o refacem
+    const watch = setInterval(() => {
+      if (closed) return;
+      if (ws && ws.readyState === 1 && Date.now() - lastMsg > 20000) { try { ws.close(); } catch (e) { /* ignor */ } }
+    }, 5000);
+    connect();
+    return {
+      symbols,
+      close() { closed = true; stopPoll(); clearInterval(watch); clearTimeout(retryT); if (ws) { try { ws.close(); } catch (e) { /* ignor */ } } },
+      wake() { if (closed) return; if (!ws || ws.readyState > 1) { clearTimeout(retryT); connect(); } if (poll) pollOnce(); }
+    };
+  }
+
+  CE.BN = { getJson, spot, ping, ticker, resolvePair, klines, klinesHistory, depth, futures, clockOffset, now, clockInfo, symbolInfo, roundTo, live };
+})(typeof window !== 'undefined' ? window : globalThis);
+
+/* sources.js — date din alte surse, toate opționale:
+   • Fear & Greed Index (alternative.me): sentimentul pieței, 0 = frică extremă, 100 = lăcomie extremă;
+   • CoinGecko (API public fără cheie): dominanța Bitcoin, capitalizarea pieței, oferta monedei și maximul ei istoric.
+   Dacă o sursă nu răspunde, analiza merge mai departe fără ea. Rezultatele se păstrează pe dispozitiv, ca să nu cerem prea des. */
+(function (root) {
+  'use strict';
+  const CE = root.CE;
+  const mem = {};
+  const lsGet = (k) => { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } };
+  const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* fără memorare */ } };
+  async function getJson(url, ms) {
+    const ctl = typeof AbortController === 'function' ? new AbortController() : null;
+    const t = setTimeout(() => { if (ctl) ctl.abort(); }, ms || 8000);
+    try {
+      const r = await fetch(url, { cache: 'no-store', signal: ctl ? ctl.signal : undefined });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return await r.json();
+    } finally { clearTimeout(t); }
+  }
+  /* valoare proaspătă dacă e cazul; dacă sursa nu răspunde, ultima valoare salvată (cel mult 24 de ore), marcată „veche” */
+  async function cached(key, ttl, fn, noStore) {
+    const now = Date.now(), k = 'src:' + key, m = mem[key] || (noStore ? null : lsGet(k));
+    if (m && now - m.at < ttl) return m.v;
+    try {
+      const v = await fn(), rec = { at: now, v };
+      mem[key] = rec; if (!noStore) lsSet(k, rec);
+      return v;
+    } catch (e) {
+      if (m && now - m.at < 24 * 36e5) return Object.assign({}, m.v, { stale: true });
+      throw e;
+    }
+  }
+
+  /* ---------- Fear & Greed ---------- */
+  function fngLabel(v) {
+    if (!Number.isFinite(v)) return '';
+    return v <= 24 ? 'Frică extremă' : v <= 44 ? 'Frică' : v <= 55 ? 'Neutru' : v <= 75 ? 'Lăcomie' : 'Lăcomie extremă';
+  }
+  function parseFng(j) {
+    const d = (j && Array.isArray(j.data) ? j.data : []).map((x) => ({ v: +x.value, t: +x.timestamp * 1000 }))
+      .filter((x) => Number.isFinite(x.v) && x.v >= 0 && x.v <= 100 && Number.isFinite(x.t) && x.t > 0).sort((a, b) => a.t - b.t);
+    if (!d.length) throw new Error('fără date');
+    return d;
+  }
+  function fng() {
+    return cached('fng', 60 * 6e4, async () => {
+      const d = parseFng(await getJson('https://api.alternative.me/fng/?limit=31&format=json'));
+      const last = d[d.length - 1], wk = d.length >= 8 ? d[d.length - 8] : null, l7 = d.slice(-7);
+      return { value: last.v, label: fngLabel(last.v), t: last.t, chg7: wk ? last.v - wk.v : null, avg7: l7.reduce((a, x) => a + x.v, 0) / l7.length,
+        min30: Math.min(...d.map((x) => x.v)), max30: Math.max(...d.map((x) => x.v)), at: Date.now() };
+    });
+  }
+  /* tot istoricul (din 2018), pentru testul pe trecut; ținut doar în memorie */
+  function fngHistory() {
+    return cached('fng-all', 12 * 36e5, async () => parseFng(await getJson('https://api.alternative.me/fng/?limit=0&format=json', 15000)).map((x) => [x.t, x.v]), true);
+  }
+
+  /* ---------- CoinGecko (fără cheie; câteva cereri pe minut) ---------- */
+  const CG = 'https://api.coingecko.com/api/v3/';
+  function cgGlobal() {
+    return cached('cg-global', 30 * 6e4, async () => {
+      const j = await getJson(CG + 'global'), d = j && j.data;
+      if (!d || !d.market_cap_percentage || !Number.isFinite(+d.market_cap_percentage.btc)) throw new Error('fără date');
+      return { btcDom: +d.market_cap_percentage.btc, ethDom: Number.isFinite(+d.market_cap_percentage.eth) ? +d.market_cap_percentage.eth : null,
+        mcap: d.total_market_cap && Number.isFinite(+d.total_market_cap.usd) ? +d.total_market_cap.usd : null,
+        mcapChg24: Number.isFinite(+d.market_cap_change_percentage_24h_usd) ? +d.market_cap_change_percentage_24h_usd : null, at: Date.now() };
+    });
+  }
+  function cgCoin(sym) {
+    const s = String(sym || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (!s) return Promise.reject(new Error('fără monedă'));
+    return cached('cg-coin-' + s, 6 * 36e5, async () => {
+      const arr = await getJson(CG + 'coins/markets?vs_currency=usd&symbols=' + encodeURIComponent(s) + '&order=market_cap_desc&per_page=10&page=1&sparkline=false');
+      const c = (Array.isArray(arr) ? arr : []).filter((x) => x && String(x.symbol).toLowerCase() === s).sort((a, b) => (b.market_cap || 0) - (a.market_cap || 0))[0];
+      if (!c) throw new Error('nu am găsit moneda');
+      const n = (x) => (x === null || x === undefined || !Number.isFinite(+x) ? null : +x);
+      return { id: String(c.id || ''), name: String(c.name || ''), rank: n(c.market_cap_rank), mcap: n(c.market_cap), fdv: n(c.fully_diluted_valuation),
+        circ: n(c.circulating_supply), total: n(c.total_supply), max: n(c.max_supply), ath: n(c.ath), athChg: n(c.ath_change_percentage),
+        athDate: c.ath_date ? Date.parse(c.ath_date) || null : null, price: n(c.current_price), at: Date.now() };
+    });
+  }
+
+  CE.SRC = { fng, fngHistory, fngLabel, cgGlobal, cgCoin, getJson };
 })(typeof window !== 'undefined' ? window : globalThis);
 
 /* update.js — actualizări automate.
@@ -1984,7 +2499,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
    Online (GitHub Pages): primește setările de pe laptop și oferă instalarea ca aplicație (Edge, Chrome). */
 (function () {
   'use strict';
-  const VERSION = '202611271449'; // înlocuit la asamblare: AAAALLZZOOMM
+  const VERSION = '202611271816'; // înlocuit la asamblare: AAAALLZZOOMM
   const UKEY = 'analizor-online', OFF = 'analizor-upd-off', IOFF = 'analizor-install-off';
   const isFile = location.protocol === 'file:';
   const $ = (s) => document.querySelector(s);
@@ -2122,10 +2637,12 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   const esc = (s) => String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const KEY = 'analizor-crypto-v1';
   const QUOTES = ['AUTO', 'USDT', 'USDC', 'FDUSD', 'EUR', 'BTC'];
-  const MAN_TFS = ['15m', '1h', '4h', '1d', '3d', '1w'];
+  const MAN_TFS = ['15m', '1h', '4h', '1d', '3d', '1w', '1M'];
   const VALID_TF = ['15m', '30m', '1h', '2h', '4h', '6h', '8h', '12h', '1d', '3d', '1w', '1M'];
-  const LIMITS = { '15m': 500, '1h': 500, '4h': 1000, '1d': 1000, '1w': 500 };
-  const NEED = { swing: ['1h', '4h', '1d', '1w'], long: ['4h', '1d', '1w'], short: ['15m', '1h', '4h', '1d'] };
+  const LIMITS = { '15m': 500, '1h': 500, '4h': 1000, '1d': 1000, '1w': 500, '1M': 500 };
+  const NEED = { swing: ['1h', '4h', '1d', '1w'], long: ['4h', '1d', '1w', '1M'], short: ['15m', '1h', '4h', '1d'] };
+  const EXTRA = ['1M']; // contextul foarte lung: se ia automat la orice stil; la lipire e opțional
+  const fetchList = () => { const n = NEED[S.style] || NEED.swing; return n.concat(EXTRA.filter((t) => !n.includes(t))); };
   /* În pagina din Claude, accesul direct la Binance e blocat; ca aplicație separată (sau fișier pe calculator) merge. */
   const IN_CLAUDE = !!window.claude || /claude/i.test(location.hostname) || !/^(https?|file):$/.test(location.protocol);
 
@@ -2176,7 +2693,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   let saveT = null;
   function save() {
     clearTimeout(saveT);
-    saveT = setTimeout(() => { try { localStorage.setItem(KEY, JSON.stringify({ coin: S.coin, quote: S.quote, style: S.style, manual: S.manual, extra: S.extra, extraCoin: S.extraCoin, settings: S.settings, favs: S.favs })); } catch (e) { /* fără memorare */ } }, 300);
+    saveT = setTimeout(() => { try { localStorage.setItem(KEY, JSON.stringify({ coin: S.coin, quote: S.quote, style: S.style, manual: S.manual, extra: S.extra, extraCoin: S.extraCoin, settings: S.settings, favs: S.favs, acc: S.acc })); } catch (e) { /* fără memorare */ } }, 300);
   }
   function load() {
     try { const d = JSON.parse(localStorage.getItem(KEY) || 'null'); if (d && typeof d === 'object') return d; } catch (e) { /* ignor */ }
@@ -2208,6 +2725,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     if (p[0] === 't') { S.manual.coin = S.coin; S.manual.tfs[p[1]] = S.manual.tfs[p[1]] || {}; return S.manual.tfs[p[1]]; }
     if (p[0] === 'x') { S.extraCoin = S.coin; return S.extra; }
     if (p[0] === 's') return S.settings;
+    if (p[0] === 'a') return S.acc;
     return null;
   }
   function onField(e) {
@@ -2221,6 +2739,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     if (slot && el.tagName === 'INPUT' && el.type !== 'checkbox') slot.innerHTML = echoHtml(el.value);
     if (parts[0] === 't') refreshChips();
     if (parts[0] === 's' && window.UI && e.type === 'input') window.UI.onSettings();
+    if (parts[0] === 'a' && window.ACCUI) window.ACCUI.onInput(key);
     save();
   }
   document.addEventListener('input', onField);
@@ -2250,7 +2769,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
 
   /* ---------- panourile modurilor ---------- */
   function panelAuto() {
-    let h = '<p>Scrii moneda sus și apeși „Analizează”: iau singur de la Binance prețul, lumânările pe ' + esc((NEED[S.style] || NEED.swing).join(', ')) + ', cartea de ordine și datele de futures.</p>';
+    let h = '<p>Scrii moneda sus și apeși „Analizează”: iau singur de la Binance prețul, lumânările pe ' + esc(fetchList().join(', ')) + ', cartea de ordine și datele de futures.</p>';
     const again = S.report && S.report.auto && S.auto.symbol && S.auto.symbol.indexOf(S.coin) === 0;
     h += '<div class="btns"><button class="btn" id="autoGo"' + (S.auto.busy ? ' disabled' : '') + '>' + (S.auto.busy ? 'Iau datele…' : (again ? 'Actualizează ' : 'Analizează ') + esc(S.coin || '')) + '</button></div>';
     if (S.favs.length) h += '<div class="favs" aria-label="Monedele tale"><span class="small">Monedele tale:</span>' + S.favs.map((c) => '<button data-fav="' + esc(c) + '">' + esc(c) + '</button>').join('') + '</div>';
@@ -2278,7 +2797,9 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
       const s = S.sets[tf];
       return '<a href="' + esc(klUrl(tf)) + '" target="_blank" rel="noopener" class="' + (s ? 'have' : '') + '"><b>' + esc(tf) + ' · ' + esc(tfName(tf)) + '</b><span>' + (s ? CE.nDe(s.candles.length, 'lumânări') + ', până la ' + esc(fmtDate(s.candles[s.candles.length - 1].t)) : 'lipsește — deschide') + '</span></a>';
     }).join('') + '</div>';
-    const other = Object.keys(S.sets).filter((tf) => !need.includes(tf));
+    const opt = EXTRA.filter((tf) => !need.includes(tf));
+    if (opt.length) h += '<p class="small">Opțional, pentru contextul foarte lung: ' + opt.map((tf) => '<a href="' + esc(klUrl(tf)) + '" target="_blank" rel="noopener">' + esc(tf) + ' · ' + esc(tfName(tf)) + '</a>' + (S.sets[tf] ? ' (adăugat)' : '')).join(', ') + '.</p>';
+    const other = Object.keys(S.sets).filter((tf) => !need.includes(tf) && !opt.includes(tf));
     if (other.length) h += '<p class="small">Ai și: ' + esc(other.join(', ')) + '.</p>';
     h += '<label class="fld" style="margin-top:8px"><span>Lipește aici textul copiat</span><textarea id="pasteBox" placeholder="[[1764201600000,&quot;0.05012&quot;, …]]" spellcheck="false" autocomplete="off"></textarea></label>';
     h += '<div class="btns"><button class="btn" id="pasteAdd">Adaugă datele lipite</button>' + (Object.keys(S.sets).length ? '<button class="btn ghost" id="pasteClear">Șterge datele</button>' : '') + '</div>';
@@ -2341,13 +2862,13 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     if (!coin) { setMsg('auto', 'Scrie o monedă (ex. BTC).', true); return; }
     if (S.auto.busy) return;
     S.auto.busy = true; renderPanels();
-    const need = NEED[S.style] || NEED.swing;
+    const need = fetchList();
     try {
       setMsg('auto', 'Caut perechea ' + (S.quote === 'AUTO' ? 'cea mai lichidă' : coin + '/' + S.quote) + '…');
-      const pair = await CE.BN.resolvePair(coin, S.quote);
+      const [pair, off] = await Promise.all([CE.BN.resolvePair(coin, S.quote), CE.BN.clockOffset().catch(() => null)]);
       S.auto.symbol = pair.symbol; S.auto.quote = pair.quote; S.auto.alt = pair.all; S.auto.ticker = pair.t;
       setMsg('auto', 'Iau lumânările ' + need.join(', ') + ' pentru ' + pair.symbol + '…');
-      const cap = Date.now();
+      const cap = nowS(); // ora Binance, nu a telefonului
       const res = await Promise.allSettled(need.map((tf) => CE.BN.klines(pair.symbol, tf, LIMITS[tf] || 500)));
       const sets = {}, failed = [];
       res.forEach((r, i) => {
@@ -2370,6 +2891,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
       S.sets = sets; S.autoExtra = ax; S.auto.at = cap; S.auto.fut = fv ? fv.symbol : null;
       if (!S.favs.includes(coin)) { S.favs.unshift(coin); S.favs = S.favs.slice(0, 8); save(); }
       const notes = [];
+      if (fin(off) && Math.abs(off) > 60000) notes.push('Ceasul dispozitivului e decalat cu ' + CE.nDe(Math.round(Math.abs(off) / 6e4), 'minute') + ' față de Binance; am folosit ora Binance.');
       if (failed.length) notes.push('Nu am primit ' + failed.join(', ') + '.');
       if (!fv) notes.push('Fără date futures pentru ' + coin + '.');
       if (coin !== 'BTC' && !S.btcSet) notes.push('Nu am primit trendul Bitcoin.');
@@ -2377,6 +2899,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
       const altTxt = alt.length ? ' (are mai mult volum decât ' + alt.map((a) => a.quote).join(', ') + ')' : '';
       setMsg('auto', 'Gata: ' + pair.symbol + altTxt + ', ' + fmtDate(cap) + '. ' + notes.join(' '), false);
       analyzeKlines(true);
+      setupTrade(); // perechea pe care cumperi + prețul live
     } catch (e) {
       setMsg('auto', (e && e.message) ? e.message : 'Eroare la descărcare.', true);
       if (e && e.kind === 'net') { S.auto.ok = false; }
@@ -2386,7 +2909,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   }
   /* istoric mai lung pentru testul pe trecut: intrare până la 3000 de lumânări, filtru, zilnic (pentru forța relativă) și Bitcoin pe 1 zi */
   async function historyFor(coin, quote, setupTf, filterTf) {
-    const sym = coin + quote, cap = Date.now(), dayLen = setupTf === '1d' ? 3000 : 1000;
+    const sym = coin + quote, cap = nowS(), dayLen = setupTf === '1d' ? 3000 : 1000;
     const jobs = [CE.BN.klinesHistory(sym, setupTf, 3000), CE.BN.klinesHistory(sym, filterTf, filterTf === '1w' ? 500 : 1000)];
     const needDay = setupTf !== '1d' && filterTf !== '1d';
     if (needDay) jobs.push(CE.BN.klinesHistory(sym, '1d', 1000));
@@ -2398,7 +2921,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     else {
       let c = btcCache[dayLen];
       if (!c || Date.now() - c.at > 10 * 6e4) { // o singură cerere chiar dacă mai multe monede o cer deodată
-        c = btcCache[dayLen] = { at: Date.now(), p: CE.BN.klinesHistory('BTCUSDT', '1d', dayLen).then((rows) => CE.computeTF(CE.rowsToCandles(rows), '1d', Date.now())) };
+        c = btcCache[dayLen] = { at: Date.now(), p: CE.BN.klinesHistory('BTCUSDT', '1d', dayLen).then((rows) => CE.computeTF(CE.rowsToCandles(rows), '1d', nowS())) };
         c.p.catch(() => { if (btcCache[dayLen] === c) delete btcCache[dayLen]; });
       }
       market = { btcD: await c.p, coinD: Dt, isBtc: false };
@@ -2571,6 +3094,73 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   }
   function settingsNum() { return { capital: parseNum(S.settings.capital), riskPct: parseNum(S.settings.riskPct), feePct: parseNum(S.settings.feePct) }; }
   H.settingsNum = settingsNum;
+  /* ---------- prețul live și perechea pe care cumperi ---------- */
+  const nowS = () => (CE.BN && CE.BN.now ? CE.BN.now() : Date.now());
+  S.live = {}; S.liveVia = null; S.trade = null;
+  let feed = null, liveT = null, lastAutoTry = 0, refreshing = false;
+  function tradeSymbol() {
+    const base = S.report && S.report.baseCoin ? S.report.baseCoin : S.coin;
+    return base + ((S.acc && S.acc.pair) || 'USDC');
+  }
+  async function setupTrade() {
+    if (IN_CLAUDE || !S.auto.symbol) return;
+    const sym = tradeSymbol(), my = { sym, quote: (S.acc && S.acc.pair) || 'USDC', info: null, aInfo: null, missing: false, loading: true };
+    S.trade = my;
+    const [ti, ai] = await Promise.allSettled([CE.BN.symbolInfo(sym), CE.BN.symbolInfo(S.auto.symbol)]);
+    if (S.trade !== my) return;
+    my.loading = false;
+    if (ti.status === 'fulfilled' && ti.value.status === 'TRADING') my.info = ti.value; else my.missing = true;
+    my.aInfo = ai.status === 'fulfilled' ? ai.value : null;
+    startLive();
+    scheduleLive();
+    if (window.ACCUI && window.ACCUI.isOpen()) window.ACCUI.renderOut();
+    if (window.UI && window.UI.renderTrade) window.UI.renderTrade();
+  }
+  function startLive() {
+    if (IN_CLAUDE || !S.auto.symbol || !CE.BN.live) return;
+    const syms = [S.auto.symbol];
+    if (S.trade && S.trade.info && S.trade.sym !== S.auto.symbol) syms.push(S.trade.sym);
+    if (feed && feed.symbols.join() === syms.join()) return;
+    if (feed) feed.close();
+    S.live = {}; S.liveVia = null;
+    feed = CE.BN.live(syms, (t) => { S.live[t.symbol] = Object.assign(S.live[t.symbol] || {}, t); scheduleLive(); }, (st) => { S.liveVia = st; scheduleLive(); });
+  }
+  function scheduleLive() {
+    if (liveT) return;
+    liveT = setTimeout(() => { liveT = null; if (window.UI && window.UI.renderLive) window.UI.renderLive(); checkRefresh(); }, 250);
+  }
+  /* când se închide o lumânare pe intervalul de intrare, analiza se reface singură (semnalele se schimbă doar atunci) */
+  function checkRefresh() {
+    const R = S.report;
+    if (!R || !R.auto || S.auto.busy || refreshing || document.visibilityState !== 'visible') return;
+    const T = S.tfs && S.tfs[R.roles.setup];
+    if (!T || !T.liveOpen) return;
+    const closeAt = T.T[T.n - 1];
+    if (nowS() > closeAt + 3000 && Date.now() - lastAutoTry > 60000) {
+      lastAutoTry = Date.now(); refreshing = true;
+      const y = window.scrollY;
+      autoAnalyze().finally(() => { refreshing = false; try { window.scrollTo(0, y); } catch (e) { /* ignor */ } });
+    }
+  }
+  setInterval(checkRefresh, 15000);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') { if (feed) feed.wake(); checkRefresh(); } });
+  /* prețul de pe perechea de analiză → prețul de pe perechea ta, rotunjit la pasul de preț al perechii tale */
+  const midOf = (x) => (x && x.bid > 0 && x.ask > 0 ? (x.bid + x.ask) / 2 : x && x.last > 0 ? x.last : null);
+  function tradeConv() {
+    const t = S.trade;
+    if (!t || !t.info) return null;
+    if (t.sym === S.auto.symbol) return { t, ratio: 1 };
+    const ma = midOf(S.live[S.auto.symbol]), mb = midOf(S.live[t.sym]);
+    return { t, ratio: ma && mb ? mb / ma : null };
+  }
+  function tradePx(px, mode) {
+    const c = tradeConv();
+    if (!c || !c.ratio || !fin(px)) return null;
+    return CE.BN.roundTo(px * c.ratio, c.t.info.tick, c.t.info.tickDec, mode || 'near');
+  }
+  function tradeQty(q) { const c = tradeConv(); if (!c || !fin(q)) return null; return CE.BN.roundTo(q, c.t.info.step, c.t.info.stepDec, 'down'); }
+  Object.assign(H, { nowS, setupTrade, tradeConv, tradePx, tradeQty, startLive });
+
   function analyzeKlines(fromAuto) {
     const sets = Object.entries(S.sets).map(([interval, v]) => ({ interval, candles: v.candles, capturedAt: v.capturedAt }));
     if (!sets.length) return;
@@ -2581,11 +3171,12 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     if (base === 'BTC' && S.tfs['1d']) market = { btcD: S.tfs['1d'], isBtc: true };
     else if (auto && S.btcSet) market = { btcD: CE.computeTF(S.btcSet.candles, '1d', S.btcSet.capturedAt), isBtc: false };
     S.market = market;
-    S.report = CE.buildReport({ source: 'klines', symbol: sym, style: S.style, tfs: S.tfs, market, settings: settingsNum(), extra: extraInput(auto), now: Date.now() });
+    S.report = CE.buildReport({ source: 'klines', symbol: sym, style: S.style, tfs: S.tfs, market, auto: auto && !!S.auto.symbol, settings: settingsNum(), extra: extraInput(auto), now: nowS() });
     S.report.auto = auto && !!S.auto.symbol;
-    S.source = 'klines'; S.isExample = false; S.bt = null; S.multi = null;
+    S.source = 'klines'; S.isExample = false; S.bt = null; S.multi = null; S.accBt = null;
     if (!S.chartTf || !S.tfs[S.chartTf]) S.chartTf = S.report.roles.setup || Object.keys(S.tfs)[0];
     window.UI.render();
+    if (window.ACCUI && !IN_CLAUDE) window.ACCUI.fetchExtras(base); // sentimentul pieței și datele CoinGecko (opționale)
   }
   function analyzeManual(isExample) {
     const m = manualInput();
@@ -2593,9 +3184,10 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     if (!tfs.length) { setMsg('manual', 'Completează măcar un interval (MA-urile sau DIF/DEA).', true); return; }
     if (!fin(m.global.price)) { setMsg('manual', 'Completează prețul curent.', true); return; }
     S.report = CE.buildReport({ source: 'manual', symbol: symbol(), style: S.style, manual: m, settings: settingsNum(), extra: extraInput(false), now: Date.now() });
-    S.source = 'manual'; S.isExample = !!isExample; S.tfs = null; S.bt = null;
+    S.source = 'manual'; S.isExample = !!isExample; S.tfs = null; S.bt = null; S.accBt = null;
     if (!isExample) setMsg('manual', 'Analiză actualizată.');
     window.UI.render();
+    if (window.ACCUI && !IN_CLAUDE) window.ACCUI.fetchExtras(S.report.baseCoin);
   }
   function reanalyze() { if (S.source === 'klines') analyzeKlines(); else if (S.source === 'manual') analyzeManual(S.isExample); }
   Object.assign(H, { analyzeKlines, analyzeManual, reanalyze, symbol, autoAnalyze });
@@ -2671,6 +3263,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
       if (d.extra && typeof d.extra === 'object') S.extra = d.extra;
       if (typeof d.extraCoin === 'string') S.extraCoin = d.extraCoin;
       if (d.settings && typeof d.settings === 'object') S.settings = Object.assign(S.settings, d.settings);
+      if (d.acc && typeof d.acc === 'object' && S.acc) for (const k of Object.keys(S.acc)) if (typeof d.acc[k] === 'string') S.acc[k] = d.acc[k].slice(0, 40);
       if (Array.isArray(d.favs)) S.favs = d.favs.filter((x) => typeof x === 'string' && /^[A-Z0-9]{2,15}$/.test(x)).slice(0, 8);
     }
     const hasManual = Object.keys(S.manual.tfs || {}).some((tf) => tfFilled(tf));
@@ -2703,6 +3296,302 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   H.EXAMPLE = EXAMPLE;
 })();
 
+/* app3.js — tab-ul „Acumulare”: unde e piața, planul de ordine (termen scurt sau lung), testul pe istoric, cum pui ordinele.
+   Plus datele din alte surse (Fear & Greed, CoinGecko), afișate și în „Analiză”. */
+(function () {
+  'use strict';
+  const CE = window.CE, S = window.APP, H = window.HELP, A = CE.ACC;
+  const { $, esc } = H;
+  const { fin, fmtNum, fmtPrice, fmtPct, fmtDate, fmtCompact, parseNum } = CE;
+  S.acc = Object.assign({ amount: '', horizon: 'lung', weeks: '12', reserve: '30', pair: 'USDC' }, S.acc || {});
+  S.ext = S.ext || null;
+
+  const kv = (label, val, cls) => '<div class="' + (cls || '') + '"><span>' + esc(label) + '</span><b>' + esc(val) + '</b></div>';
+  const icon = (ok) => (ok === null || ok === undefined ? '<span class="ic q" role="img" aria-label="necunoscut">?</span>' : ok ? '<span class="ic y" role="img" aria-label="da">✓</span>' : '<span class="ic n" role="img" aria-label="nu">✕</span>');
+  const more = (id, label) => '<button class="more" data-lesson="' + esc(id) + '">' + esc(label) + '</button>';
+  const pc = (x, d) => (fin(x) ? fmtNum(x * 100, d === undefined ? 0 : d) + '%' : '—');
+  const sc = (x) => CE.fmtScore(x);
+  const money = (x, q) => (fin(x) ? fmtNum(x, x >= 100 ? 0 : 2) + ' ' + q : '—');
+
+  /* ---------- datele din alte surse ---------- */
+  let extSeq = 0;
+  function fetchExtras(coin) {
+    if (H.IN_CLAUDE || !CE.SRC) return;
+    const my = ++extSeq;
+    S.ext = { coin, loading: true, funding: S.autoExtra && fin(S.autoExtra.funding) ? S.autoExtra.funding : null };
+    const tasks = [CE.SRC.fng(), CE.SRC.cgGlobal(), coin ? CE.SRC.cgCoin(coin) : Promise.reject(new Error('fără monedă'))];
+    Promise.allSettled(tasks).then(([f, g, c]) => {
+      if (my !== extSeq) return;
+      S.ext = { coin, loading: false, funding: S.ext.funding, fng: f.status === 'fulfilled' ? f.value : null, global: g.status === 'fulfilled' ? g.value : null,
+        coinInfo: c.status === 'fulfilled' ? c.value : null, failed: [f.status !== 'fulfilled' && 'Fear & Greed', (g.status !== 'fulfilled' || c.status !== 'fulfilled') && 'CoinGecko'].filter(Boolean) };
+      renderSent();
+      if (isOpen()) renderOut();
+    });
+  }
+  /* în „Analiză”, la secțiunea despre piață */
+  function renderSent() {
+    const el = $('#sentBox'); if (!el) return;
+    const e = S.ext;
+    if (!e || H.IN_CLAUDE) { el.innerHTML = ''; return; }
+    if (e.loading) { el.innerHTML = '<p class="small mute">Iau sentimentul pieței și dominanța Bitcoin…</p>'; return; }
+    let h = '';
+    if (e.fng) h += kv('Sentiment (Fear & Greed)', fmtNum(e.fng.value, 0) + ' · ' + e.fng.label + (fin(e.fng.chg7) ? ' (' + (e.fng.chg7 > 0 ? '+' : e.fng.chg7 < 0 ? '−' : '') + fmtNum(Math.abs(e.fng.chg7), 0) + ' în 7 zile)' : ''), 'txt');
+    if (e.global) h += kv('Dominanța Bitcoin', fmtNum(e.global.btcDom, 1) + '%') + (fin(e.global.mcapChg24) ? kv('Toată piața, 24h', fmtPct(e.global.mcapChg24, 1)) : '');
+    if (!h) { el.innerHTML = '<p class="small mute">Sentimentul pieței și dominanța nu sunt disponibile acum (sursele externe nu au răspuns).</p>'; return; }
+    let t = '';
+    if (e.fng) t = e.fng.value <= 20 ? 'Frică extremă: istoric, perioadele de frică extremă au fost mai des momente bune de acumulare decât de vânzare, dar pot dura săptămâni.' : e.fng.value >= 80 ? 'Lăcomie extremă: piața e entuziasmată; riscul unei corecții e mai mare.' : '';
+    el.innerHTML = '<div class="kv">' + h + '</div>' + (t ? '<p class="small">' + esc(t) + '</p>' : '') + '<p class="small mute">Surse: Fear & Greed Index de la <a href="https://alternative.me/crypto/fear-and-greed-index/" target="_blank" rel="noopener">alternative.me</a>' + (e.global ? '; dominanța de la <a href="https://www.coingecko.com" target="_blank" rel="noopener">CoinGecko</a>' : '') + '.</p>';
+  }
+
+  /* ---------- prețurile pe perechea ta (în aplicație, cu prețul live și regulile Binance) ---------- */
+  function tradeCtx(R) {
+    const c = !H.IN_CLAUDE && H.tradeConv ? H.tradeConv() : null, t = S.trade;
+    const info = c && c.t ? c.t.info : null, ok = !!(c && c.ratio && info);
+    const pxOf = (px, mode) => (ok ? H.tradePx(px, mode) : px);
+    const qtyOf = (amt, px) => (amt === null || !fin(px) || px <= 0 ? null : ok ? H.tradeQty(amt / px) : amt / px);
+    const fmt = (x) => (ok ? fmtNum(x, info.tickDec) : fmtPrice(x, R.livePrice));
+    const fq = (q) => (q === null ? '—' : ok ? fmtNum(q, info.stepDec) : fmtNum(q, q >= 100 ? 0 : 4));
+    let note;
+    if (ok) note = 'Prețurile sunt pe ' + R.baseCoin + '/' + info.quote + ', după prețul live, rotunjite la pasul de preț Binance (' + fmtNum(info.tick, info.tickDec) + ')' + (info.step ? '; cantitățile la pasul ' + fmtNum(info.step, info.stepDec) : '') + (info.minNotional ? '; minim ' + fmtNum(info.minNotional, 2) + ' ' + info.quote + ' pe ordin' : '') + '. Le scrii exact așa.';
+    else if (t && t.missing) note = t.sym.replace(/(USDC|EUR|USDT)$/, '/$1') + ' nu există pe Binance Spot: prețurile sunt pe ' + R.symbol + '. Alege altă pereche mai sus.';
+    else if (H.IN_CLAUDE) note = 'Prețurile sunt pe perechea analizată; pe perechea ta pot diferi foarte puțin. În aplicație, le primești exacte, pe perechea ta.';
+    else note = 'Prețurile sunt pe ' + R.symbol + ' (aștept prețul live pe perechea ta ca să le convertesc exact).';
+    return { ok, info, pxOf, qtyOf, fmt, fq, note, minOrder: ok && info.minNotional ? info.minNotional : 0 };
+  }
+
+  /* ---------- tab-ul Acumulare ---------- */
+  const isOpen = () => { const v = $('#v-acumulare'); return v && !v.hidden; };
+  function setNum(k) { const v = parseNum(S.acc[k]); return fin(v) ? v : null; }
+  function inputsHtml(q) {
+    const a = S.acc, opt = (k, list) => list.map(([v, l]) => '<option value="' + esc(v) + '"' + (String(a[k]) === v ? ' selected' : '') + '>' + esc(l) + '</option>').join('');
+    let h = '<div class="sec"><h2>Acumulare: cumperi treptat, mai ales când piața scade</h2>';
+    h += '<p>Aici nu cauți „momentul perfect”. Împarți suma în mai multe cumpărări, la prețuri și momente diferite, ca să nu depinzi de o singură zi. Programul îți spune unde e piața acum, unde să pui ordinele și ce a mers istoric pe această monedă.</p>';
+    h += '<div class="form">';
+    h += '<label>Suma pe care vrei s-o acumulezi<input data-f="a.amount" inputmode="decimal" autocomplete="off" value="' + esc(a.amount) + '" placeholder="de exemplu 500"><em>În ' + esc(a.pair) + '. Doar bani de care nu ai nevoie în următorii ani.</em><span class="echo-slot"></span></label>';
+    h += '<label>Orizontul<select data-f="a.horizon">' + opt('horizon', [['scurt', 'Scurt: zile–săptămâni'], ['lung', 'Lung: luni–ani']]) + '</select><em>' + (a.horizon === 'scurt' ? 'Ordine limită eșalonate, cu stop și ținte.' : 'Cumpărare săptămânală + rezervă pentru căderi.') + '</em></label>';
+    if (a.horizon !== 'scurt') {
+      h += '<label>În cât timp cumperi<select data-f="a.weeks">' + opt('weeks', [['8', '8 săptămâni'], ['12', '12 săptămâni'], ['26', '26 de săptămâni'], ['52', '52 de săptămâni']]) + '</select><em>12 săptămâni ≈ 3 luni.</em></label>';
+      h += '<label>Rezervă pentru căderi<select data-f="a.reserve">' + opt('reserve', [['0', 'fără'], ['20', '20%'], ['30', '30% (recomandat)'], ['40', '40%'], ['50', '50%']]) + '</select><em>Din sumă, pentru ordine mult sub preț.</em></label>';
+    }
+    h += '<label>Perechea pe care cumperi<select data-f="a.pair">' + opt('pair', [['USDC', esc(q) + '/USDC'], ['EUR', esc(q) + '/EUR'], ['USDT', esc(q) + '/USDT']]) + '</select><em>În UE, Binance nu mai are perechi spot cu USDT: folosește USDC sau EUR.</em></label>';
+    h += '</div></div>';
+    return h;
+  }
+  function render() {
+    const box = $('#acc'); if (!box) return;
+    const R = S.report, coin = R && R.baseCoin ? R.baseCoin : S.coin;
+    box.innerHTML = inputsHtml(coin) + '<div id="accOut"></div>';
+    for (const el of box.querySelectorAll('input[data-f]')) { const slot = el.parentElement.querySelector('.echo-slot'); if (slot && el.value) slot.innerHTML = echo(el.value); }
+    renderOut();
+  }
+  const echo = (v) => { const n = parseNum(v); return n === null ? '<span class="echo bad">nu înțeleg numărul</span>' : '<span class="echo">= ' + esc(fmtNum(n, n >= 100 ? 0 : 2)) + '</span>'; };
+  let outT = null;
+  function onInput(key) {
+    const el = document.querySelector('#acc input[data-f="a.' + key + '"]');
+    if (el) { const slot = el.parentElement.querySelector('.echo-slot'); if (slot) slot.innerHTML = el.value ? echo(el.value) : ''; }
+    clearTimeout(outT);
+    if (key === 'horizon') { render(); return; }
+    if (key === 'pair' && H.setupTrade) H.setupTrade();
+    outT = setTimeout(renderOut, key === 'amount' ? 450 : 0);
+  }
+  function needData() {
+    if (H.IN_CLAUDE) return 'Planul de acumulare are nevoie de lumânările pe 1 zi (și ideal pe 1 săptămână). Aici, în Claude, lipește-le în modul „Date complete”; în aplicația de pe telefon sau laptop le ia singur, în modul Automat.';
+    return 'Fă întâi o analiză în modul Automat (sau lipește lumânările pe 1 zi și 1 săptămână în „Lipire”). Planul de acumulare are nevoie de istoricul pe 1 zi.';
+  }
+  function renderOut() {
+    const box = $('#accOut'); if (!box) return;
+    const R = S.report;
+    if (!R || R.source !== 'klines' || !S.tfs || !S.tfs['1d']) { box.innerHTML = '<div class="sec"><p class="mute">' + esc(needData()) + '</p></div>'; return; }
+    const ext = S.ext && S.ext.coin === R.baseCoin ? S.ext : (S.ext && !S.ext.coin ? S.ext : null);
+    const extIn = { fng: ext && ext.fng, funding: S.autoExtra && fin(S.autoExtra.funding) && R.auto ? S.autoExtra.funding : null };
+    const ph = A.phase(S.tfs, R.per, extIn);
+    if (!ph) { box.innerHTML = '<div class="sec"><p class="mute">Prea puțin istoric pe 1 zi pentru un plan (am nevoie de cel puțin 60 de zile).</p></div>'; return; }
+    const q = S.acc.pair, h = [phaseHtml(R, ph, ext), S.acc.horizon === 'scurt' ? shortHtml(R, ph, q) : longHtml(R, ph, q, ext), fundHtml(R, ext), testHtml(R), howHtml(R, q)];
+    box.innerHTML = h.join('');
+    if (S.accBt && S.accBt.coin === R.baseCoin) renderTest();
+  }
+
+  function phaseHtml(R, ph, ext) {
+    const fp = (x) => fmtPrice(x, ph.price);
+    let h = '<div class="sec"><h2>Unde e piața acum (' + esc(R.baseCoin) + ')</h2><div class="status ' + esc(ph.info.tone) + '"><h3>' + esc(ph.info.name) + '</h3><p>' + esc(ph.info.text) + '</p></div>';
+    h += '<div class="kv">' + kv('Față de maximul din istoric', fin(ph.dd) ? fmtPct(ph.dd * 100, 0) : '—') + kv('Trend pe 1 zi', sc(ph.sD)) + kv('Trend pe 1 săptămână', fin(ph.sW) ? sc(ph.sW) : 'lipsește') +
+      (ext && ext.fng ? kv('Sentiment', fmtNum(ext.fng.value, 0) + ' · ' + ext.fng.label, 'txt') : '') + '</div>';
+    if (fin(ph.dd)) h += '<p class="small mute">Maximul: ' + esc(fp(ph.hi)) + ', în ' + esc(fmtDate(ph.hiT, false)) + ' (din istoricul de pe Binance).</p>';
+    h += '<h3 style="margin-top:12px">Semne că vânzătorii obosesc: ' + ph.cnt + ' din ' + ph.sig.length + '</h3><ul class="checks">' +
+      ph.sig.map((s) => '<li>' + icon(s.ok) + '<div><div class="t">' + esc(s.name) + '</div>' + (s.val ? '<div class="v">' + esc(s.val) + '</div>' : '') + '</div></li>').join('') + '</ul>';
+    h += '<p class="small">Cu 3 sau mai multe semne, căderea e „avansată”. Semnele cresc șansele unui minim apropiat, dar nu-l garantează: în crize lungi, aceleași semne apar de mai multe ori.</p>';
+    return h + more('acumulare', 'Cum funcționează acumularea') + '</div>';
+  }
+
+  function shortHtml(R, ph, q) {
+    const st = H.settingsNum(), fp = (x) => fmtPrice(x, ph.price);
+    const tc = tradeCtx(R);
+    const L = A.ladder({ D: S.tfs['1d'], price: R.livePrice, levels: R.levels, phase: ph.phase, amount: setNum('amount'), capital: st.capital, riskPct: fin(st.riskPct) ? st.riskPct : 1, fee: fin(st.feePct) ? st.feePct / 100 : 0.001, minOrder: tc.minOrder });
+    if (!L) return '<div class="sec"><h2>Planul pe termen scurt</h2><p class="mute">Nu pot calcula volatilitatea (ATR) pe 1 zi.</p></div>';
+    const prob = A.touchProb(S.tfs['1d'], L.orders.map((o) => o.k), L.validDays, true);
+    let h = '<div class="sec"><h2>Planul pe termen scurt: ordine eșalonate, cu stop</h2>';
+    h += '<p>Pui ' + L.orders.length + ' ordine de cumpărare (Limit) sub prețul de acum, cu sume mai mari mai jos, ca prețul mediu să fie cât mai bun. Toate au același stop: dacă prețul îl atinge, ieși, pentru că scenariul de revenire nu s-a confirmat.</p>';
+    if (ph.phase === 'none' || ph.phase === 'pullback' || ph.phase === 'recovery') h += '<p class="small">Piața nu e acum într-o cădere. Pentru o cumpărare pe termen scurt, regula din „Analiză” (retragere + semnal de reluare) e mai potrivită; planul de mai jos rămâne valabil pentru cumpărări la scădere.</p>';
+    const riskTxt = L.budget !== null ? 'Riscul tău pe tranzacție e ' + fmtNum(st.riskPct, 1) + '% din capital' + (L.riskMul < 1 ? ', iar în această fază folosesc ' + (L.riskMul === 0.5 ? 'jumătate' : fmtNum(L.riskMul * 100, 0) + '%') + ' din el, pentru că cumperi împotriva trendului' : '') + ': cel mult ' + money(L.budget, q) + ' pierdere dacă se execută tot și se atinge stopul.' : 'Pune capitalul în tab-ul „Risc” ca să calculez suma maximă potrivită pentru riscul tău.';
+    h += '<p class="small">' + esc(riskTxt) + '</p>';
+    if (L.amount === null) h += '<p><b>Scrie suma sus</b> (sau capitalul în „Risc”) ca să-ți arăt sumele și cantitățile.</p>';
+    else if (L.want !== null && L.maxAmt !== null && L.want > L.maxAmt * 1.001) h += '<p class="small"><b>Suma ta (' + esc(money(L.want, q)) + ') e prea mare pentru riscul ales.</b> Planul folosește ' + esc(money(L.amount, q)) + '. Restul îl poți folosi pe termen lung (cumpărare săptămânală) sau după un semnal din „Analiză”.</p>';
+    else if (L.want === null && L.maxAmt !== null) h += '<p class="small">N-ai scris o sumă, așa că folosesc maximul potrivit pentru riscul tău: ' + esc(money(L.amount, q)) + '.</p>';
+    if (L.tooSmall) h += '<p class="small lwarn2">Suma e sub minimul unui ordin pe Binance (' + esc(money(L.minOrder, q)) + '): mărește suma sau riscul.</p>';
+    else if (L.fewer) h += '<p class="small">Suma e mică pentru 3 ordine (pe Binance un ordin trebuie să valoreze cel puțin ' + esc(money(L.minOrder, q)) + '), așa că planul folosește ' + (L.orders.length === 1 ? 'un singur ordin' : L.orders.length + ' ordine') + '.</p>';
+    h += '<div class="scroll"><table class="orders"><thead><tr><th>Ordin Limit de cumpărare</th><th class="n">Sumă</th><th class="n">Șansa în ' + L.validDays + ' zile</th></tr></thead><tbody>' +
+      L.orders.map((o, i) => { const px = tc.pxOf(o.px, 'down'), qn = tc.qtyOf(o.amt, px); return '<tr><td><b>' + (i + 1) + '. la ' + esc(tc.fmt(px)) + '</b> <span class="small">(−' + esc(pc(o.dist, 1)) + ')</span><br><span class="small mute">' + esc(o.why) + '</span></td><td class="n">' + esc(o.amt !== null ? money(o.amt, q) : pc(o.w)) + (qn !== null ? '<br><span class="small mute">' + esc(tc.fq(qn) + ' ' + R.baseCoin) + '</span>' : '') + '</td><td class="n">' + esc(pc(prob.p[i])) + '</td></tr>'; }).join('') + '</tbody></table></div>';
+    h += '<p class="small">' + esc(tc.note) + '</p>';
+    h += '<p class="small mute">„Șansa istorică” = cât de des a coborât prețul până acolo în următoarele ' + L.validDays + ' zile, ' + (prob.onlyFalling ? 'în zilele cu trend descendent pe 1 zi' : 'în toate zilele (prea puține zile cu trend descendent)') + ' (' + CE.nDe(prob.n, 'zile analizate') + '). Distanțele se măsoară în ATR, adică în mișcarea zilnică obișnuită.</p>';
+    h += '<div class="kv">' + kv('Stop pentru toate', tc.fmt(tc.pxOf(L.stop, 'near')) + ' (−' + pc(1 - L.stop / ph.price, 1) + ')', 'stop') + kv('Preț mediu, dacă se execută tot', tc.fmt(tc.pxOf(L.avg, 'near'))) +
+      kv('Ținta 1: vinzi jumătate', tc.fmt(tc.pxOf(L.tp1, 'near')), 'tgt') + kv('Ținta 2: restul', tc.fmt(tc.pxOf(L.tp2, 'near')), 'tgt') + kv('Câștig/risc la ținta 1', fmtNum(L.rr1, 2)) +
+      (L.lossAll !== null ? kv('Pierdere maximă (tot + stop)', money(L.lossAll, q)) : '') + '</div>';
+    h += '<details class="why"><summary>De unde vin prețurile</summary><p>Stop: ' + esc(L.stopWhy) + '. Ținta 1: ' + esc(L.tp1Why) + '. Ținta 2: ' + esc(L.tp2Why) + '. ATR pe 1 zi = ' + esc(fp(L.A)) + ' (mișcarea obișnuită într-o zi).</p></details>';
+    h += '<h3 style="margin-top:12px">Regulile planului</h3><ul class="small"><li>Ordinele stau ' + L.validDays + ' zile. Dacă nu se execută niciunul, le anulezi și refaci planul cu prețurile de atunci.</li><li>La ținta 1 vinzi jumătate și muți stopul la prețul mediu: restul nu mai poate deveni pierdere.</li><li>Dacă după ' + L.timeStopDays + ' de zile prețul n-a ajuns la ținta 1, ieși: revenirea nu a venit.</li><li>Nu adăuga ordine sub stop „ca să faci media”: așa se transformă o pierdere mică într-una mare.</li></ul>';
+    return h + '</div>';
+  }
+
+  function longHtml(R, ph, q, ext) {
+    const fp = (x) => fmtPrice(x, ph.price), fv = ext && ext.fng ? ext.fng.value : null;
+    const tc = tradeCtx(R);
+    const P = A.dcaPlan({ D: S.tfs['1d'], Wk: S.tfs['1w'], price: R.livePrice, levels: R.levels, amount: setNum('amount'), weeks: setNum('weeks'), reservePct: setNum('reserve'), fngValue: fv, now: H.nowS ? H.nowS() : Date.now(), minOrder: tc.minOrder });
+    if (!P) return '';
+    let h = '<div class="sec"><h2>Planul pe termen lung: cumpărare săptămânală + rezervă</h2>';
+    h += '<p>Împarți suma în ' + P.weeks + ' cumpărări săptămânale. Cumperi mai mult când prețul e jos față de media lui lungă și când piața e speriată, și mai puțin când e scump. O parte din sumă (rezerva) stă în ordine limită mult mai jos, pentru căderile mari.</p>';
+    if (P.amount === null) h += '<p><b>Scrie suma sus</b> ca să-ți arăt sumele exacte.</p>';
+    h += '<div class="kv">' + (P.amount !== null ? kv('Suma totală', money(P.amount, q)) + kv('Pe săptămână (bază)', money(P.base, q)) + kv('Rezervă pentru căderi', money(P.amount * P.r, q) + ' (' + pc(P.r) + ')') : kv('Rezervă pentru căderi', pc(P.r))) +
+      kv('Media lungă', P.ma !== null ? fp(P.ma) : '—') + kv('Prețul față de medie', fin(P.d) ? fmtPct(P.d * 100, 0) : '—') + '</div>';
+    const why = [P.pf.why, P.ff.why].filter(Boolean).join('; ');
+    h += '<div class="status ' + (P.f > 1.05 ? 'pos' : P.f < 0.95 ? 'warn' : 'flat') + '"><h3>Săptămâna aceasta: ' + (P.thisWeek !== null ? 'cumperi ' + esc(money(P.thisWeek, q)) : 'cumperi de ' + esc(fmtNum(P.f, 2)) + ' × suma de bază') + '</h3><p>Factor ' + esc(fmtNum(P.f, 2)) + ' × suma de bază' + (why ? ', pentru că: ' + esc(why) : '') + '. Factorul se recalculează în fiecare săptămână, când deschizi programul.</p></div>';
+    if (P.weekTooSmall) h += '<p class="small lwarn2">Suma de săptămâna aceasta e sub minimul unui ordin pe Binance (' + esc(money(P.minOrder, q)) + '). Alege mai puține săptămâni sau o sumă mai mare.</p>';
+    h += '<details class="why"><summary>Cum se calculează factorul</summary><p>Prețul față de ' + esc(P.maName) + ': cu peste 30% sub medie × 1,5; sub medie × 1,25; aproape de medie × 1; peste medie × 0,75; cu peste 40% peste × 0,5. Sentimentul (Fear & Greed): frică extremă × 1,25; frică × 1,1; lăcomie × 0,9; lăcomie extremă × 0,75. Rezultatul e între 0,5 și 2. Dacă factorii sunt mari mult timp, suma se termină mai repede; la final cumperi ce a rămas.</p></details>';
+    if (P.reserve.length) {
+      const prob = A.touchProb(S.tfs['1d'], P.reserve.map((o) => o.k || 0), P.weeks * 7, true);
+      h += '<h3 style="margin-top:12px">Rezerva: ordine limită pentru căderi mari</h3><div class="scroll"><table class="orders"><thead><tr><th>Ordin Limit de cumpărare</th><th class="n">Sumă</th><th class="n">Șansa în ' + P.weeks + ' săpt.</th></tr></thead><tbody>' +
+        P.reserve.map((o, i) => { const px = tc.pxOf(o.px, 'down'), qn = tc.qtyOf(o.amt, px); return '<tr><td><b>' + (i + 1) + '. la ' + esc(tc.fmt(px)) + '</b> <span class="small">(−' + esc(pc(o.dist, 0)) + ')</span><br><span class="small mute">' + esc(o.why) + '</span></td><td class="n">' + esc(o.amt !== null ? money(o.amt, q) : pc(o.w)) + (qn !== null ? '<br><span class="small mute">' + esc(tc.fq(qn) + ' ' + R.baseCoin) + '</span>' : '') + '</td><td class="n">' + esc(pc(prob.p[i])) + '</td></tr>'; }).join('') + '</tbody></table></div>';
+      h += '<p class="small">' + esc(tc.note) + '</p>';
+      h += '<p class="small mute">Dacă rezerva nu se execută până la final, o investești treptat în ultimele săptămâni sau o păstrezi pentru următoarea cădere. „Șansa” e cât de des a coborât prețul până acolo în ' + CE.nDe(P.weeks, 'săptămâni') + ', ' + (prob.onlyFalling ? 'pornind din zile cu trend descendent' : 'pornind din orice zi') + '.</p>';
+    }
+    if (P.reserveTooSmall) h += '<p class="small">Rezerva e sub minimul unui ordin pe Binance, așa că o cumperi odată cu tranșele săptămânale.</p>';
+    if (P.amount !== null) {
+      const rows = P.sched.slice(0, 6);
+      h += '<h3 style="margin-top:12px">Calendarul</h3><div class="scroll"><table><thead><tr><th>Săptămâna</th><th>Data</th><th class="n">Suma de bază</th></tr></thead><tbody>' +
+        rows.map((x, i) => '<tr><td>' + (i + 1) + '</td><td class="num">' + esc(fmtDate(x.t, false)) + '</td><td class="n">' + esc(money(x.base, q)) + ' × factor</td></tr>').join('') +
+        (P.sched.length > rows.length ? '<tr><td colspan="3" class="mute">… până la săptămâna ' + P.sched.length + ', ' + esc(fmtDate(P.sched[P.sched.length - 1].t, false)) + '</td></tr>' : '') + '</tbody></table></div>';
+    }
+    h += '<h3 style="margin-top:12px">Ce mai contează pe termen lung</h3><ul class="small">';
+    h += '<li>Fără levier și fără „tot odată”. Ține banii de acumulare separat de capitalul de tranzacționare.</li>';
+    h += '<li>Nu există stop-loss la acumularea pe ani, așa că riscul îl controlezi prin sumă: pune doar cât poți lăsa acolo 2–4 ani, chiar dacă scade cu 70–80%.</li>';
+    if (!R.isBtc) {
+      const m = R.market;
+      h += '<li>Altcoin-urile au scăzut istoric mai mult decât Bitcoin în piețele descendente și unele nu și-au mai revenit. ' + (m && m.rsPos === false && fin(m.rsChg30) && m.rsChg30 < 0 ? esc(R.baseCoin) + ' e acum mai slabă decât Bitcoin (' + fmtPct(m.rsChg30, 0) + ' față de BTC în 30 de zile): ia în calcul ca o parte din acumulare să fie în BTC.' : 'Ia în calcul ca o parte din acumulare să fie în BTC.') + '</li>';
+    }
+    h += '<li>Profitul îl iei tot în trepte: de exemplu 10–20% din poziție când prețul e cu peste 100% peste media lungă sau când sentimentul e de lăcomie extremă câteva săptămâni.</li></ul>';
+    return h + '</div>';
+  }
+
+  function fundHtml(R, ext) {
+    if (H.IN_CLAUDE) return '';
+    if (!ext || ext.loading) return '<div class="sec"><h2>Date din alte surse</h2><p class="small mute">Se încarcă…</p></div>';
+    const c = ext.coinInfo, g = ext.global;
+    let h = '<div class="sec"><h2>Date din alte surse</h2>';
+    if (!c && !g && !ext.fng) return h + '<p class="mute">Sursele externe (CoinGecko, alternative.me) nu au răspuns acum. Planul folosește doar datele Binance.</p></div>';
+    h += '<div class="kv">';
+    if (c) {
+      if (fin(c.rank)) h += kv('Locul după capitalizare', '#' + fmtNum(c.rank, 0));
+      if (fin(c.mcap)) h += kv('Capitalizare', fmtCompact(c.mcap) + ' $');
+      if (fin(c.fdv) && fin(c.mcap) && c.mcap > 0) h += kv('FDV / capitalizare', fmtNum(c.fdv / c.mcap, 2) + ' ×');
+      if (fin(c.circ) && fin(c.max) && c.max > 0) h += kv('În circulație din maxim', pc(c.circ / c.max));
+      else if (fin(c.circ) && fin(c.total) && c.total > 0) h += kv('În circulație din total', pc(c.circ / c.total));
+      if (fin(c.athChg)) h += kv('Față de maximul istoric', fmtPct(c.athChg, 0));
+    }
+    if (g) h += kv('Dominanța Bitcoin', fmtNum(g.btcDom, 1) + '%');
+    h += '</div>';
+    const notes = [];
+    if (c && fin(c.fdv) && fin(c.mcap) && c.mcap > 0) {
+      const r = c.fdv / c.mcap;
+      notes.push(r >= 2 ? 'Doar aproximativ ' + pc(1 / r) + ' din monede sunt în circulație. Restul vor intra treptat pe piață (deblocări), iar oferta nouă apasă de obicei prețul. Pentru acumulare pe termen lung, e un risc important.' : r >= 1.3 ? 'O parte însemnată din monede urmează să intre în circulație: verifică programul de deblocări (Tokenomist, CoinMarketCap).' : 'Aproape toate monedele sunt deja în circulație: risc mic de diluare.');
+    }
+    if (c && fin(c.athChg) && c.athChg <= -80) notes.push('Prețul e cu peste 80% sub maximul istoric. Unele monede revin după astfel de căderi, multe nu: „ieftin față de maxim” nu e un motiv suficient de cumpărare.');
+    if (g && !R.isBtc) notes.push('Dominanța Bitcoin arată ce parte din toată piața crypto e BTC. Când crește într-o piață care scade, banii se retrag din altcoin-uri spre BTC.');
+    h += notes.map((t) => '<p class="small">' + esc(t) + '</p>').join('');
+    if (ext.failed && ext.failed.length) h += '<p class="small mute">Nu au răspuns: ' + esc(ext.failed.join(', ')) + '. Restul planului nu e afectat.</p>';
+    h += '<p class="small mute">Surse: <a href="https://www.coingecko.com" target="_blank" rel="noopener">CoinGecko</a> (capitalizare, ofertă, maxim istoric, dominanță) și <a href="https://alternative.me/crypto/fear-and-greed-index/" target="_blank" rel="noopener">alternative.me</a> (Fear & Greed). Datele CoinGecko vin de la toate bursele, deci pot diferi puțin de Binance.</p>';
+    return h + more('surse', 'Ce înseamnă aceste date') + '</div>';
+  }
+
+  /* ---------- testul pe istoric ---------- */
+  function testHtml(R) {
+    return '<div class="sec"><h2>Ce a mers istoric pe această monedă</h2><p>Programul aplică ambele metode pe trecutul monedei, folosind doar ce se știa în fiecare zi: ordinele eșalonate (termen scurt) în zilele cu trend descendent și cumpărarea săptămânală (termen lung) față de cumpărarea totul o dată.</p>' +
+      '<div class="btns"><button class="btn" id="runAcc" style="background:var(--ink);color:var(--bg)">Testează pe istoricul ' + esc(R.baseCoin) + '</button></div><div id="accBtOut"></div></div>';
+  }
+  async function runTest() {
+    const R = S.report; if (!R || !S.tfs || !S.tfs['1d']) return;
+    const b = $('#runAcc'); if (b) { b.disabled = true; b.textContent = R.auto ? 'Iau istoricul lung…' : 'Testez…'; }
+    let D = S.tfs['1d'], Wk = S.tfs['1w'] || null, fng = null, note = '';
+    if (R.auto && S.auto.symbol && CE.BN) {
+      try {
+        const cap = Date.now();
+        const [d, w] = await Promise.all([CE.BN.klinesHistory(S.auto.symbol, '1d', 3000), CE.BN.klinesHistory(S.auto.symbol, '1w', 500)]);
+        D = CE.computeTF(CE.rowsToCandles(d), '1d', cap); Wk = CE.computeTF(CE.rowsToCandles(w), '1w', cap);
+      } catch (e) { note = 'Nu am putut lua istoricul lung; testul folosește doar lumânările deja descărcate.'; }
+      try { fng = await CE.SRC.fngHistory(); } catch (e) { fng = null; }
+    }
+    const weeks = setNum('weeks') || 12, reserve = fin(setNum('reserve')) ? setNum('reserve') : 30, st = H.settingsNum();
+    let res;
+    try {
+      res = { coin: R.baseCoin, note, days: D.lastClosed + 1, weeks, reserve, short: A.ladderBacktest(D, { fee: fin(st.feePct) ? st.feePct / 100 : 0.001 }), long: A.dcaBacktest(D, Wk, { weeks, reservePct: reserve, fng: Array.isArray(fng) ? fng : null }) };
+    } catch (e) { res = { coin: R.baseCoin, error: 'Testul a eșuat: ' + (e && e.message ? e.message : 'eroare') }; }
+    S.accBt = res;
+    if (b) { b.disabled = false; b.textContent = 'Rulează din nou'; }
+    renderTest();
+  }
+  function renderTest() {
+    const out = $('#accBtOut'), r = S.accBt; if (!out || !r) return;
+    if (r.error) { out.innerHTML = '<p class="mute">' + esc(r.error) + '</p>'; return; }
+    const s = r.short, l = r.long, fR = (x) => (fin(x) ? (x >= 0 ? '+' : '') + fmtNum(x, 2) + ' R' : '—'), fP = (x) => (fin(x) ? fmtPct(x * 100, 1) : '—');
+    let h = (r.note ? '<p class="small">' + esc(r.note) + '</p>' : '') + '<p class="small mute">Istoric folosit: ' + esc(CE.nDe(r.days, 'zile')) + '.</p>';
+    h += '<h3>Termen scurt: ordine eșalonate în zile cu trend descendent</h3>';
+    if (!s.n) h += '<p>' + (s.placed ? 'Ordinele s-au plasat de ' + s.placed + ' ori, dar nu s-au executat niciodată.' : 'Nu au existat suficiente zile cu trend descendent pentru test.') + '</p>';
+    else {
+      h += '<div class="kv">' + kv('Planuri plasate', fmtNum(s.placed, 0)) + kv('Cu cel puțin un ordin executat', pc(s.fillRate)) + kv('Pe plus', pc(s.winRate)) + kv('Rezultat mediu', fR(s.avgR)) + kv('Ieșiri: țintă / stop / timp', s.why.tinta + ' / ' + s.why.stop + ' / ' + s.why.timp, 'txt') + '</div>';
+      const v = s.n < 20 ? 'Eșantion mic (' + s.n + '): rezultatul poate fi întâmplător.' : s.avgR > 0.1 ? 'Pe ' + r.coin + ', cumpărările eșalonate în cădere au avut istoric un avantaj: rezultatul mediu a fost pozitiv.' : s.avgR < 0 ? 'Pe ' + r.coin + ', cumpărările eșalonate în cădere au pierdut bani istoric. Preferă acumularea lentă pe termen lung sau așteaptă semnalul din „Analiză”.' : 'Rezultat aproape de zero: fără avantaj clar pe această monedă.';
+      h += '<p>' + esc(v) + ' <span class="small mute">R = pierderea maximă a planului (dacă se execută tot și se atinge stopul). Testul folosește trepte de 1,5 / 3 / 4,5 × ATR, stop la 5,5 × ATR, ieșire la MA(25) pe 1 zi sau după 20 de zile.</span></p>';
+    }
+    h += '<h3 style="margin-top:14px">Termen lung: ' + CE.nDe(r.weeks, 'săptămâni') + ', rezervă ' + r.reserve + '%</h3>';
+    if (!l.n) h += '<p>Istoricul e prea scurt pentru ' + CE.nDe(r.weeks, 'săptămâni') + '.</p>';
+    else {
+      h += '<div class="scroll"><table><thead><tr><th>Metoda</th><th class="n">Preț mediu față de „totul odată”</th><th class="n">Rezultat la ~' + Math.round(l.holdDays / 30) + ' luni după</th></tr></thead><tbody>' +
+        '<tr><td>Totul odată, în prima zi</td><td class="n">0%</td><td class="n">' + esc(fP(l.valLump)) + '</td></tr>' +
+        '<tr><td>Treptat, sume egale</td><td class="n">' + esc(fP(l.medDca)) + '</td><td class="n">' + esc(fP(l.valDca)) + '</td></tr>' +
+        '<tr><td>Treptat, cu factor și rezervă (planul)</td><td class="n">' + esc(fP(l.medSmart)) + '</td><td class="n">' + esc(fP(l.valSmart)) + '</td></tr></tbody></table></div>';
+      h += '<p>' + esc('Din ' + CE.nDe(l.n, 'situații') + ' ' + (l.onlyFalling ? 'în care trendul pe 1 săptămână era descendent' : 'din tot istoricul (prea puține cu trend descendent)') + ' (valori mediane): planul a obținut un preț mediu mai bun decât „totul odată” în ' + pc(l.smartBeatsLump) + ' din cazuri și mai bun decât sumele egale în ' + pc(l.smartBeatsDca) + '.') + '</p>';
+      h += '<p class="small mute">' + esc('Negativ în coloana a doua = ai plătit mai puțin decât dacă cumpărai totul în prima zi. ' + (l.usedFng ? 'Factorul a folosit și istoricul Fear & Greed. ' : 'Factorul a folosit doar prețul (fără istoricul Fear & Greed). ') + 'Situațiile pornesc la 2 săptămâni una de alta și se suprapun, deci nu sunt independente. Într-o piață care urcă tot timpul, „totul odată” câștigă de obicei; cumpărarea treptată te protejează când nu știi ce urmează.') + '</p>';
+    }
+    out.innerHTML = h;
+  }
+
+  /* ---------- cum pui ordinele în Binance ---------- */
+  function howHtml(R, q) {
+    const pair = R.baseCoin + '/' + q;
+    let h = '<div class="sec"><h2>Cum pui ordinele în Binance</h2>';
+    if (S.acc.horizon === 'scurt') {
+      h += '<ol><li>Deschide <b>' + esc(pair) + '</b> → Spot → <b>Limit</b> → Cumpără. Scrie prețul și suma din tabel; repetă pentru fiecare ordin. Ordinele Limit care stau în carte plătesc de obicei comisionul mai mic (maker).</li>' +
+        '<li>Când se execută primul ordin, pune protecția: Vinde → <b>OCO</b>: „Limit” la ținta 1 pentru jumătate din cantitate și „Stop-Limit” la stop (cu prețul limită puțin sub stop). Pentru cealaltă jumătate pune un „Stop-Limit” la același stop.</li>' +
+        '<li>La fiecare ordin nou executat, actualizează cantitățile din ordinele de vânzare.</li><li>După ' + 10 + ' zile fără execuții, anulează ordinele (Ordine deschise → Anulează) și refă planul.</li></ol>';
+    } else {
+      h += '<ol><li>Cumpărarea săptămânală: deschide <b>' + esc(pair) + '</b> → Spot și cumpără suma din „Săptămâna aceasta” (Limit la prețul curent sau Market pentru sume mici). Poți folosi și cumpărarea recurentă (Auto-Invest) din aplicația Binance, dacă e disponibilă pentru contul tău; atunci ajustezi manual doar diferența dată de factor.</li>' +
+        '<li>Rezerva: pune ordinele <b>Limit</b> din tabel; rămân active până se execută sau până le anulezi.</li><li>Notează fiecare cumpărare (data, prețul, suma). Prețul tău mediu = suma totală plătită / cantitatea totală.</li></ol>';
+    }
+    const tc = tradeCtx(R);
+    h += '<p class="small">' + esc(tc.ok ? 'Prețurile și cantitățile din tabele sunt deja pe ' + pair + ', rotunjite la regulile Binance, așa că le poți copia exact.' : 'Prețurile sunt calculate pe ' + R.symbol + '. Pe ' + pair + ' sunt practic aceleași, dar verifică-le înainte de a trimite ordinul.') + ' Planul aplică reguli fixe pe date: nu știe viitorul și nu e un sfat financiar.</p>';
+    return h + '</div>';
+  }
+
+  document.addEventListener('click', (e) => { const t = e.target.closest('button'); if (t && t.id === 'runAcc') runTest(); });
+  window.ACCUI = { render, renderOut, onInput, fetchExtras, renderSent, isOpen };
+})();
+
 /* app2.js — afișarea rezultatelor, grafice, backtest, risc, lecții */
 (function () {
   'use strict';
@@ -2730,15 +3619,77 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
       const head = '<div class="brow"><div class="h">' + esc(hz.name) + '<small>' + esc(hz.span) + '</small></div><div class="tf">' + esc(tf) + (roleOf[tf] ? '<small>' + roleName[roleOf[tf]] + '</small>' : '') + '</div>';
       if (!p) return head + '<div class="lab na">lipsesc date</div><div class="sc">—</div></div>';
       const arrow = p.trend.cls.startsWith('up') ? '▲ ' : p.trend.cls.startsWith('down') ? '▼ ' : '■ ';
-      return head + '<div class="lab ' + esc(p.trend.cls) + '">' + arrow + esc(p.trend.label) + '</div><div class="sc">' + esc(sc(p.trend.score)) + '</div></div>';
+      const part = fin(p.trend.score) && p.trend.coverage < 0.6 ? '<small>date parțiale</small>' : !fin(p.trend.score) && p.trend.comps.length ? '<small>istoric prea scurt</small>' : '';
+      return head + '<div class="lab ' + esc(p.trend.cls) + '">' + (fin(p.trend.score) ? arrow : '') + esc(p.trend.label) + part + '</div><div class="sc">' + esc(sc(p.trend.score)) + '</div></div>';
     }).join('');
   }
+  /* ---------- prețul live (în aplicație) ---------- */
+  const ago = (ms) => { const s = Math.max(0, Math.round(ms / 1000)); return s < 3 ? 'acum' : s < 60 ? 'acum ' + s + ' s' : s < 3600 ? 'acum ' + Math.round(s / 60) + ' min' : 'acum ' + CE.nDe(Math.round(s / 3600), 'ore'); };
+  const fmtPx = (x, info) => (fin(x) ? (info && info.tick ? fmtNum(x, info.tickDec) : fmtPrice(x)) : '—');
+  const last = {};
+  const put = (id, html) => { if (last[id] === html) return; const el = $('#' + id); if (!el) return; el.innerHTML = html; last[id] = html; };
+  function renderLive() {
+    const box = $('#liveBox'); if (!box) return;
+    const R = S.report;
+    if (H.IN_CLAUDE || !R || !R.auto || !S.auto.symbol || R.symbol !== S.auto.symbol) { box.innerHTML = ''; return; }
+    if (!$('#lvMain')) { box.innerHTML = '<div class="live"><span class="dot" id="lvDot"></span><div class="lrows"><div id="lvMain"></div><div id="lvTrade"></div><div id="lvAn"></div></div></div><div id="lvAct"></div>'; for (const k of ['lvMain', 'lvTrade', 'lvAn', 'lvAct']) delete last[k]; }
+    const now = H.nowS(), a = S.live[S.auto.symbol], t = S.trade, ai = t && t.aInfo && t.aInfo.symbol === S.auto.symbol ? t.aInfo : null;
+    const fp = (x) => (ai ? fmtPx(x, ai) : fmtPrice(x, R.livePrice)), dot = $('#lvDot');
+    if (!a || !fin(a.last)) {
+      if (dot) dot.className = 'dot wait';
+      put('lvMain', '<span class="lmute">' + (S.liveVia === 'error' ? 'Nu primesc prețul live acum; reîncerc…' : 'Mă conectez la prețul live de pe Binance…') + '</span>');
+      put('lvTrade', ''); put('lvAn', ''); put('lvAct', '');
+      return;
+    }
+    if (dot) dot.className = 'dot ' + (now - a.at < 15000 ? 'on' : 'off');
+    const vp = document.querySelector('#verdict .vprice'); // prețul mare din antet devine și el live
+    if (vp) { const txt = fp(a.last); if (vp.textContent !== txt) vp.textContent = txt; vp.title = 'preț live'; }
+    put('lvMain', '<b>' + esc(pairOf(S.auto.symbol)) + ' ' + esc(fp(a.last)) + '</b> <span class="lmute">· cumperi la ' + esc(fp(a.ask)) + ' · vinzi la ' + esc(fp(a.bid)) + ' · ' + esc(ago(now - a.at)) + (S.liveVia === 'rest' ? ' (la 5 s)' : ', live') + '</span>');
+    let tr = '', warn = '';
+    if (t && t.info && t.sym !== S.auto.symbol) {
+      const b = S.live[t.sym];
+      if (b && fin(b.last)) {
+        const sp = b.ask > 0 && b.bid > 0 ? (b.ask - b.bid) / ((b.ask + b.bid) / 2) * 100 : null;
+        tr = 'Perechea ta: <b>' + esc(pairOf(t.sym)) + ' ' + esc(fmtPx(b.last, t.info)) + '</b> <span class="lmute">· cumperi la ' + esc(fmtPx(b.ask, t.info)) + (fin(sp) ? ' · diferență cumpărare/vânzare ' + esc(fmtNum(sp, 2)) + '%' : '') + '</span>';
+        if (fin(sp) && sp > 0.3) warn = 'Pe ' + pairOf(t.sym) + ' diferența dintre cumpărare și vânzare e mare: folosește doar ordine Limit, nu Market.';
+      } else tr = '<span class="lmute">Aștept prețul pe ' + esc(pairOf(t.sym)) + '…</span>';
+    } else if (t && t.missing) warn = pairOf(t.sym) + ' nu există pe Binance Spot. Alege altă pereche în „Acumulare” → „Perechea pe care cumperi” (USDC sau EUR).';
+    put('lvTrade', tr);
+    const mv = a.last / R.livePrice - 1, sn = R.per[R.roles.setup], atrP = sn && fin(sn.snap.atr) ? sn.snap.atr / R.livePrice : null;
+    put('lvAn', '<span class="lmute">Analiza e făcută la ' + esc(fp(R.livePrice)) + ', ' + esc(ago(now - R.liveAt)) + '; de atunci ' + esc(fmtPct(mv * 100, 2)) + '. Se reface singură la închiderea fiecărei lumânări de ' + esc(R.roles.setup || '') + '.</span>');
+    const big = fin(atrP) && Math.abs(mv) >= 0.5 * atrP;
+    put('lvAct', (warn ? '<p class="lwarn">' + esc(warn) + '</p>' : '') + (big ? '<p class="lwarn">Prețul s-a mișcat mult de la analiză (cel puțin jumătate din mișcarea obișnuită a unei lumânări de ' + esc(R.roles.setup) + '). <button class="btn" id="liveRefresh">Actualizează analiza</button></p>' : ''));
+    renderTrade();
+  }
+  /* planul pe perechea ta: prețuri rotunjite la pasul Binance, cantitate la pasul de cantitate, verificarea minimului */
+  function renderTrade() {
+    const el = $('#tradeLine'), R = S.report;
+    if (!el) return;
+    if (H.IN_CLAUDE || !R || !R.auto || !R.plan || !S.trade) { put('tradeLine', ''); return; }
+    const t = S.trade, p = R.plan;
+    if (t.loading) { put('tradeLine', ''); return; }
+    if (t.missing) { put('tradeLine', '<p class="small lwarn2">' + esc(pairOf(t.sym)) + ' nu există pe Binance Spot, așa că nu pot calcula prețurile exacte pentru ea.</p>'); return; }
+    const c = H.tradeConv();
+    if (!c || !c.ratio) { put('tradeLine', '<p class="small mute">Aștept prețul live ca să-ți dau prețurile exacte pe ' + esc(pairOf(t.sym)) + '.</p>'); return; }
+    const i = t.info, b = S.live[t.sym] || S.live[S.auto.symbol], ask = b && b.ask > 0 ? b.ask : H.tradePx(p.entry, 'up');
+    const q = fin(p.qty) ? H.tradeQty(p.qty) : null, val = q !== null ? q * ask : null;
+    let h = '<div class="card" style="margin-top:12px"><h3>Pe perechea ta: ' + esc(pairOf(t.sym)) + '</h3><div class="kv">' +
+      kv('Intrare (cumperi acum la)', fmtPx(ask, i)) + kv('Stop-loss', fmtPx(H.tradePx(p.stop, 'near'), i), 'stop') +
+      kv('Ținta 1', fmtPx(H.tradePx(p.t1, 'near'), i), 'tgt') + kv('Ținta 2', fmtPx(H.tradePx(p.t2, 'near'), i), 'tgt') +
+      (q !== null ? kv('Cantitate', fmtNum(q, i.stepDec) + ' ' + R.baseCoin) : '') + '</div>';
+    h += '<p class="small mute">Prețurile sunt rotunjite la pasul de preț al perechii (' + esc(fmtNum(i.tick, i.tickDec)) + ')' + (i.step ? ', cantitatea la pasul de cantitate (' + esc(fmtNum(i.step, i.stepDec)) + ')' : '') + (i.minNotional ? '; un ordin trebuie să valoreze cel puțin ' + esc(fmtNum(i.minNotional, 2) + ' ' + i.quote) : '') + '. Le poți scrie exact așa în Binance.</p>';
+    if (val !== null && i.minNotional && val < i.minNotional) h += '<p class="small lwarn2">Valoarea poziției (' + esc(fmtNum(val, 2) + ' ' + i.quote) + ') e sub minimul unui ordin pe Binance. Mărește capitalul sau riscul, sau așteaptă un setup cu stop mai apropiat.</p>';
+    if (q !== null && i.minQty && q < i.minQty) h += '<p class="small lwarn2">Cantitatea e sub minimul perechii (' + esc(fmtNum(i.minQty, i.stepDec)) + ').</p>';
+    put('tradeLine', h + '</div>');
+  }
+
   function renderVerdict(R) {
     const el = $('#verdict');
     if (!R) { el.innerHTML = '<div class="vstatus na">Aștept datele tale</div><p class="vtext">Alege mai sus cum aduci datele: din capturi, date complete sau manual. Fiecare rezultat vine cu explicația lui.</p>'; return; }
     const src = R.source === 'klines' ? (R.auto ? 'luate automat de la Binance, ' : 'date complete, ') + fmtDate(R.liveAt) : S.isExample ? 'exemplu din capturile tale' : 'valori introduse';
     const st = R.entry.status, ov = R.overall;
     let h = '<div class="vhead"><b>' + esc(pairOf(R.symbol)) + '</b><span class="vprice num">' + esc(fmtPrice(R.livePrice)) + '</span><span>' + esc(src) + ' · ' + esc(R.styleName) + '</span></div>';
+    h += '<div id="liveBox"></div>';
     h += '<div class="vstatus ' + esc(st.tone) + '">' + esc(st.title) + '</div><p class="vtext">' + esc(st.text) + '</p>';
     if (fin(ov.score)) h += '<div class="lean"><span>Înclinație generală: <b>' + esc(ov.label) + '</b> <span class="num">(' + esc(sc(ov.score)) + ' din ±100)</span></span><div class="meter" role="img" aria-label="Scor ' + esc(sc(ov.score)) + ' pe o scară de la minus 100 la plus 100"><i style="left:' + ((ov.score + 100) / 2).toFixed(1) + '%"></i></div><span>Încredere ' + esc(ov.confidence) + ': ' + esc(ov.confWhy) + '.</span></div>';
     h += '<div class="board">' + boardRows(R) + '</div>';
@@ -2759,7 +3710,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   }
   function secMarket(R) {
     const m = R.market;
-    if (!m) return R.isBtc ? '' : '<div class="sec"><h2>Piața (Bitcoin)</h2><p class="mute">' + (R.source === 'klines' ? 'Trendul Bitcoin nu e disponibil în modul acesta. Verifică-l separat pe 1 zi înainte de orice cumpărare de altcoin.' : 'Alege în formular trendul Bitcoin pe 1 zi (câmpul „Bitcoin pe 1 zi”), ca regula să poată verifica piața.') + '</p>' + more('piata', 'De ce contează Bitcoin') + '</div>';
+    if (!m) return R.isBtc ? '' : '<div class="sec"><h2>Piața (Bitcoin)</h2><p class="mute">' + (R.source === 'klines' ? 'Trendul Bitcoin nu e disponibil în modul acesta. Verifică-l separat pe 1 zi înainte de orice cumpărare de altcoin.' : 'Alege în formular trendul Bitcoin pe 1 zi (câmpul „Bitcoin pe 1 zi”), ca regula să poată verifica piața.') + '</p><div id="sentBox"></div>' + more('piata', 'De ce contează Bitcoin') + '</div>';
     let h = '<div class="sec"><h2>Piața (Bitcoin)' + (R.isBtc || m.manual ? '' : ' și forța relativă') + '</h2><div class="kv">' + kv('Bitcoin, trend pe 1 zi', m.label + (m.manual ? ' (ales de tine)' : ' (' + sc(m.score) + ')'), 'txt') + (fin(m.btcChg30) ? kv('Bitcoin, 30 de zile', fmtPct(m.btcChg30, 1)) : '');
     if (!R.isBtc && fin(m.rsChg30)) h += kv(R.baseCoin + ' față de Bitcoin, 30 de zile', fmtPct(m.rsChg30, 1)) + kv('Forța relativă', m.rsPos ? 'mai puternică decât BTC' : m.rsAboveMa === false && m.rsChg30 < 0 ? 'mai slabă decât BTC' : 'amestecată', 'txt');
     h += '</div>';
@@ -2769,7 +3720,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
       if (fin(m.rsChg30)) h += esc(m.rsPos ? R.baseCoin + ' a crescut mai mult (sau a scăzut mai puțin) decât Bitcoin în ultima lună: banii o preferă. Monedele mai puternice decât BTC tind să rămână așa o vreme.' : m.rsChg30 < 0 ? R.baseCoin + ' a mers mai prost decât Bitcoin în ultima lună: chiar dacă piața urcă, ea poate rămâne în urmă.' : 'Față de Bitcoin, semnalele sunt amestecate.');
       h += '</p>';
     }
-    return h + more('piata', 'De ce contează Bitcoin și forța relativă') + '</div>';
+    return h + '<div id="sentBox"></div>' + more('piata', 'De ce contează Bitcoin și forța relativă') + '</div>';
   }
   function secAnalog() {
     if (!S.analog) return '';
@@ -2815,7 +3766,8 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
       h += '<div class="kv">' + kv('Cantitate', fmtNum(p.qty, p.qty >= 100 ? 0 : 6) + ' ' + S.coin) + kv('Valoarea poziției', fmtNum(p.notional, 2) + ' ' + Q) +
         kv('Pierdere la stop', '−' + fmtNum(p.lossAtStop, 2) + ' ' + Q, 'stop') + kv('Profit la ținta 1', '+' + fmtNum(p.profitT1, 2) + ' ' + Q, 'tgt') + '</div>';
       if (p.capped) h += '<p class="small">Poziția e limitată de capitalul tău (fără împrumut), așa că riscul real e sub ' + esc(fmtNum(p.riskPct, 1)) + '%.</p>';
-    } else h += '<p class="small">Pune capitalul în „Plan și risc” ca să afli câte monede să cumperi.</p>';
+    } else h += '<p class="small">Pune capitalul în tab-ul „Risc” ca să afli câte monede să cumperi.</p>';
+    h += '<div id="tradeLine"></div>';
     const why = [];
     if (p.kind === 'klines') {
       why.push('Stop-ul stă sub minimul ultimelor 6 lumânări (' + fp(p.low6) + '), minus un sfert de ATR. ATR = ' + fp(p.atr) + ' = cât se mișcă în medie o lumânare.');
@@ -2916,6 +3868,9 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     if (fig && 'ResizeObserver' in window) { chartRO = new ResizeObserver(() => drawChart()); chartRO.observe(fig); } else drawChart();
     if (S.bt) renderBt(); // afișează și testul pe 12 monede, dacă există
     updateCalc();
+    if (window.ACCUI) { window.ACCUI.renderSent(); if (window.ACCUI.isOpen()) window.ACCUI.render(); }
+    for (const k of Object.keys(last)) delete last[k];
+    renderLive();
   }
 
   /* ---------- graficul cu lumânări ---------- */
@@ -3154,12 +4109,13 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
   document.addEventListener('input', (e) => { if (['cEntry', 'cStop', 'cTarget'].includes(e.target.id)) updateCalc(); });
 
   /* ---------- navigare: tab-uri, lecții, grafic ---------- */
-  const VIEWS = ['analiza', 'risc', 'invata'];
+  const VIEWS = ['analiza', 'risc', 'acumulare', 'invata'];
   function showView(v) {
     if (!VIEWS.includes(v)) v = 'analiza';
     for (const k of VIEWS) { $('#v-' + k).hidden = k !== v; $('#t-' + k).setAttribute('aria-selected', String(k === v)); }
     $('#heroAnaliza').hidden = v !== 'analiza';
     if (v === 'analiza') { if (S.tfs) drawChart(); }
+    if (v === 'acumulare' && window.ACCUI) window.ACCUI.render();
   }
   function openLesson(id) {
     if (location.hash !== '#invata') location.hash = 'invata'; else showView('invata');
@@ -3175,6 +4131,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
     if (t.dataset.ctf) { S.chartTf = t.dataset.ctf; $$('#chartChips button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.ctf === S.chartTf))); drawChart(); return; }
     if (t.id === 'runBt') { runBt(); return; }
     if (t.id === 'runMulti') { runMulti(); return; }
+    if (t.id === 'liveRefresh') { t.disabled = true; H.autoAnalyze(); return; }
     if (t.id === 'usePlan') {
       const p = S.report && S.report.plan;
       if (!p) { $('#calcOut').innerHTML = '<p class="small mute">Nu există încă un plan: fă întâi o analiză.</p>'; return; }
@@ -3185,7 +4142,7 @@ line.cu,rect.cu{stroke:var(--up);fill:var(--up)}line.cd,rect.cd{stroke:var(--dn)
 
   let setT = null;
   window.UI = {
-    render,
+    render, renderLive, renderTrade,
     onSettings() { clearTimeout(setT); setT = setTimeout(() => { updateCalc(); const keep = S.bt, keepM = S.multi; H.reanalyze(); if (keep) { S.bt = keep; S.multi = keepM; render(); } }, 400); }
   };
   renderRisk();
